@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DBMS – LearnHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="db">
+  <div id="progress"></div>
+  <canvas id="bg"></canvas>
+
+  <nav>
+    <a href="index.html" class="logo">Learn<span>Hub</span></a>
+    <button class="menu-btn">☰</button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="cn.html">Networks</a></li>
+      <li><a href="os.html">OS</a></li>
+      <li><a href="dbms.html">DBMS</a></li>
+      <li><a href="#revision">Revision</a></li>
+      <li><a href="#questions">Questions</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <div class="icon">🗄️</div>
+    <h1>DBMS</h1>
+    <p>Complete course: ER model, relational model, SQL, normalization, transactions, indexing, NoSQL and security, with live simulators.</p>
+  </header>
+
+  <div class="layout">
+    <aside class="side" id="side"></aside>
+    <main>
+
+      <!-- ===================== 1. INTRO ===================== -->
+      <section class="topic" id="intro">
+        <span class="level l1">BEGINNER</span>
+        <h2>1. What is a DBMS?</h2>
+        <p><b>Data</b> is raw facts (like "Aarav", "84"). <b>Information</b> is data with meaning ("Aarav scored 84"). A <b>database</b> is an organised collection of data. A <b>DBMS (Database Management System)</b> is the software that stores, retrieves and protects it. Think of a <b>library</b>: books are data, shelves are the database, and the librarian is the DBMS.</p>
+        <div class="path">
+          <div class="node">📱<small>App</small></div>
+          <div class="node">🧑‍💼<small>DBMS</small></div>
+          <div class="node">💽<small>Disk</small></div>
+          <div class="node">📊<small>Data</small></div>
+          <div class="dot"></div>
+        </div>
+
+        <h3>File system vs DBMS</h3>
+        <div class="tbl"><table>
+          <tr><th>File system</th><th>DBMS</th></tr>
+          <tr><td>Data repeated in many files (redundancy)</td><td>Redundancy is controlled</td></tr>
+          <tr><td>Inconsistent copies are common</td><td>Consistency through constraints</td></tr>
+          <tr><td>Weak security</td><td>Users, roles, permissions</td></tr>
+          <tr><td>No crash recovery or transactions</td><td>Backup, recovery, transactions</td></tr>
+          <tr><td>Hard to query</td><td>Easy queries using SQL</td></tr>
+          <tr><td>Data and programs are tightly tied</td><td>Data independence</td></tr>
+          <tr><td>Concurrent access causes errors</td><td>Concurrency control</td></tr>
+        </table></div>
+
+        <h3>Advantages and disadvantages</h3>
+        <ul>
+          <li><b>Advantages:</b> less redundancy, data sharing, integrity, security, backup and recovery, multi-user access, standard language (SQL).</li>
+          <li><b>Disadvantages:</b> costly software and hardware, complexity, needs trained staff, overkill for tiny single-user apps, a failure can affect everything.</li>
+        </ul>
+
+        <h3>Key terms: schema and instance</h3>
+        <ul>
+          <li><b>Schema:</b> the <i>design</i> or blueprint of the database (table names, columns, types). It changes rarely.</li>
+          <li><b>Instance:</b> the actual data stored at one moment (a snapshot). It changes constantly.</li>
+          <li><b>Data dictionary (catalog):</b> the DBMS's own tables that store information <i>about</i> the data (metadata).</li>
+        </ul>
+
+        <h3>3-Schema Architecture</h3>
+        <ul>
+          <li><b>External (view) level:</b> what each user sees.</li>
+          <li><b>Conceptual (logical) level:</b> tables, relationships, constraints for everyone.</li>
+          <li><b>Internal (physical) level:</b> how data is stored on disk (files, indexes).</li>
+        </ul>
+<pre>User A view   User B view   User C view      (External level)
+        \           |           /
+         +----- Conceptual schema -----+            (Logical level)
+                      |
+              Internal schema                      (Physical level)
+                      |
+                    Disk</pre>
+        <div class="tip">💡 <b>Data independence:</b> you can change a lower level without breaking the upper one. <b>Physical</b> independence = change storage without changing tables. <b>Logical</b> independence = change tables without changing user views (harder to achieve).</div>
+
+        <h3>DBMS components (what is inside)</h3>
+        <ul>
+          <li><b>Query processor:</b> DDL compiler, DML compiler, <b>query optimiser</b> (finds the cheapest way to run a query).</li>
+          <li><b>Storage manager:</b> file manager, buffer manager (keeps hot pages in RAM), transaction manager, authorisation manager.</li>
+          <li><b>Disk storage:</b> data files, indexes, data dictionary, log files.</li>
+        </ul>
+
+        <h3>Application architecture</h3>
+        <div class="tbl"><table>
+          <tr><th>Type</th><th>Idea</th><th>Example</th></tr>
+          <tr><td>1-tier</td><td>App and DB on the same machine</td><td>MS Access on your laptop</td></tr>
+          <tr><td>2-tier</td><td>Client app talks directly to the DB server</td><td>Old desktop apps</td></tr>
+          <tr><td>3-tier</td><td>Client → application (business) server → DB server. Safer and scalable</td><td>Almost all web apps</td></tr>
+        </table></div>
+
+        <h3>People who use a database</h3>
+        <ul>
+          <li><b>DBA (Database Administrator):</b> installs, tunes, backs up, secures, grants access.</li>
+          <li><b>Database designer:</b> decides tables and relations.</li>
+          <li><b>Application programmers</b> and <b>end users</b> (casual, naive, sophisticated).</li>
+        </ul>
+
+        <h3>Data models and languages</h3>
+        <p><b>Data models:</b> hierarchical (tree), network (graph), <b>relational</b> (tables, the most used), object-oriented, document, key-value, graph. <b>Languages:</b> DDL (define), DML (manipulate, <i>procedural</i> or <i>declarative</i>), DCL, TCL. SQL is <b>declarative</b>: you say <i>what</i> you want, not <i>how</i> to get it.</p>
+
+        <h3>Types of databases</h3>
+        <p><b>Relational (SQL):</b> MySQL, PostgreSQL, Oracle, SQL Server. <b>NoSQL:</b> MongoDB (document), Redis (key-value), Cassandra (column), Neo4j (graph).</p>
+      </section>
+
+      <!-- ===================== 2. ER ===================== -->
+      <section class="topic" id="er">
+        <span class="level l1">BEGINNER</span>
+        <h2>2. ER Model, Relational Model & Keys</h2>
+        <p>Before building tables we <b>draw</b> the design as an <b>ER (Entity-Relationship) diagram</b>.</p>
+        <ul>
+          <li><b>Entity</b> (rectangle): a real-world thing, such as Student, Course. A group of similar entities is an <b>entity set</b>.</li>
+          <li><b>Attribute</b> (oval): a property, such as name, phone. Underlined = key.</li>
+          <li><b>Relationship</b> (diamond): link between entities, such as Enrolls.</li>
+        </ul>
+        <svg class="er" viewBox="0 0 760 270" role="img" aria-label="ER diagram of Student enrolls Course">
+          <g>
+            <line x1="160" y1="125" x2="320" y2="125"/><line x1="440" y1="125" x2="600" y2="125"/>
+            <line x1="45" y1="65" x2="85" y2="100"/><line x1="150" y1="65" x2="120" y2="100"/><line x1="100" y1="195" x2="100" y2="150"/>
+            <line x1="610" y1="65" x2="640" y2="100"/><line x1="715" y1="65" x2="690" y2="100"/><line x1="660" y1="195" x2="660" y2="150"/>
+            <line x1="380" y1="205" x2="380" y2="165"/>
+          </g>
+          <rect x="40" y="100" width="120" height="50" rx="6"/><text class="ent" x="100" y="125">Student</text>
+          <rect x="600" y="100" width="120" height="50" rx="6"/><text class="ent" x="660" y="125">Course</text>
+          <polygon points="380,85 440,125 380,165 320,125"/><text x="380" y="125">Enrolls</text>
+          <ellipse cx="45" cy="45" rx="45" ry="20"/><text class="key" x="45" y="45">roll_no</text>
+          <ellipse cx="150" cy="45" rx="38" ry="20"/><text x="150" y="45">name</text>
+          <ellipse cx="100" cy="215" rx="40" ry="20"/><text x="100" y="215">phone</text>
+          <ellipse cx="610" cy="45" rx="48" ry="20"/><text class="key" x="610" y="45">course_id</text>
+          <ellipse cx="715" cy="45" rx="35" ry="20"/><text x="715" y="45">title</text>
+          <ellipse cx="660" cy="215" rx="40" ry="20"/><text x="660" y="215">credits</text>
+          <ellipse cx="380" cy="225" rx="38" ry="20"/><text x="380" y="225">grade</text>
+          <text x="235" y="110">N</text><text x="520" y="110">M</text>
+        </svg>
+        <p>This is a <b>Many-to-Many (M:N)</b> relationship: one student takes many courses, and one course has many students.</p>
+
+        <h3>Types of attributes</h3>
+        <ul>
+          <li><b>Simple:</b> cannot be split (age). <b>Composite:</b> can be split (address → city, pin).</li>
+          <li><b>Single-valued:</b> one value (roll_no). <b>Multivalued:</b> many values (phone numbers, drawn with a double oval).</li>
+          <li><b>Derived:</b> calculated (age from date of birth, dashed oval). <b>Stored:</b> the base value (date of birth).</li>
+        </ul>
+
+        <h3>Cardinality and participation</h3>
+        <ul>
+          <li><b>Cardinality</b> = how many entities can be linked: 1:1, 1:N, N:1, M:N.</li>
+          <li><b>Participation</b> = must every entity take part? <b>Total</b> (double line, mandatory: every Employee works in a Department) or <b>Partial</b> (single line, optional).</li>
+        </ul>
+
+        <h3>Cardinality and converting to tables</h3>
+        <div class="tbl"><table>
+          <tr><th>Relationship</th><th>Example</th><th>How to make tables</th></tr>
+          <tr><td>1 : 1</td><td>Person – Passport</td><td>Put the foreign key on either side (prefer the side with total participation)</td></tr>
+          <tr><td>1 : N</td><td>Department – Students</td><td>Put the foreign key on the <b>N</b> side</td></tr>
+          <tr><td>M : N</td><td>Student – Course</td><td>Create a <b>new table</b> (Enrollment) with both keys</td></tr>
+        </table></div>
+        <details open><summary>✍️ Worked example: converting the diagram above into tables</summary>
+          <p>1. Strong entity → table: <code>Student(<u>roll_no</u>, name)</code>, <code>Course(<u>course_id</u>, title, credits)</code>.<br>
+          2. Multivalued attribute <code>phone</code> → its own table: <code>Student_Phone(<u>roll_no</u>, <u>phone</u>)</code> with roll_no as foreign key.<br>
+          3. M:N relationship → table with both keys plus relationship attributes: <code>Enrolls(<u>roll_no</u>, <u>course_id</u>, grade)</code>.<br>
+          <b>Total: 4 tables.</b> The composite primary key of Enrolls is (roll_no, course_id), and each part is also a foreign key.</p></details>
+
+        <p><b>Weak entity:</b> cannot be identified alone, depends on a strong entity (example: Dependent of Employee). It has a <i>partial key</i> (discriminator), is drawn with a double rectangle, and its table's primary key = owner's key + partial key.</p>
+
+        <h3>Extended ER: Specialization, Generalization, Aggregation</h3>
+        <ul>
+          <li><b>Specialization (top-down):</b> split an entity into sub-types. Employee → Engineer, Manager (an "ISA" relationship). Sub-types <b>inherit</b> attributes.</li>
+          <li><b>Generalization (bottom-up):</b> combine similar entities into one super-type (Car + Truck → Vehicle).</li>
+          <li><b>Constraints:</b> <b>disjoint</b> (an entity belongs to only one sub-type) vs <b>overlapping</b>; <b>total</b> vs <b>partial</b> coverage.</li>
+          <li><b>Aggregation:</b> treat a relationship as a higher-level entity so it can take part in another relationship.</li>
+        </ul>
+
+        <h3>The Relational Model: words you must know</h3>
+        <div class="tbl"><table>
+          <tr><th>Formal term</th><th>Everyday term</th></tr>
+          <tr><td>Relation</td><td>Table</td></tr>
+          <tr><td>Tuple</td><td>Row (record)</td></tr>
+          <tr><td>Attribute</td><td>Column (field)</td></tr>
+          <tr><td>Domain</td><td>Set of allowed values of a column</td></tr>
+          <tr><td>Degree</td><td>Number of <b>columns</b></td></tr>
+          <tr><td>Cardinality</td><td>Number of <b>rows</b></td></tr>
+        </table></div>
+        <p>Properties of a relation: no duplicate rows, row order does not matter, column order does not matter, every value is atomic.</p>
+
+        <h3>Keys</h3>
+        <div class="tbl"><table>
+          <tr><th>Key</th><th>Meaning</th></tr>
+          <tr><td>Super key</td><td>Any set of attributes that uniquely identifies a row</td></tr>
+          <tr><td>Candidate key</td><td>Minimal super key (no extra attribute)</td></tr>
+          <tr><td>Primary key</td><td>The candidate key chosen by the designer. Unique and NOT NULL</td></tr>
+          <tr><td>Alternate key</td><td>Candidate keys that were not chosen</td></tr>
+          <tr><td>Foreign key</td><td>Attribute that refers to the primary key of another table</td></tr>
+          <tr><td>Composite key</td><td>Key made of 2 or more attributes</td></tr>
+          <tr><td>Surrogate key</td><td>Artificial key (auto-increment ID) with no business meaning</td></tr>
+        </table></div>
+        <div class="note">📌 Example: in Student(roll_no, email, name), both <code>roll_no</code> and <code>email</code> are candidate keys. If we pick roll_no as primary, then email is an alternate key. <code>{roll_no, name}</code> is a super key but not a candidate key.</div>
+        <div class="tip">💡 <b>Counting trick:</b> in a relation with <b>n</b> attributes, if there is exactly one candidate key and it is a <b>single attribute</b>, the number of super keys is <b>2<sup>n−1</sup></b> (the key plus any combination of the other n−1 attributes).</div>
+
+        <h3>Integrity constraints</h3>
+        <p><b>Entity integrity:</b> primary key cannot be NULL. <b>Referential integrity:</b> a foreign key must match an existing primary key (or be NULL). <b>Domain:</b> values must be of the right type or range. <b>Key constraint:</b> keys are unique.</p>
+        <p><b>Referential actions</b> (what happens when the parent row is deleted or updated):</p>
+        <div class="tbl"><table>
+          <tr><th>Action</th><th>Effect</th></tr>
+          <tr><td>CASCADE</td><td>Child rows are deleted/updated too</td></tr>
+          <tr><td>SET NULL</td><td>Child foreign key becomes NULL</td></tr>
+          <tr><td>RESTRICT / NO ACTION</td><td>The operation is refused if child rows exist</td></tr>
+        </table></div>
+      </section>
+
+      <!-- ===================== 3. SQL ===================== -->
+      <section class="topic" id="sql">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>3. SQL (with a live playground)</h2>
+        <p><b>SQL</b> (Structured Query Language) is the language to talk to a relational database.</p>
+        <div class="tbl"><table>
+          <tr><th>Type</th><th>Meaning</th><th>Commands</th></tr>
+          <tr><td>DDL</td><td>Define structure</td><td>CREATE, ALTER, DROP, TRUNCATE, RENAME</td></tr>
+          <tr><td>DML</td><td>Change data</td><td>INSERT, UPDATE, DELETE</td></tr>
+          <tr><td>DQL</td><td>Read data</td><td>SELECT</td></tr>
+          <tr><td>DCL</td><td>Permissions</td><td>GRANT, REVOKE</td></tr>
+          <tr><td>TCL</td><td>Transactions</td><td>COMMIT, ROLLBACK, SAVEPOINT</td></tr>
+        </table></div>
+
+        <h3>Common data types</h3>
+        <div class="tbl"><table>
+          <tr><th>Kind</th><th>Types</th></tr>
+          <tr><td>Numbers</td><td>INT, BIGINT, DECIMAL(10,2), FLOAT</td></tr>
+          <tr><td>Text</td><td>CHAR(n) fixed length, VARCHAR(n) variable length, TEXT</td></tr>
+          <tr><td>Date / time</td><td>DATE, TIME, DATETIME / TIMESTAMP</td></tr>
+          <tr><td>Other</td><td>BOOLEAN, BLOB (binary), JSON</td></tr>
+        </table></div>
+
+        <h3>Creating a table with constraints</h3>
+<pre>CREATE TABLE students (
+  id       INT PRIMARY KEY,
+  name     VARCHAR(50) NOT NULL,
+  email    VARCHAR(80) UNIQUE,
+  marks    INT CHECK (marks BETWEEN 0 AND 100),
+  dept_id  INT,
+  FOREIGN KEY (dept_id) REFERENCES departments(id)
+);
+
+INSERT INTO students VALUES (9, 'Neha', 'neha@x.com', 84, 1);
+UPDATE students SET marks = 90 WHERE id = 9;
+DELETE FROM students WHERE id = 9;</pre>
+        <p>Other constraints: <code>DEFAULT value</code>, <code>AUTO_INCREMENT</code> (MySQL) / <code>SERIAL</code> (PostgreSQL), and <code>ON DELETE CASCADE</code> on a foreign key.</p>
+
+        <h3>Changing a table (ALTER)</h3>
+<pre>ALTER TABLE students ADD city VARCHAR(30);
+ALTER TABLE students MODIFY name VARCHAR(80);   -- MySQL
+ALTER TABLE students DROP COLUMN city;
+ALTER TABLE students ADD CONSTRAINT uq_email UNIQUE (email);</pre>
+        <div class="tip">💡 <b>DELETE</b> removes rows (can WHERE, can rollback). <b>TRUNCATE</b> removes all rows quickly (no WHERE, resets auto-increment, usually cannot rollback). <b>DROP</b> removes the whole table and its structure.</div>
+
+        <h3>Useful operators and clauses</h3>
+<pre>SELECT DISTINCT dept_id FROM students;
+SELECT * FROM students WHERE marks BETWEEN 60 AND 80;
+SELECT * FROM students WHERE dept_id IN (1, 2);
+SELECT * FROM students WHERE name LIKE 'A%';    -- % any text, _ one character
+SELECT * FROM students ORDER BY marks DESC, name ASC LIMIT 5;
+SELECT name, marks + 5 AS bonus_marks FROM students;</pre>
+
+        <h3>Aggregate functions and GROUP BY</h3>
+        <p><code>COUNT, SUM, AVG, MIN, MAX</code> turn many rows into one value. <code>GROUP BY</code> makes one result row <b>per group</b>. Every column in SELECT must be either grouped or inside an aggregate.</p>
+<pre>SELECT dept_id, COUNT(*) AS total, AVG(marks) AS avg_marks
+FROM students
+GROUP BY dept_id;</pre>
+
+        <h3>Joins</h3>
+        <div class="tbl"><table>
+          <tr><th>Join</th><th>Returns</th></tr>
+          <tr><td>INNER JOIN</td><td>Only rows that match in both tables</td></tr>
+          <tr><td>LEFT JOIN</td><td>All rows from left + matches from right (NULL if none)</td></tr>
+          <tr><td>RIGHT JOIN</td><td>All rows from right + matches from left</td></tr>
+          <tr><td>FULL JOIN</td><td>All rows from both sides</td></tr>
+          <tr><td>CROSS JOIN</td><td>Every row with every row (cartesian product, m × n rows)</td></tr>
+          <tr><td>SELF JOIN</td><td>A table joined with itself (use aliases), e.g. employee and manager</td></tr>
+          <tr><td>NATURAL JOIN</td><td>Joins automatically on columns with the same name</td></tr>
+        </table></div>
+        <details><summary>✍️ Worked example: INNER vs LEFT vs RIGHT join</summary>
+          <p><b>students:</b> (Aarav, dept 1), (Priya, dept 2), (Isha, NULL)<br>
+          <b>departments:</b> (1, CSE), (2, ECE), (3, Civil)<br><br>
+          <b>INNER JOIN</b> on dept id → Aarav–CSE, Priya–ECE (2 rows). Isha has no match and Civil has no match, so both are dropped.<br>
+          <b>LEFT JOIN</b> (students on the left) → Aarav–CSE, Priya–ECE, <b>Isha–NULL</b> (3 rows).<br>
+          <b>RIGHT JOIN</b> → Aarav–CSE, Priya–ECE, <b>NULL–Civil</b> (3 rows).<br>
+          <b>FULL JOIN</b> → all 4 distinct combos above (Isha–NULL and NULL–Civil both appear).</p></details>
+<pre>-- Self join: employee with manager name
+SELECT e.name AS employee, m.name AS manager
+FROM emp e LEFT JOIN emp m ON e.manager_id = m.id;</pre>
+
+        <h3>WHERE vs HAVING, and the order SQL runs</h3>
+        <p><b>WHERE</b> filters rows <i>before</i> grouping. <b>HAVING</b> filters groups <i>after</i> GROUP BY (works with COUNT, SUM, AVG).</p>
+<pre>Written:  SELECT → FROM → WHERE → GROUP BY → HAVING → ORDER BY → LIMIT
+Runs as:  FROM/JOIN → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT</pre>
+
+        <h3>🧮 Try it: SQL Playground</h3>
+        <p>Here are the two tables you can query. Notice <b>Isha</b> has no department (NULL) and <b>Civil</b> has no students.</p>
+        <div class="two" id="db-tables"></div>
+        <p>Click an example, or write your own query:</p>
+        <div class="sq">
+          <button onclick="setSQL(0)">All students</button>
+          <button onclick="setSQL(1)">Filter + sort</button>
+          <button onclick="setSQL(6)">AND condition</button>
+          <button onclick="setSQL(2)">GROUP BY</button>
+          <button onclick="setSQL(5)">HAVING</button>
+          <button onclick="setSQL(3)">INNER JOIN</button>
+          <button onclick="setSQL(4)">LEFT JOIN</button>
+        </div>
+        <textarea id="sql-in">SELECT name, marks FROM students WHERE marks > 75 ORDER BY marks DESC</textarea>
+        <div class="ctl"><button class="btn2" onclick="runSQL()">▶ Run Query</button></div>
+        <div id="sql-out"></div>
+        <p><small>This is a mini engine for learning. It supports SELECT with DISTINCT, JOIN, WHERE (AND/OR, LIKE, IS NULL), GROUP BY, HAVING, ORDER BY, LIMIT and COUNT/SUM/AVG/MIN/MAX. Use full table names (no aliases). The advanced features below (subqueries, window functions, CTEs) work in real MySQL or PostgreSQL, not in this mini engine.</small></p>
+
+        <h3>Subqueries, IN, EXISTS, ANY, ALL</h3>
+        <p>A <b>subquery</b> is a query inside a query. A <b>correlated subquery</b> uses a value from the outer query and runs once per outer row.</p>
+<pre>-- Students who scored above the average
+SELECT name FROM students WHERE marks &gt; (SELECT AVG(marks) FROM students);
+
+-- Departments that have at least one student
+SELECT dept_name FROM departments d
+WHERE EXISTS (SELECT 1 FROM students s WHERE s.dept_id = d.id);
+
+-- Higher than ALL students of dept 2
+SELECT name FROM students
+WHERE marks &gt; ALL (SELECT marks FROM students WHERE dept_id = 2);</pre>
+        <div class="note">📌 <code>IN</code> compares to a list of values. <code>EXISTS</code> only checks whether any row comes back (stops at the first match, often faster for big subqueries). <b>Beware:</b> <code>NOT IN</code> returns nothing if the list contains a NULL, so prefer <code>NOT EXISTS</code>.</div>
+
+        <h3>Set operations</h3>
+        <p><b>UNION</b> merges results and removes duplicates; <b>UNION ALL</b> keeps duplicates (faster); <b>INTERSECT</b> common rows; <b>EXCEPT</b> (MINUS in Oracle) rows in the first but not the second. Both queries need the same number and type of columns.</p>
+
+        <h3>CASE, and NULL handling</h3>
+<pre>SELECT name,
+  CASE WHEN marks &gt;= 90 THEN 'A'
+       WHEN marks &gt;= 75 THEN 'B'
+       ELSE 'C' END AS grade
+FROM students;
+
+SELECT COALESCE(dept_id, 0) FROM students;   -- first non-NULL value</pre>
+        <div class="note">📌 <b>NULL tip:</b> NULL is "unknown". <code>NULL = NULL</code> is not true. Always use <code>IS NULL</code>. Also <code>COUNT(*)</code> counts all rows, but <code>COUNT(col)</code> skips NULLs, and aggregates like AVG ignore NULLs.</div>
+
+        <h3>Window functions and CTEs (modern SQL)</h3>
+        <p>A <b>window function</b> calculates across related rows <i>without collapsing them</i> into one row like GROUP BY does.</p>
+<pre>SELECT name, marks,
+  ROW_NUMBER() OVER (ORDER BY marks DESC) AS rn,
+  RANK()       OVER (ORDER BY marks DESC) AS rnk,
+  DENSE_RANK() OVER (ORDER BY marks DESC) AS drnk
+FROM students;
+
+-- CTE (a named temporary result, easier to read than nested subqueries)
+WITH top AS (SELECT * FROM students WHERE marks &gt;= 85)
+SELECT name FROM top;</pre>
+        <div class="tbl"><table>
+          <tr><th>Marks</th><th>ROW_NUMBER</th><th>RANK</th><th>DENSE_RANK</th></tr>
+          <tr><td>90</td><td>1</td><td>1</td><td>1</td></tr>
+          <tr><td>90</td><td>2</td><td>1</td><td>1</td></tr>
+          <tr><td>80</td><td>3</td><td><b>3</b> (gap)</td><td><b>2</b> (no gap)</td></tr>
+        </table></div>
+
+        <h3>Classic placement queries</h3>
+<pre>-- 2nd highest marks
+SELECT MAX(marks) FROM students
+WHERE marks &lt; (SELECT MAX(marks) FROM students);
+
+-- Nth highest (N = 3) using LIMIT/OFFSET
+SELECT DISTINCT marks FROM students ORDER BY marks DESC LIMIT 1 OFFSET 2;
+
+-- Duplicate emails
+SELECT email, COUNT(*) FROM students GROUP BY email HAVING COUNT(*) &gt; 1;
+
+-- Delete duplicates but keep one row (keeps the smallest id)
+DELETE FROM students WHERE id NOT IN (
+  SELECT MIN(id) FROM (SELECT id, email FROM students) t GROUP BY email);
+
+-- Students with no department
+SELECT name FROM students WHERE dept_id IS NULL;
+
+-- Departments with more than 2 students
+SELECT d.dept_name, COUNT(*) FROM departments d
+JOIN students s ON s.dept_id = d.id
+GROUP BY d.dept_name HAVING COUNT(*) &gt; 2;
+
+-- Departments with NO students
+SELECT d.dept_name FROM departments d
+LEFT JOIN students s ON s.dept_id = d.id
+WHERE s.id IS NULL;
+
+-- Highest marks in each department
+SELECT dept_id, MAX(marks) FROM students GROUP BY dept_id;
+
+-- Employees earning more than their manager
+SELECT e.name FROM emp e JOIN emp m ON e.manager_id = m.id
+WHERE e.salary &gt; m.salary;</pre>
+        <div class="tip">💡 Tip for the duplicate-delete query: in MySQL you cannot select from the same table you are deleting from directly, so the inner query is wrapped as a derived table (<code>t</code>).</div>
+
+        <h3>Indexes, views and transactions in SQL</h3>
+<pre>CREATE INDEX idx_marks ON students(marks);
+CREATE VIEW top_students AS SELECT name, marks FROM students WHERE marks &gt;= 85;
+
+START TRANSACTION;
+UPDATE accounts SET bal = bal - 200 WHERE id = 1;
+UPDATE accounts SET bal = bal + 200 WHERE id = 2;
+COMMIT;      -- or ROLLBACK;
+
+GRANT SELECT, INSERT ON students TO 'ravi';
+REVOKE INSERT ON students FROM 'ravi';</pre>
+      </section>
+
+      <!-- ===================== 4. NORMALIZATION ===================== -->
+      <section class="topic" id="normalization">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>4. Normalization & Functional Dependencies</h2>
+        <p><b>Normalization</b> means organising tables to <b>remove redundancy</b> and avoid anomalies by splitting big tables into smaller related ones.</p>
+        <h3>Why? The 3 anomalies</h3>
+<pre>Student_Course (roll, name, course, instructor)
+101 | Aarav | DBMS | Rao
+101 | Aarav | OS   | Iyer
+102 | Priya | DBMS | Rao</pre>
+        <ul>
+          <li><b>Insert anomaly:</b> cannot add a new course until a student enrolls.</li>
+          <li><b>Update anomaly:</b> if Rao changes name, we must edit many rows.</li>
+          <li><b>Delete anomaly:</b> deleting Priya also deletes the fact that DBMS is taught by Rao.</li>
+        </ul>
+
+        <h3>Functional Dependency (FD)</h3>
+        <p><code>X → Y</code> means: if two rows have the same X, they must have the same Y. Example: <code>roll → name</code>. X is the <b>determinant</b>.</p>
+        <div class="tbl"><table>
+          <tr><th>Kind</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td>Trivial</td><td>Y is a subset of X</td><td>{roll, name} → name</td></tr>
+          <tr><td>Non-trivial</td><td>Y is not a subset of X</td><td>roll → name</td></tr>
+          <tr><td>Full dependency</td><td>Y depends on the <b>whole</b> composite key</td><td>(roll, course) → grade</td></tr>
+          <tr><td>Partial dependency</td><td>Y depends on <b>part</b> of a composite key</td><td>(roll, course) → name, because roll → name</td></tr>
+          <tr><td>Transitive dependency</td><td>X → Y and Y → Z, so X → Z through a non-key</td><td>emp → dept → dept_head</td></tr>
+        </table></div>
+
+        <h3>Armstrong's axioms (rules to derive FDs)</h3>
+        <ul>
+          <li><b>Reflexivity:</b> if Y ⊆ X then X → Y.</li>
+          <li><b>Augmentation:</b> if X → Y then XZ → YZ.</li>
+          <li><b>Transitivity:</b> if X → Y and Y → Z then X → Z.</li>
+          <li>Derived: <b>Union</b> (X→Y, X→Z ⇒ X→YZ), <b>Decomposition</b> (X→YZ ⇒ X→Y and X→Z), <b>Pseudo-transitivity</b> (X→Y, WY→Z ⇒ WX→Z).</li>
+        </ul>
+
+        <h3>Closure and candidate keys</h3>
+        <p>The <b>closure</b> X⁺ is the set of all attributes that X can determine. Method: start with X, keep adding the right side of any FD whose left side is already inside, until nothing new appears. If X⁺ contains <b>all attributes</b>, X is a super key; if no proper subset of X is also a super key, X is a candidate key.</p>
+        <details open><summary>✍️ Worked example: R(A,B,C,D,E), FDs: A→B, BC→D, D→E. Find the candidate key.</summary>
+          <p><b>Step 1: attributes that never appear on any right side</b> must be in every key. Right sides: B, D, E. So <b>A and C</b> must be in the key.<br>
+          <b>Step 2:</b> compute (AC)⁺: start {A, C} → A→B gives {A,B,C} → BC→D gives {A,B,C,D} → D→E gives {A,B,C,D,E}. That is all attributes.<br>
+          <b>Step 3:</b> A⁺ = {A,B} and C⁺ = {C}, so no smaller part works.<br>
+          <b>Candidate key = AC</b> (and it is the only one).</p></details>
+
+        <h3>Normal forms</h3>
+        <div class="tbl"><table>
+          <tr><th>Form</th><th>Rule</th><th>Fixes</th></tr>
+          <tr><td>1NF</td><td>Every cell has a single (atomic) value, no repeating groups</td><td>Multi-valued cells</td></tr>
+          <tr><td>2NF</td><td>1NF + no <b>partial dependency</b> (non-key attribute must depend on the <b>whole</b> key)</td><td>Needs a composite key to matter</td></tr>
+          <tr><td>3NF</td><td>2NF + no <b>transitive dependency</b>. Formally: for every X → A, either X is a super key <b>or</b> A is a prime attribute (part of some candidate key)</td><td>Key → A → B</td></tr>
+          <tr><td>BCNF</td><td>For every FD X → Y, <b>X must be a super key</b></td><td>Stricter 3NF</td></tr>
+        </table></div>
+        <div class="tip">💡 <b>Remember:</b> "The key (1NF), the whole key (2NF), and nothing but the key (3NF/BCNF), so help me Codd."</div>
+        <p><b>4NF</b> removes multi-valued dependencies (X →→ Y), <b>5NF</b> removes join dependencies. They are rarely asked in depth. Hierarchy: BCNF ⊂ 3NF ⊂ 2NF ⊂ 1NF.</p>
+
+        <h3>Examples for each form</h3>
+        <details><summary>✍️ 1NF: multi-valued cell</summary>
+          <p>Not in 1NF: <code>Student(101, Aarav, "9876, 9123")</code> has two phones in one cell.<br>
+          Fix: one row per phone, <code>(101, Aarav, 9876)</code> and <code>(101, Aarav, 9123)</code>, or better, move phones to a separate table.</p></details>
+        <details><summary>✍️ 2NF: partial dependency</summary>
+          <p>R(<u>StudentID, CourseID</u>, StudentName, Grade). Key = (StudentID, CourseID).<br>
+          <code>StudentID → StudentName</code> is a <b>partial</b> dependency (name depends on only part of the key).<br>
+          Fix: split into <code>Student(StudentID, StudentName)</code> and <code>Enrollment(StudentID, CourseID, Grade)</code>.</p></details>
+        <details><summary>✍️ 3NF: transitive dependency</summary>
+          <p>R(<u>Emp</u>, Dept, DeptHead) with Emp → Dept and Dept → DeptHead. So Emp → DeptHead is transitive.<br>
+          Fix: <code>Employee(Emp, Dept)</code> and <code>Department(Dept, DeptHead)</code>.</p></details>
+        <details><summary>✍️ BCNF: 3NF but not BCNF</summary>
+          <p>R(A,B,C) with FDs AB → C and C → A. Candidate keys: AB and BC (AB⁺ = ABC; BC⁺ = BCA). All attributes are prime, so the relation is in <b>3NF</b> (A is prime in C → A). But C is <b>not a super key</b>, so it is <b>not in BCNF</b>.<br>
+          Decompose to R1(C, A) and R2(B, C). Now every determinant is a key, but the dependency AB → C is no longer stored in one table (BCNF can lose dependency preservation).</p></details>
+
+        <h3>Decomposition: what makes it good?</h3>
+        <ul>
+          <li><b>Lossless join:</b> joining the pieces back gives exactly the original data. Test: for a split into R1 and R2, the common attributes must be a key of R1 or R2.</li>
+          <li><b>Dependency preserving:</b> every original FD can still be checked inside one of the smaller tables.</li>
+          <li>3NF can always be reached with both properties. BCNF always gives lossless join but may lose dependencies.</li>
+        </ul>
+
+        <h3>🧮 Try it: Closure, Candidate Keys and Normal Form finder</h3>
+        <p>Enter the attributes of a relation and its FDs. Defaults: R(A,B,C,D) with A→B, B→C, C→D. Try your exam questions!</p>
+        <div class="fd-in">
+          <label>Attributes (space or comma separated)</label>
+          <input id="fd-attrs" class="wide" value="A B C D" style="padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:#fff;width:100%">
+          <label style="margin-top:10px">Functional dependencies (one per line, use -&gt;)</label>
+          <textarea id="fd-list">A -> B
+B -> C
+C -> D</textarea>
+          <label style="margin-top:10px">Find closure of</label>
+          <input id="fd-q" class="wide" value="A" style="padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:rgba(0,0,0,.3);color:#fff;width:100%">
+        </div>
+        <div class="ctl"><button class="btn2" onclick="runFD()">▶ Analyse</button></div>
+        <div id="fd-out" style="padding:14px;border-radius:12px;background:rgba(0,0,0,.25);line-height:1.9"></div>
+        <div class="note">📌 <b>Closure</b> X⁺ = all attributes that X can determine. If X⁺ contains every attribute, X is a <b>super key</b>. Try attributes <code>A B C</code> with FDs <code>AB -> C</code> and <code>C -> A</code> to see BCNF vs 3NF.</div>
+
+        <h3>Denormalization</h3>
+        <p>Sometimes we <b>add redundancy back on purpose</b> to make read-heavy queries faster (fewer joins). This is a trade-off: faster reads, harder updates. Common in reporting and data warehouses.</p>
+      </section>
+
+      <!-- ===================== 5. TRANSACTIONS ===================== -->
+      <section class="topic" id="transactions">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>5. Transactions, Concurrency & Recovery</h2>
+        <p>A <b>transaction</b> is a group of operations treated as <b>one unit</b>. Example: transferring money (debit A, credit B).</p>
+        <div class="tbl"><table>
+          <tr><th>Property</th><th>Meaning</th><th>Handled by</th></tr>
+          <tr><td><b>A</b>tomicity</td><td>All or nothing</td><td>Recovery manager (log, rollback)</td></tr>
+          <tr><td><b>C</b>onsistency</td><td>DB moves from one valid state to another</td><td>Constraints + programmer</td></tr>
+          <tr><td><b>I</b>solation</td><td>Parallel transactions do not disturb each other</td><td>Concurrency control (locks)</td></tr>
+          <tr><td><b>D</b>urability</td><td>Committed data survives crashes</td><td>Logs, disk writes</td></tr>
+        </table></div>
+
+        <h3>🎬 Watch atomicity in action</h3>
+        <p>Transfer ₹200 from A to B. Run it normally, then with a crash in the middle.</p>
+        <div class="bals">
+          <div class="bal">Account A<b id="bal-a">1000</b></div>
+          <div class="bal">Account B<b id="bal-b">500</b></div>
+        </div>
+        <div class="ctl" style="justify-content:center">
+          <button class="btn2" onclick="runTx(false)">▶ Run normally</button>
+          <button class="btn2" onclick="runTx(true)">💥 Run with crash</button>
+        </div>
+        <div id="tx-log" style="min-height:120px;display:flex;flex-direction:column;gap:10px;margin:10px 0"></div>
+
+        <h3>Transaction states</h3>
+        <p><b>Active → Partially Committed → Committed</b>. If something fails: Active/Partially Committed → <b>Failed → Aborted</b> (rolled back, and then either restarted or killed).</p>
+<pre>Active --> Partially Committed --> Committed
+  |                |
+  +--> Failed <----+
+        |
+     Aborted</pre>
+
+        <h3>Concurrency problems</h3>
+        <ul>
+          <li><b>Dirty read:</b> reading data written by an uncommitted transaction (W–R conflict).</li>
+          <li><b>Non-repeatable read:</b> reading the same row twice gives different values (R–W conflict).</li>
+          <li><b>Phantom read:</b> the same query returns new rows the second time.</li>
+          <li><b>Lost update:</b> two transactions overwrite each other's changes (W–W conflict).</li>
+        </ul>
+
+        <h3>Isolation levels</h3>
+        <div class="tbl"><table>
+          <tr><th>Level</th><th>Dirty read</th><th>Non-repeatable</th><th>Phantom</th></tr>
+          <tr><td>Read Uncommitted</td><td>Possible</td><td>Possible</td><td>Possible</td></tr>
+          <tr><td>Read Committed</td><td>Prevented</td><td>Possible</td><td>Possible</td></tr>
+          <tr><td>Repeatable Read</td><td>Prevented</td><td>Prevented</td><td>Possible</td></tr>
+          <tr><td>Serializable</td><td>Prevented</td><td>Prevented</td><td>Prevented</td></tr>
+        </table></div>
+        <div class="note">📌 Higher isolation = more correctness but less concurrency (slower). Defaults: MySQL InnoDB = Repeatable Read, PostgreSQL and Oracle = Read Committed.</div>
+
+        <h3>Schedules and serializability</h3>
+        <p>A <b>schedule</b> is the order in which operations of several transactions run. A <b>serial</b> schedule runs one transaction fully after another (always correct, but slow). A schedule is <b>serializable</b> if its result equals some serial order.</p>
+        <p>Two operations <b>conflict</b> when they are from different transactions, on the same data item, and at least one is a <b>write</b>. <b>Conflict serializability</b> is checked with a <b>precedence graph</b>: draw an edge Ti → Tj if a conflicting operation of Ti comes before one of Tj. <b>No cycle</b> → conflict serializable.</p>
+        <details open><summary>✍️ Worked example: two schedules</summary>
+          <p><b>S1:</b> R1(A), W1(A), R2(A), W2(A)<br>
+          Conflicts: W1(A) before R2(A) and W2(A), and R1(A) before W2(A). All edges point T1 → T2. <b>No cycle</b> → serializable, equivalent to the serial order T1, T2.<br><br>
+          <b>S2:</b> R1(A), R2(A), W1(A), W2(A)<br>
+          R2(A) before W1(A) gives T2 → T1. R1(A) before W2(A) gives T1 → T2. These form a <b>cycle</b> → <b>not</b> conflict serializable (it is also a lost-update situation).</p></details>
+
+        <h3>Recoverable schedules</h3>
+        <ul>
+          <li><b>Recoverable:</b> if Tj reads from Ti, then Ti must commit before Tj commits.</li>
+          <li><b>Cascadeless (ACA):</b> transactions read only <b>committed</b> data, so no chain of rollbacks.</li>
+          <li><b>Strict:</b> no read <i>or</i> write of an item until the transaction that last wrote it commits or aborts. Strict ⊂ Cascadeless ⊂ Recoverable.</li>
+        </ul>
+
+        <h3>Locking</h3>
+        <ul>
+          <li><b>Shared lock (S):</b> for reading, many allowed. <b>Exclusive lock (X):</b> for writing, only one.</li>
+          <li><b>Two-Phase Locking (2PL):</b> a <i>growing</i> phase (only take locks), then a <i>shrinking</i> phase (only release). It ensures serializability but can cause deadlock. <b>Strict 2PL</b> holds exclusive locks until commit, which avoids cascading rollbacks. <b>Rigorous 2PL</b> holds all locks until commit.</li>
+          <li><b>Timestamp ordering:</b> older transactions get priority, with no locks.</li>
+          <li><b>MVCC (Multi-Version Concurrency Control):</b> keep several versions of each row, so readers see an old snapshot and never block writers (PostgreSQL, Oracle, MySQL InnoDB).</li>
+          <li><b>Lock granularity:</b> row, page, table. Finer locks = more concurrency but more overhead.</li>
+        </ul>
+        <div class="tbl"><table>
+          <tr><th></th><th>S held</th><th>X held</th></tr>
+          <tr><td>Request S</td><td>Granted</td><td>Wait</td></tr>
+          <tr><td>Request X</td><td>Wait</td><td>Wait</td></tr>
+        </table></div>
+
+        <h3>Deadlock in databases</h3>
+        <p>T1 holds a lock on A and waits for B; T2 holds B and waits for A. Handling:</p>
+        <ul>
+          <li><b>Detection:</b> build a <b>wait-for graph</b>; a cycle = deadlock; abort one <b>victim</b>.</li>
+          <li><b>Wait-Die</b> (non-preemptive): if an <b>older</b> transaction wants a lock held by a younger one, it <b>waits</b>; if a <b>younger</b> one wants a lock held by an older one, it <b>dies</b> (aborts).</li>
+          <li><b>Wound-Wait</b> (preemptive): an <b>older</b> requester <b>wounds</b> (aborts) the younger holder; a <b>younger</b> requester <b>waits</b>.</li>
+          <li><b>Timeout:</b> abort if waiting too long. Both schemes use timestamps, so the oldest transaction is never starved.</li>
+        </ul>
+
+        <h3>Recovery</h3>
+        <p><b>Write-Ahead Logging (WAL):</b> the log is written to disk <i>before</i> the data change. After a crash: <b>REDO</b> committed transactions, <b>UNDO</b> uncommitted ones. <b>Checkpoints</b> limit how far back we need to look.</p>
+        <ul>
+          <li><b>Log record examples:</b> <code>&lt;T1 start&gt;</code>, <code>&lt;T1, A, old=1000, new=800&gt;</code>, <code>&lt;T1 commit&gt;</code>.</li>
+          <li><b>Deferred update:</b> write to the DB only after commit (only REDO needed). <b>Immediate update:</b> write early (UNDO and REDO needed).</li>
+          <li><b>ARIES</b> is the standard algorithm: analysis, redo, undo. <b>Shadow paging</b> keeps a copy of the page table instead of a log.</li>
+          <li><b>Backups:</b> full, incremental, differential; <b>point-in-time recovery</b> = restore a backup, then replay the log up to a chosen moment.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 6. INDEXING ===================== -->
+      <section class="topic" id="indexing">
+        <span class="level l3">ADVANCED</span>
+        <h2>6. Indexing, Hashing & Query Performance</h2>
+        <p>An <b>index</b> is like the index at the back of a book. Instead of reading every page (full table scan), you jump straight to the right place.</p>
+
+        <h3>🏁 Race: with index vs without index</h3>
+        <p>A table has 64 sorted rows. Pick a row number to search for.</p>
+        <div class="ctl">
+          <input type="number" id="ix-t" value="45" min="1" max="64">
+          <button class="btn2" onclick="runIdx()">▶ Search</button>
+        </div>
+        <div id="ix-out"></div>
+        <p>A full scan is <b>O(n)</b>, while an index lookup is <b>O(log n)</b>. With 1 million rows that is about 20 steps instead of up to 1,000,000.</p>
+
+        <h3>How data sits on disk</h3>
+        <p>Records are stored in fixed-size <b>blocks (pages)</b>, and the disk is read one block at a time. Disk I/O is the slow part, so the cost of a query is counted in <b>block accesses</b>.</p>
+        <ul>
+          <li><b>Blocking factor</b> = ⌊block size ÷ record size⌋ (records per block).</li>
+          <li><b>Number of blocks</b> = ⌈number of records ÷ blocking factor⌉.</li>
+          <li><b>File organisations:</b> <b>heap</b> (unsorted, fast insert), <b>sorted</b> (fast binary search), <b>hashed</b> (fast equality lookup).</li>
+        </ul>
+        <details open><summary>✍️ Worked example: cost of a search with and without an index</summary>
+          <p>30,000 records, record size = 100 bytes, block size = 1024 bytes.<br>
+          Blocking factor = ⌊1024 ÷ 100⌋ = <b>10</b> records/block. Blocks = 30,000 ÷ 10 = <b>3000</b>.<br>
+          <b>Linear search</b> (unsorted): average 3000/2 = 1500 blocks, worst case 3000.<br>
+          <b>Binary search</b> (sorted on the key): ⌈log₂ 3000⌉ = <b>12</b> block accesses.<br>
+          <b>Sparse primary index</b> with one entry per block: 3000 entries. Each entry = 16 bytes → 1024 ÷ 16 = 64 entries/block → ⌈3000 ÷ 64⌉ = <b>47</b> index blocks. Binary search in the index = ⌈log₂ 47⌉ = 6, plus 1 data block = <b>7 block accesses</b>.</p></details>
+
+        <h3>Types of indexes</h3>
+        <div class="tbl"><table>
+          <tr><th>Type</th><th>Idea</th></tr>
+          <tr><td>Clustered (primary)</td><td>Table rows are <b>physically sorted</b> by this key. Only <b>one</b> per table.</td></tr>
+          <tr><td>Non-clustered (secondary)</td><td>Separate structure with pointers to the rows. Many allowed.</td></tr>
+          <tr><td>Dense</td><td>An index entry for <b>every</b> row.</td></tr>
+          <tr><td>Sparse</td><td>An index entry for only <b>some</b> rows (per block). Needs sorted data.</td></tr>
+          <tr><td>Composite</td><td>On multiple columns. Follows the <b>leftmost prefix</b> rule.</td></tr>
+          <tr><td>Covering</td><td>Contains every column the query needs, so the table itself is never read.</td></tr>
+          <tr><td>Unique</td><td>Also enforces uniqueness (created automatically for PRIMARY KEY and UNIQUE).</td></tr>
+          <tr><td>Bitmap</td><td>One bit-vector per value; great for low-cardinality columns (gender, status) in data warehouses.</td></tr>
+          <tr><td>Multilevel</td><td>An index on the index, so the search tree gets short.</td></tr>
+        </table></div>
+
+        <h3>B Tree vs B+ Tree</h3>
+        <p>Databases use <b>B+ trees</b> because they are short and wide, so very few disk reads are needed. All leaves are at the same depth (the tree is always balanced).</p>
+        <div class="tbl"><table>
+          <tr><th>B Tree</th><th>B+ Tree</th></tr>
+          <tr><td>Data stored in all nodes</td><td>Data (pointers) only in <b>leaf</b> nodes</td></tr>
+          <tr><td>Leaves not linked</td><td>Leaves are <b>linked</b> as a list, so range queries are fast</td></tr>
+          <tr><td>Fewer keys per node</td><td>More keys per node, so the tree is shorter</td></tr>
+          <tr><td>A key appears once</td><td>Keys in internal nodes are copied again in the leaves</td></tr>
+        </table></div>
+        <details><summary>✍️ Worked example: inserting into a B+ tree (max 3 keys per node)</summary>
+          <p>Insert 10, 20, 30 → one leaf <code>[10 | 20 | 30]</code>.<br>
+          Insert 40 → leaf overflows (4 keys). <b>Split</b> into <code>[10 | 20]</code> and <code>[30 | 40]</code>, and <b>copy up</b> 30 into a new root <code>[30]</code>.<br>
+          Insert 50 → goes to the right leaf: <code>[30 | 40 | 50]</code>.<br>
+          Insert 60 → right leaf overflows → split into <code>[30 | 40]</code> and <code>[50 | 60]</code>, copy up 50 → root becomes <code>[30 | 50]</code> with three leaves.<br>
+          The leaves stay linked left to right: <code>[10 20] → [30 40] → [50 60]</code>.</p></details>
+        <p><b>Height estimate:</b> if each node holds up to 100 child pointers (fan-out 100), 1 million keys need about log₁₀₀(10⁶) = <b>3 levels</b>. That is only 3 to 4 disk reads to find any row.</p>
+
+        <h3>Hashing</h3>
+        <p>A hash function maps a key to a bucket. It gives O(1) for <b>equality</b> (<code>=</code>) but cannot do range queries (<code>&gt;</code>, <code>BETWEEN</code>) or sorting.</p>
+        <ul>
+          <li><b>Static hashing:</b> fixed number of buckets; overflow chains grow when full.</li>
+          <li><b>Dynamic hashing</b> (extendible, linear): the bucket directory grows as data grows.</li>
+          <li><b>Collision:</b> two keys hash to the same bucket (solved by chaining or open addressing).</li>
+        </ul>
+
+        <h3>When an index is NOT used (common mistakes)</h3>
+        <ul>
+          <li>Function on the column: <code>WHERE YEAR(joined) = 2025</code> (rewrite as a date range).</li>
+          <li>Leading wildcard: <code>LIKE '%son'</code> cannot use a normal index; <code>LIKE 'Ra%'</code> can.</li>
+          <li>Type mismatch: comparing a number column with a string.</li>
+          <li>Composite index (a, b, c) used with a filter only on b or c (breaks the leftmost-prefix rule).</li>
+          <li>Very low selectivity (a column with only a few distinct values), or a tiny table: the optimiser prefers a scan.</li>
+        </ul>
+<pre>EXPLAIN SELECT * FROM students WHERE marks = 90;   -- shows if an index is used</pre>
+        <div class="tip">💡 <b>Indexes are not free.</b> They speed up SELECT but slow down INSERT/UPDATE/DELETE and use extra space. Index columns used often in WHERE, JOIN and ORDER BY. Avoid indexing tiny tables or columns with few distinct values.</div>
+
+        <h3>How a query is executed</h3>
+        <ol>
+          <li><b>Parse</b> the SQL and check syntax and names.</li>
+          <li><b>Convert</b> it to relational algebra.</li>
+          <li><b>Optimise:</b> try different plans (join order, which index, join method) and pick the lowest estimated cost, using statistics. Rule of thumb: <b>push selections down</b> (filter early), push projections down.</li>
+          <li><b>Execute</b> the plan. Join methods: nested loop, <b>hash join</b>, sort-merge join.</li>
+        </ol>
+      </section>
+
+      <!-- ===================== 7. ADVANCED ===================== -->
+      <section class="topic" id="advanced">
+        <span class="level l3">ADVANCED</span>
+        <h2>7. Views, Triggers, Relational Algebra, NoSQL & Distributed Databases</h2>
+
+        <h3>Views, procedures, triggers</h3>
+        <ul>
+          <li><b>View:</b> a saved query that acts like a virtual table. It gives security and simplicity. A simple view (one table, no aggregates/DISTINCT) is usually updatable. A <b>materialized view</b> stores the result physically for speed and must be refreshed.</li>
+          <li><b>Stored procedure:</b> saved SQL code you call by name. It is faster, reusable, and can take parameters and change data. A <b>function</b> must return a value and can be used inside SELECT.</li>
+          <li><b>Trigger:</b> code that runs <b>automatically</b> on INSERT/UPDATE/DELETE, <b>BEFORE</b> or <b>AFTER</b> the event (example: write an audit log).</li>
+          <li><b>Cursor:</b> processes query results row by row (slow; prefer set-based SQL when possible).</li>
+        </ul>
+<pre>CREATE VIEW top_students AS
+SELECT name, marks FROM students WHERE marks &gt;= 85;
+
+-- Stored procedure (MySQL)
+DELIMITER //
+CREATE PROCEDURE get_top(IN m INT)
+BEGIN
+  SELECT name, marks FROM students WHERE marks &gt;= m;
+END //
+DELIMITER ;
+CALL get_top(80);
+
+-- Trigger: log every delete
+CREATE TRIGGER log_delete AFTER DELETE ON students
+FOR EACH ROW
+  INSERT INTO audit(student_id, action) VALUES (OLD.id, 'deleted');</pre>
+
+        <h3>Relational Algebra</h3>
+        <div class="tbl"><table>
+          <tr><th>Symbol</th><th>Name</th><th>SQL idea</th></tr>
+          <tr><td>σ (sigma)</td><td>Selection (filter rows)</td><td>WHERE</td></tr>
+          <tr><td>π (pi)</td><td>Projection (pick columns)</td><td>SELECT columns</td></tr>
+          <tr><td>⋈</td><td>Join</td><td>JOIN</td></tr>
+          <tr><td>∪ ∩ −</td><td>Union, Intersection, Difference</td><td>UNION, INTERSECT, EXCEPT</td></tr>
+          <tr><td>×</td><td>Cartesian product</td><td>CROSS JOIN</td></tr>
+          <tr><td>ρ (rho)</td><td>Rename</td><td>AS</td></tr>
+          <tr><td>÷</td><td>Division ("for ALL")</td><td>NOT EXISTS ... NOT EXISTS</td></tr>
+        </table></div>
+        <p><b>Example:</b> names of students with marks above 80 → <code>π<sub>name</sub>(σ<sub>marks&gt;80</sub>(Student))</code>. <b>Division example:</b> "students who enrolled in <i>all</i> courses" = Enrollment(roll, course) ÷ Course(course).</p>
+        <ul>
+          <li>Union, intersection and difference need <b>union-compatible</b> relations (same columns and types).</li>
+          <li>Projection removes duplicates in pure algebra (a set), unlike SQL SELECT.</li>
+          <li>Tuple relational calculus and domain relational calculus are <b>declarative</b> versions with the same power.</li>
+        </ul>
+
+        <h3>SQL vs NoSQL</h3>
+        <div class="tbl"><table>
+          <tr><th>SQL</th><th>NoSQL</th></tr>
+          <tr><td>Fixed schema, tables</td><td>Flexible schema (documents, key-value, graph)</td></tr>
+          <tr><td>Strong ACID, joins</td><td>Often BASE (eventual consistency), easy to scale out</td></tr>
+          <tr><td>Scales mostly vertically</td><td>Scales horizontally (sharding)</td></tr>
+          <tr><td>Banking, ERP</td><td>Social feeds, caching, big data</td></tr>
+        </table></div>
+        <div class="tbl"><table>
+          <tr><th>NoSQL type</th><th>Stores</th><th>Examples</th><th>Good for</th></tr>
+          <tr><td>Key-value</td><td>key → value</td><td>Redis, DynamoDB</td><td>Cache, sessions</td></tr>
+          <tr><td>Document</td><td>JSON-like documents</td><td>MongoDB, CouchDB</td><td>Catalogues, content, user profiles</td></tr>
+          <tr><td>Column-family</td><td>Wide rows by column groups</td><td>Cassandra, HBase</td><td>Huge write-heavy data, time series</td></tr>
+          <tr><td>Graph</td><td>Nodes and edges</td><td>Neo4j</td><td>Social networks, recommendations, fraud</td></tr>
+        </table></div>
+
+        <h3>CAP Theorem and BASE</h3>
+        <p>A distributed system can guarantee only <b>2 of 3</b>: <b>C</b>onsistency (everyone sees the same data), <b>A</b>vailability (always responds), <b>P</b>artition tolerance (works when the network splits). Since partitions happen in real life, the real choice is <b>CP vs AP</b>.</p>
+        <ul>
+          <li><b>CP:</b> stays correct, may refuse some requests during a partition (e.g. HBase).</li>
+          <li><b>AP:</b> always answers, may return stale data that is fixed later (e.g. Cassandra, DynamoDB).</li>
+          <li><b>BASE:</b> <b>B</b>asically <b>A</b>vailable, <b>S</b>oft state, <b>E</b>ventually consistent. The NoSQL counterpart of ACID.</li>
+        </ul>
+
+        <h3>Distributed databases</h3>
+        <ul>
+          <li><b>Replication</b> = copies of the same data on many servers (reliability, read speed). Common setup: one <b>primary</b> takes writes, <b>replicas</b> serve reads.</li>
+          <li><b>Sharding (partitioning)</b> = splitting data across servers (scale). Choose a good <b>shard key</b> to avoid one overloaded "hot" shard.</li>
+          <li><b>Two-Phase Commit (2PC):</b> a coordinator asks all nodes "can you commit?" (prepare), then tells all to commit or abort. Gives atomicity across servers but can block if the coordinator fails.</li>
+        </ul>
+
+        <h3>OLTP vs OLAP, and data warehouses</h3>
+        <div class="tbl"><table>
+          <tr><th>Feature</th><th>OLTP</th><th>OLAP</th></tr>
+          <tr><td>Purpose</td><td>Daily operations (orders, payments)</td><td>Analysis and reports</td></tr>
+          <tr><td>Queries</td><td>Many short reads/writes</td><td>Few, heavy, read-only</td></tr>
+          <tr><td>Design</td><td>Normalized</td><td>Denormalized (star/snowflake schema)</td></tr>
+          <tr><td>Data</td><td>Current</td><td>Historical, large</td></tr>
+        </table></div>
+        <p>A <b>data warehouse</b> collects data from many sources using <b>ETL</b> (Extract, Transform, Load). A <b>star schema</b> has a central <b>fact table</b> (sales amount, quantity) linked to <b>dimension tables</b> (date, product, customer). OLAP operations: roll-up, drill-down, slice, dice, pivot.</p>
+
+        <h3>Database security</h3>
+        <ul>
+          <li><b>Authentication and authorisation:</b> users, roles, <code>GRANT</code>/<code>REVOKE</code>, least privilege.</li>
+          <li><b>Encryption:</b> at rest (disk) and in transit (TLS). Store passwords as <b>salted hashes</b>, never as plain text.</li>
+          <li><b>Auditing and backups.</b></li>
+        </ul>
+        <p><b>SQL injection:</b> an attacker types SQL as input and the app glues it into a query.</p>
+<pre>-- Dangerous (string concatenation)
+query = "SELECT * FROM users WHERE name='" + input + "'";
+-- input:  ' OR '1'='1     →  WHERE name='' OR '1'='1'   (returns everyone!)
+
+-- Safe: parameterised (prepared) statement
+SELECT * FROM users WHERE name = ?;   -- value is passed separately</pre>
+        <div class="note">📌 Prevent injection with <b>prepared statements</b>, input validation, least-privilege database accounts, and never showing raw database errors to users.</div>
+      </section>
+
+      <!-- ===================== 8. PRACTICE ===================== -->
+      <section class="topic" id="practice">
+        <span class="level l3">PRACTICE</span>
+        <h2>8. Practice Problems with Answers</h2>
+        <p>Try each one yourself first, then open the answer.</p>
+
+        <details><summary>Q1. R(A,B,C,D,E) with A→B, BC→D, D→E. Find (AC)⁺ and the candidate key.</summary>
+          <p>Start {A,C}. A→B gives {A,B,C}. BC→D gives {A,B,C,D}. D→E gives {A,B,C,D,E}. So (AC)⁺ = all attributes. A and C never appear on a right side, so they must be in every key. <b>Candidate key = AC</b> (only one).</p></details>
+
+        <details><summary>Q2. R(A,B,C,D) has only one candidate key, A. How many super keys does it have?</summary>
+          <p>A super key = A plus any subset of the other 3 attributes → 2³ = <b>8 super keys</b>.</p></details>
+
+        <details><summary>Q3. R(A,B,C,D) with AB→C and C→D. What is the highest normal form?</summary>
+          <p>(AB)⁺ = ABCD, so the key is AB. There is no partial dependency (D depends on C, which is not part of the key), so it is in 2NF. But C → D is <b>transitive</b>: C is not a super key and D is not prime. So it is not in 3NF. Highest normal form = <b>2NF</b>.</p></details>
+
+        <details><summary>Q4. R(A,B,C) with AB→C and C→A. Is it in 3NF? In BCNF?</summary>
+          <p>Candidate keys: AB and BC, so A, B, C are all prime. 3NF: for C → A, A is prime, so <b>yes, 3NF</b>. BCNF: C is not a super key, so <b>not in BCNF</b>.</p></details>
+
+        <details><summary>Q5. Table A has 5 rows, table B has 4 rows. How many rows does A CROSS JOIN B give? What is the minimum for A LEFT JOIN B?</summary>
+          <p>Cross join = 5 × 4 = <b>20 rows</b>. A LEFT JOIN keeps every row of A, so it returns <b>at least 5 rows</b> (more if some A rows match several B rows).</p></details>
+
+        <details><summary>Q6. marks column holds 80, NULL, 90, 90. Find COUNT(*), COUNT(marks), COUNT(DISTINCT marks) and AVG(marks).</summary>
+          <p>COUNT(*) = <b>4</b> (all rows). COUNT(marks) = <b>3</b> (skips NULL). COUNT(DISTINCT marks) = <b>2</b> (80 and 90). AVG = (80+90+90)/3 = <b>86.67</b> (NULL is ignored, not treated as 0).</p></details>
+
+        <details><summary>Q7. Write a query to list departments that have no students.</summary>
+          <p><code>SELECT d.dept_name FROM departments d LEFT JOIN students s ON s.dept_id = d.id WHERE s.id IS NULL;</code><br>
+          or <code>SELECT dept_name FROM departments d WHERE NOT EXISTS (SELECT 1 FROM students s WHERE s.dept_id = d.id);</code></p></details>
+
+        <details><summary>Q8. Is S: R1(A), W2(A), W1(A) conflict serializable?</summary>
+          <p>R1(A) before W2(A) gives T1 → T2. W2(A) before W1(A) gives T2 → T1. The precedence graph has a <b>cycle</b>, so it is <b>not</b> conflict serializable.</p></details>
+
+        <details><summary>Q9. A Student–Course relationship is M:N with attribute "grade", and each entity has only simple attributes. How many tables are needed?</summary>
+          <p><b>3 tables</b>: Student, Course, and a new Enrollment(student_id, course_id, grade) table.</p></details>
+
+        <details><summary>Q10. 30,000 records of 100 bytes each, block size 1024 bytes, sorted file. How many block accesses for a binary search?</summary>
+          <p>Blocking factor = ⌊1024/100⌋ = 10. Blocks = 30,000/10 = 3000. Binary search = ⌈log₂ 3000⌉ = <b>12 block accesses</b>.</p></details>
+
+        <details><summary>Q11. A B+ tree has a fan-out of 100 and stores 1,000,000 keys. About how many levels?</summary>
+          <p>log₁₀₀(1,000,000) = log(10⁶)/log(10²) = 6/2 = <b>3 levels</b>.</p></details>
+
+        <details><summary>Q12. T1 reads a row twice. Between the reads, T2 updates the row and commits. Which anomaly is this and which is the lowest isolation level that prevents it?</summary>
+          <p>It is a <b>non-repeatable read</b>. It is prevented by <b>Repeatable Read</b> (and also by Serializable).</p></details>
+      </section>
+
+      <!-- ===================== REVISION ===================== -->
+      <section class="topic" id="revision">
+        <span class="level l3">QUICK REVISION</span>
+        <h2>⚡ Fast Revision Notes</h2>
+        <div class="rev">
+          <div><h4>Basics</h4><ul>
+            <li>3-schema: external, conceptual, internal</li><li>Physical vs logical independence</li><li>Schema = design, instance = data</li><li>3-tier = client, app server, DB</li></ul></div>
+          <div><h4>Keys</h4><ul>
+            <li>Super ⊃ Candidate ⊃ Primary</li><li>Primary: unique + NOT NULL</li><li>Foreign key → refers to a primary key</li><li>Only one primary key per table</li><li>Super keys = 2^(n−1) if one single-attribute key</li></ul></div>
+          <div><h4>ER to Tables</h4><ul>
+            <li>1:N → FK on N side</li><li>M:N → new table</li><li>Multivalued attribute → new table</li><li>Weak entity → needs owner's key</li></ul></div>
+          <div><h4>SQL</h4><ul>
+            <li>WHERE before GROUP BY, HAVING after</li><li>DELETE (DML), TRUNCATE/DROP (DDL)</li><li>UNION removes duplicates</li><li>NULL: use IS NULL</li><li>COUNT(*) vs COUNT(col)</li></ul></div>
+          <div><h4>Joins</h4><ul>
+            <li>INNER: matches only</li><li>LEFT: all left + matches</li><li>CROSS: m × n rows</li><li>Self join needs aliases</li><li>RANK has gaps, DENSE_RANK none</li></ul></div>
+          <div><h4>Normalization</h4><ul>
+            <li>1NF: atomic values</li><li>2NF: no partial dependency</li><li>3NF: no transitive dependency</li><li>BCNF: LHS must be super key</li><li>Closure X⁺ finds keys</li><li>Lossless: common attr is a key</li></ul></div>
+          <div><h4>Transactions</h4><ul>
+            <li>ACID</li><li>Dirty, non-repeatable, phantom reads</li><li>2PL → serializable, may deadlock</li><li>Precedence graph no cycle = serializable</li><li>Strict ⊂ ACA ⊂ Recoverable</li></ul></div>
+          <div><h4>Deadlock &amp; Recovery</h4><ul>
+            <li>Wait-die: old waits, young dies</li><li>Wound-wait: old wounds, young waits</li><li>WAL: log before data</li><li>REDO committed, UNDO uncommitted</li></ul></div>
+          <div><h4>Indexing</h4><ul>
+            <li>B+ tree: data in leaves, leaves linked</li><li>One clustered index per table</li><li>Hash: only equality</li><li>Index slows writes</li><li>Blocking factor = ⌊block/record⌋</li></ul></div>
+          <div><h4>NoSQL &amp; Distributed</h4><ul>
+            <li>CAP: pick 2, P is forced</li><li>BASE = eventual consistency</li><li>Replication = copies, sharding = split</li><li>OLTP normalized, OLAP star schema</li></ul></div>
+          <div><h4>Security</h4><ul>
+            <li>GRANT / REVOKE</li><li>Salted password hashes</li><li>Prepared statements stop SQL injection</li><li>Least privilege</li></ul></div>
+        </div>
+      </section>
+
+      <!-- ===================== QUESTIONS ===================== -->
+      <section class="topic" id="questions">
+        <span class="level l3">PLACEMENT</span>
+        <h2>🎯 Important Interview Questions</h2>
+        <details><summary>1. DBMS vs RDBMS?</summary>
+          <p>A DBMS stores data in general form (files, hierarchical). An RDBMS stores data in tables with relationships using keys, supports SQL, constraints and ACID (MySQL, PostgreSQL, Oracle).</p></details>
+        <details><summary>2. Primary key vs Unique key?</summary>
+          <p>Primary key: unique, cannot be NULL, only one per table. Unique key: values must be unique, usually allows a NULL (database dependent), and many are allowed per table.</p></details>
+        <details><summary>3. What is a foreign key?</summary>
+          <p>A column that refers to the primary key of another table, to enforce referential integrity between the two tables.</p></details>
+        <details><summary>4. DELETE vs TRUNCATE vs DROP?</summary>
+          <p>DELETE removes selected rows (WHERE allowed, can rollback). TRUNCATE removes all rows quickly and keeps the structure. DROP removes the table itself.</p></details>
+        <details><summary>5. WHERE vs HAVING?</summary>
+          <p>WHERE filters individual rows before grouping and cannot use aggregates. HAVING filters groups after GROUP BY and can use aggregates.</p></details>
+        <details><summary>6. INNER JOIN vs LEFT JOIN?</summary>
+          <p>INNER JOIN returns only matching rows. LEFT JOIN returns all rows of the left table and matching rows from the right (NULLs where there is no match).</p></details>
+        <details><summary>7. What is normalization? Why do we need it?</summary>
+          <p>Organising data into related tables to remove redundancy and insert, update and delete anomalies. Forms: 1NF, 2NF, 3NF, BCNF.</p></details>
+        <details><summary>8. 3NF vs BCNF?</summary>
+          <p>3NF allows X → A if X is a super key <i>or</i> A is a prime attribute. BCNF is stricter: X must always be a super key.</p></details>
+        <details><summary>9. Explain ACID with an example.</summary>
+          <p>In a bank transfer: Atomicity (debit and credit both happen or neither), Consistency (total money stays the same), Isolation (other transactions do not see half-done work), Durability (after commit, the result survives a crash).</p></details>
+        <details><summary>10. What is a deadlock in DBMS and how is it handled?</summary>
+          <p>Two transactions each wait for a lock held by the other. Handled by prevention (wait-die, wound-wait), detection with a wait-for graph (abort a victim), or timeouts.</p></details>
+        <details><summary>11. Clustered vs non-clustered index?</summary>
+          <p>Clustered decides the physical order of rows, so only one per table. Non-clustered is a separate structure with pointers to rows, and many are allowed.</p></details>
+        <details><summary>12. What is a view? Can we update through it?</summary>
+          <p>A virtual table defined by a query. Simple views (one table, no aggregates or DISTINCT) can be updated, and the change goes to the base table. Complex views usually cannot.</p></details>
+        <details><summary>13. Write a query for the 2nd highest salary.</summary>
+          <p><code>SELECT MAX(salary) FROM emp WHERE salary &lt; (SELECT MAX(salary) FROM emp);</code> or <code>SELECT DISTINCT salary FROM emp ORDER BY salary DESC LIMIT 1 OFFSET 1;</code></p></details>
+        <details><summary>14. SQL vs NoSQL: when to choose which?</summary>
+          <p>Choose SQL for structured data needing strong consistency and joins (banking). Choose NoSQL for flexible or huge, fast-changing data that needs horizontal scaling (feeds, caching, logs).</p></details>
+        <details><summary>15. What is data independence and why does it matter?</summary>
+          <p>It means a change at one level of the 3-schema architecture does not force changes at the level above. Physical independence: change storage or indexes without touching the tables. Logical independence: change the table design without breaking user views. It lets the database evolve without rewriting every application.</p></details>
+        <details><summary>16. What is a self join? Give an example.</summary>
+          <p>A table joined with itself using two aliases. Example: employee and manager are in the same table: <code>SELECT e.name, m.name FROM emp e LEFT JOIN emp m ON e.manager_id = m.id;</code></p></details>
+        <details><summary>17. IN vs EXISTS?</summary>
+          <p>IN compares a value to a list returned by a subquery. EXISTS only checks whether the subquery returns any row and can stop at the first match. EXISTS is often faster for large subqueries and is safer than NOT IN when NULLs are possible.</p></details>
+        <details><summary>18. ROW_NUMBER vs RANK vs DENSE_RANK?</summary>
+          <p>For scores 90, 90, 80: ROW_NUMBER gives 1, 2, 3 (always unique). RANK gives 1, 1, 3 (ties share a rank and leave a gap). DENSE_RANK gives 1, 1, 2 (ties share a rank, no gap).</p></details>
+        <details><summary>19. What is a CTE and why use it?</summary>
+          <p>A Common Table Expression (<code>WITH name AS (query)</code>) is a named temporary result used inside one statement. It makes complex queries readable and allows recursive queries (like walking an org chart).</p></details>
+        <details><summary>20. Stored procedure vs function vs trigger?</summary>
+          <p>A procedure is called explicitly, can take input/output parameters and change data. A function must return a value and can be used inside a query. A trigger runs automatically when an INSERT, UPDATE or DELETE happens, and cannot be called directly.</p></details>
+        <details><summary>21. What is a lossless decomposition?</summary>
+          <p>Splitting a table so that joining the parts gives back exactly the original rows, with no lost or fake rows. For a binary split R1, R2 it is lossless if the common attributes form a key of R1 or R2.</p></details>
+        <details><summary>22. How do you find the candidate keys of a relation?</summary>
+          <p>Find attributes that never appear on any right side of an FD (they must be in every key). Compute the closure of that set. If it covers all attributes it is the key; otherwise add other attributes one by one and recompute until the closure is complete, keeping only minimal sets.</p></details>
+        <details><summary>23. Which isolation level prevents which anomaly?</summary>
+          <p>Read Committed prevents dirty reads. Repeatable Read also prevents non-repeatable reads. Serializable also prevents phantom reads. The higher the level, the safer but the slower.</p></details>
+        <details><summary>24. What is Two-Phase Locking? Does it prevent deadlock?</summary>
+          <p>2PL has a growing phase (acquire locks only) and a shrinking phase (release only), which guarantees conflict serializability. It does <b>not</b> prevent deadlock. Strict 2PL holds exclusive locks until commit to avoid cascading rollbacks.</p></details>
+        <details><summary>25. Wait-die vs wound-wait?</summary>
+          <p>Both use timestamps. Wait-die: an older requester waits for a younger holder; a younger requester aborts. Wound-wait: an older requester aborts (wounds) the younger holder; a younger requester waits. Both avoid circular waiting.</p></details>
+        <details><summary>26. What is MVCC?</summary>
+          <p>Multi-Version Concurrency Control keeps several versions of a row. Readers see a consistent snapshot from when they started, so reads do not block writes and writes do not block reads. Used by PostgreSQL, Oracle and MySQL InnoDB.</p></details>
+        <details><summary>27. Why do databases use B+ trees instead of binary trees or hash tables?</summary>
+          <p>A B+ tree node matches one disk block and holds hundreds of keys, so the tree is very short (3 to 4 levels for millions of rows), meaning few disk reads. Linked leaves make range queries and sorting fast. A hash index handles only equality, and a binary tree would be too deep for disk access.</p></details>
+        <details><summary>28. When will the database not use an index?</summary>
+          <p>When a function is applied to the indexed column, when LIKE starts with a wildcard, when types mismatch, when a composite index's leftmost column is missing from the filter, or when the optimiser decides a full scan is cheaper (tiny table or low selectivity).</p></details>
+        <details><summary>29. What is SQL injection and how do you prevent it?</summary>
+          <p>An attacker inserts SQL code through user input that the application joins into a query string (for example <code>' OR '1'='1</code>), so the query does something unintended. Prevent it with prepared (parameterised) statements, input validation, least-privilege database accounts and hiding database error details.</p></details>
+        <details><summary>30. Explain the CAP theorem and ACID vs BASE.</summary>
+          <p>In a distributed database you can have only two of Consistency, Availability and Partition tolerance; since network partitions cannot be avoided, you choose CP (stay correct, may refuse requests) or AP (always respond, may be stale). ACID systems (relational) favour strong consistency. BASE systems (many NoSQL) favour availability and eventual consistency.</p></details>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>Made with ❤️ for learners · LearnHub © 2026</footer>
+  <script src="js/main.js"></script>
+</body>
+</html>

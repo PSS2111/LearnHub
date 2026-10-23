@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Computer Networks – LearnHub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="cn">
+  <div id="progress"></div>
+  <canvas id="bg"></canvas>
+
+  <nav>
+    <a href="index.html" class="logo">Learn<span>Hub</span></a>
+    <button class="menu-btn">☰</button>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="cn.html">Networks</a></li>
+      <li><a href="os.html">OS</a></li>
+      <li><a href="dbms.html">DBMS</a></li>
+      <li><a href="#revision">Revision</a></li>
+      <li><a href="#questions">Questions</a></li>
+    </ul>
+  </nav>
+
+  <header class="page-hero">
+    <div class="icon">🌐</div>
+    <h1>Computer Networks</h1>
+    <p>Complete course: from "what is a network?" to subnetting, routing, TCP, DNS, HTTPS and network security, in simple words.</p>
+  </header>
+
+  <div class="layout">
+    <aside class="side" id="side"></aside>
+
+    <main>
+
+      <!-- ===================== 1. INTRO ===================== -->
+      <section class="topic" id="intro">
+        <span class="level l1">BEGINNER</span>
+        <h2>1. What is a Computer Network?</h2>
+        <p>A <b>network</b> is a group of devices (phones, laptops, printers, servers) connected together so they can <b>share data and resources</b>. Think of it like a <b>postal system</b>: letters (data) travel through post offices (routers) to reach a house (device).</p>
+
+        <div class="path">
+          <div class="node">💻<small>Your PC</small></div>
+          <div class="node">📡<small>Router</small></div>
+          <div class="node">☁️<small>Internet</small></div>
+          <div class="node">🗄️<small>Server</small></div>
+          <div class="dot"></div>
+        </div>
+
+        <h3>Why do we need networks?</h3>
+        <ul>
+          <li><b>Resource sharing:</b> one printer or one internet connection for many people.</li>
+          <li><b>Communication:</b> email, video calls, chat.</li>
+          <li><b>Data sharing:</b> files, databases, cloud storage.</li>
+          <li><b>Cost saving:</b> share expensive hardware and software.</li>
+          <li><b>Reliability:</b> data can be backed up on many machines.</li>
+        </ul>
+
+        <h3>Basic building blocks</h3>
+        <ul>
+          <li><b>Node / Host:</b> any device on the network (PC, phone, server).</li>
+          <li><b>Link:</b> the path between two nodes (cable or wireless).</li>
+          <li><b>Protocol:</b> a set of rules for communication. Like a common language: if both sides don't follow the same rules, they can't understand each other.</li>
+          <li><b>Packet:</b> data is cut into small pieces called packets. Each packet has a header (address info) and a payload (actual data).</li>
+        </ul>
+
+        <h3>Types of Networks (by size)</h3>
+        <div class="tbl"><table>
+          <tr><th>Type</th><th>Full form</th><th>Area</th><th>Example</th></tr>
+          <tr><td>PAN</td><td>Personal Area Network</td><td>A few metres</td><td>Bluetooth earphones</td></tr>
+          <tr><td>LAN</td><td>Local Area Network</td><td>Home, office, campus</td><td>College Wi-Fi</td></tr>
+          <tr><td>MAN</td><td>Metropolitan Area Network</td><td>A city</td><td>Cable TV network</td></tr>
+          <tr><td>WAN</td><td>Wide Area Network</td><td>Country or world</td><td>The Internet</td></tr>
+        </table></div>
+
+        <h3>Network architecture: Client-Server vs Peer-to-Peer</h3>
+        <div class="tbl"><table>
+          <tr><th>Feature</th><th>Client-Server</th><th>Peer-to-Peer (P2P)</th></tr>
+          <tr><td>Idea</td><td>Clients ask, a powerful server answers</td><td>Every device is both client and server</td></tr>
+          <tr><td>Control</td><td>Centralised</td><td>Decentralised</td></tr>
+          <tr><td>Example</td><td>Website, Gmail, online banking</td><td>BitTorrent, blockchain</td></tr>
+          <tr><td>Weak point</td><td>Server down = service down</td><td>Hard to secure and manage</td></tr>
+        </table></div>
+
+        <h3>Network Topologies (shape of a network)</h3>
+        <div class="tbl"><table>
+          <tr><th>Topology</th><th>How it looks</th><th>Pros</th><th>Cons</th></tr>
+          <tr><td>Bus</td><td>All devices on one main cable</td><td>Cheap, simple</td><td>One cable break stops everything</td></tr>
+          <tr><td>Star</td><td>All devices connect to a central switch</td><td>Easy to manage, one failure doesn't affect others</td><td>Switch failure = network down</td></tr>
+          <tr><td>Ring</td><td>Devices form a circle</td><td>Equal access</td><td>One break can stop the ring</td></tr>
+          <tr><td>Mesh</td><td>Every device connects to every other</td><td>Very reliable</td><td>Expensive, many cables: n(n−1)/2 links</td></tr>
+          <tr><td>Tree</td><td>Stars connected in a hierarchy</td><td>Scalable</td><td>Depends on the root</td></tr>
+          <tr><td>Hybrid</td><td>Mix of the above</td><td>Flexible</td><td>Complex</td></tr>
+        </table></div>
+        <div class="tip">💡 <b>Today's reality:</b> almost every home and office LAN is a <b>star topology</b> (all devices connected to one switch or Wi-Fi router).</div>
+
+        <h3>Transmission modes</h3>
+        <ul>
+          <li><b>Simplex:</b> one direction only (keyboard → computer, TV broadcast).</li>
+          <li><b>Half-duplex:</b> both directions, but one at a time (walkie-talkie).</li>
+          <li><b>Full-duplex:</b> both directions at the same time (phone call, modern Ethernet).</li>
+        </ul>
+
+        <h3>Communication types</h3>
+        <ul>
+          <li><b>Unicast:</b> one sender → one receiver.</li>
+          <li><b>Broadcast:</b> one sender → everyone in the network.</li>
+          <li><b>Multicast:</b> one sender → a chosen group (IPTV, video conferencing).</li>
+          <li><b>Anycast:</b> one sender → the nearest of many servers (used by DNS and CDNs).</li>
+        </ul>
+
+        <h3>Switching techniques</h3>
+        <div class="tbl"><table>
+          <tr><th>Type</th><th>How it works</th><th>Example</th></tr>
+          <tr><td>Circuit switching</td><td>A dedicated path is reserved for the whole call</td><td>Old telephone network</td></tr>
+          <tr><td>Packet switching</td><td>Data is cut into packets; each packet may take a different route and is reassembled at the destination</td><td>The Internet</td></tr>
+        </table></div>
+        <div class="note">📌 Packet switching is better for the Internet because many users share the same links efficiently. No bandwidth is wasted while someone is silent.</div>
+
+        <h3>Performance terms you must know</h3>
+        <div class="tbl"><table>
+          <tr><th>Term</th><th>Meaning</th><th>Analogy (water pipe)</th></tr>
+          <tr><td>Bandwidth</td><td>Maximum data capacity of a link (Mbps, Gbps)</td><td>Width of the pipe</td></tr>
+          <tr><td>Throughput</td><td>Actual data rate you really get</td><td>Water actually flowing</td></tr>
+          <tr><td>Latency</td><td>Time for data to go from sender to receiver</td><td>Time for first drop to arrive</td></tr>
+          <tr><td>RTT</td><td>Round Trip Time: there and back (what <code>ping</code> shows)</td><td>Shout and wait for echo</td></tr>
+          <tr><td>Jitter</td><td>Variation in latency</td><td>Uneven delivery times</td></tr>
+          <tr><td>Packet loss</td><td>% of packets that never arrive</td><td>Letters lost in post</td></tr>
+        </table></div>
+        <p><b>Delay formula:</b> Total delay = Transmission delay + Propagation delay + Queuing delay + Processing delay.</p>
+        <ul>
+          <li><b>Transmission delay</b> = Packet size ÷ Bandwidth</li>
+          <li><b>Propagation delay</b> = Distance ÷ Speed of signal</li>
+        </ul>
+        <details><summary>✍️ Worked example: delay calculation</summary>
+          <p>A 1000-byte packet is sent on a 1 Mbps link that is 2000 km long. Signal speed = 2×10⁸ m/s.<br>
+          Transmission delay = (1000 × 8 bits) ÷ (1×10⁶ bps) = <b>8 ms</b>.<br>
+          Propagation delay = 2,000,000 m ÷ 2×10⁸ m/s = <b>10 ms</b>.<br>
+          Total (ignoring queuing and processing) = <b>18 ms</b>.</p></details>
+      </section>
+
+      <!-- ===================== 2. MEDIA ===================== -->
+      <section class="topic" id="media">
+        <span class="level l1">BEGINNER</span>
+        <h2>2. Transmission Media & the Physical Layer</h2>
+        <p>Data must travel through something. That "something" is the <b>transmission medium</b>. At the lowest level, all data is just <b>bits (0 and 1)</b> turned into electrical, light or radio signals.</p>
+
+        <h3>Wired (guided) media</h3>
+        <div class="tbl"><table>
+          <tr><th>Medium</th><th>How it carries data</th><th>Speed / Distance</th><th>Used for</th></tr>
+          <tr><td>Twisted pair (UTP/STP)</td><td>Electrical signals on twisted copper wires</td><td>Up to 10 Gbps, ~100 m</td><td>LAN cables (Cat5e, Cat6)</td></tr>
+          <tr><td>Coaxial cable</td><td>Electrical signals, shielded copper</td><td>Medium</td><td>Cable TV, broadband</td></tr>
+          <tr><td>Optical fibre</td><td>Pulses of <b>light</b> in glass</td><td>Very high, many km</td><td>Backbone, undersea cables, FTTH</td></tr>
+        </table></div>
+        <div class="note">🧠 <b>Why twisted?</b> Twisting the wires cancels electrical noise (interference) from outside. <b>Fibre</b> is immune to electrical noise and is the fastest, but costs more.</div>
+
+        <h3>Wireless (unguided) media</h3>
+        <ul>
+          <li><b>Radio waves:</b> Wi-Fi, Bluetooth, FM radio, mobile networks (4G/5G).</li>
+          <li><b>Microwaves:</b> point-to-point links, satellite.</li>
+          <li><b>Infrared:</b> TV remote (very short range).</li>
+        </ul>
+
+        <h3>Wi-Fi basics</h3>
+        <ul>
+          <li>Wi-Fi follows the <b>IEEE 802.11</b> standard. Ethernet (wired) is <b>IEEE 802.3</b>.</li>
+          <li>Bands: <b>2.4 GHz</b> (longer range, slower, crowded) and <b>5 GHz / 6 GHz</b> (shorter range, faster).</li>
+          <li><b>SSID</b> = the name of the Wi-Fi network. <b>Access Point (AP)</b> = device that gives wireless access.</li>
+          <li>Security: WEP (broken) → WPA → <b>WPA2</b> → <b>WPA3</b> (best).</li>
+          <li>Wi-Fi uses <b>CSMA/CA</b> (avoid collision) because a wireless device cannot listen while talking.</li>
+        </ul>
+
+        <h3>Analog vs Digital signal</h3>
+        <ul>
+          <li><b>Analog:</b> continuous wave (old telephone voice).</li>
+          <li><b>Digital:</b> discrete 0s and 1s (computers). Less noise problems, easier to correct errors.</li>
+        </ul>
+
+        <h3>Multiplexing: sharing one link</h3>
+        <ul>
+          <li><b>FDM</b> (Frequency Division): each user gets a different frequency (radio stations).</li>
+          <li><b>TDM</b> (Time Division): each user gets a time slot, taking turns.</li>
+          <li><b>WDM</b> (Wavelength Division): different colours of light in one fibre.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 3. DEVICES ===================== -->
+      <section class="topic" id="devices">
+        <span class="level l1">BEGINNER</span>
+        <h2>3. Network Devices</h2>
+        <div class="tbl"><table>
+          <tr><th>Device</th><th>OSI Layer</th><th>What it does</th></tr>
+          <tr><td>Repeater</td><td>1</td><td>Boosts a weakened signal so it can travel further.</td></tr>
+          <tr><td>Hub</td><td>1</td><td>Sends data to <b>every</b> port (dumb, old, causes collisions).</td></tr>
+          <tr><td>Bridge / Switch</td><td>2</td><td>Sends data only to the right port using the <b>MAC address</b>.</td></tr>
+          <tr><td>Router</td><td>3</td><td>Connects different networks and chooses the best path using <b>IP address</b>.</td></tr>
+          <tr><td>Layer-3 Switch</td><td>2 + 3</td><td>A switch that can also route (used inside big campuses).</td></tr>
+          <tr><td>Modem</td><td>1</td><td>Converts digital ↔ analog signals to reach your ISP.</td></tr>
+          <tr><td>Access Point</td><td>2</td><td>Connects wireless devices to a wired network.</td></tr>
+          <tr><td>Firewall</td><td>3 – 7</td><td>Allows or blocks traffic using rules.</td></tr>
+          <tr><td>Gateway</td><td>Any (up to 7)</td><td>Connects networks that use different protocols; also the "exit door" of a LAN.</td></tr>
+        </table></div>
+
+        <h3>Collision domain vs Broadcast domain</h3>
+        <ul>
+          <li><b>Collision domain:</b> the area where two devices sending together will collide. A <b>hub</b> creates one big collision domain. Each <b>switch port</b> is its own collision domain.</li>
+          <li><b>Broadcast domain:</b> the area reached by a broadcast message. A <b>switch</b> does NOT stop broadcasts, but a <b>router</b> does (each router port is a separate broadcast domain).</li>
+        </ul>
+
+        <h3>Home Wi-Fi router = many devices in one box</h3>
+        <p>Your home "router" is actually a <b>modem + router + switch + access point + firewall + DHCP server + NAT</b> in a single box.</p>
+        <div class="tip">💡 <b>Remember:</b> Switch = inside one network (Layer 2). Router = between networks (Layer 3).</div>
+      </section>
+
+      <!-- ===================== 4. OSI ===================== -->
+      <section class="topic" id="osi">
+        <span class="level l1">BEGINNER</span>
+        <h2>4. OSI Model (7 Layers)</h2>
+        <p>The OSI model splits networking into <b>7 layers</b>. Each layer has one job and talks only to the layer above and below it. It helps us understand networks and fix problems layer by layer.</p>
+        <div class="note">🧠 <b>Memory trick (top to bottom):</b> <b>A</b>ll <b>P</b>eople <b>S</b>eem <b>T</b>o <b>N</b>eed <b>D</b>ata <b>P</b>rocessing</div>
+        <p><b>👆 Click any layer</b>, or press the button to watch a message travel down the sender and up the receiver.</p>
+        <button class="btn2" onclick="sendOSI()">▶ Send a message</button>
+        <div class="osi-wrap">
+          <div class="osi-stack" id="osi-stack"></div>
+          <div class="osi-info" id="osi-info"></div>
+        </div>
+
+        <h3>Layer summary table</h3>
+        <div class="tbl"><table>
+          <tr><th>#</th><th>Layer</th><th>Job (simple)</th><th>Data unit (PDU)</th><th>Examples</th></tr>
+          <tr><td>7</td><td>Application</td><td>Interface to the user's apps</td><td>Data</td><td>HTTP, DNS, SMTP, FTP</td></tr>
+          <tr><td>6</td><td>Presentation</td><td>Format, encrypt, compress</td><td>Data</td><td>TLS/SSL, JPEG, ASCII</td></tr>
+          <tr><td>5</td><td>Session</td><td>Start, manage, end conversations</td><td>Data</td><td>NetBIOS, RPC, sessions</td></tr>
+          <tr><td>4</td><td>Transport</td><td>End-to-end delivery, ports, reliability</td><td>Segment (TCP) / Datagram (UDP)</td><td>TCP, UDP</td></tr>
+          <tr><td>3</td><td>Network</td><td>Logical addressing and routing</td><td>Packet</td><td>IP, ICMP, routers</td></tr>
+          <tr><td>2</td><td>Data Link</td><td>Delivery inside one network, MAC, error detection</td><td>Frame</td><td>Ethernet, Wi-Fi, switch</td></tr>
+          <tr><td>1</td><td>Physical</td><td>Send raw bits as signals</td><td>Bits</td><td>Cables, hubs, radio</td></tr>
+        </table></div>
+
+        <h3>Encapsulation</h3>
+        <p>While going down, each layer <b>adds its own header</b> (like putting a letter in an envelope, then into a bigger envelope). The receiver removes them one by one. This is called <b>encapsulation</b> and <b>de-encapsulation</b>.</p>
+        <div class="tbl"><table>
+          <tr><th>Step</th><th>What happens</th></tr>
+          <tr><td>Application</td><td>Your data: "GET /index.html"</td></tr>
+          <tr><td>Transport</td><td>Adds TCP header (source port, destination port, sequence number) → <b>Segment</b></td></tr>
+          <tr><td>Network</td><td>Adds IP header (source IP, destination IP) → <b>Packet</b></td></tr>
+          <tr><td>Data Link</td><td>Adds Ethernet header (source MAC, destination MAC) and a trailer (CRC) → <b>Frame</b></td></tr>
+          <tr><td>Physical</td><td>Converts the frame to <b>bits</b> and sends as signals</td></tr>
+        </table></div>
+
+        <h3>Three addresses, three layers</h3>
+        <div class="tbl"><table>
+          <tr><th>Address</th><th>Layer</th><th>Identifies</th><th>Changes at each hop?</th></tr>
+          <tr><td>Port number</td><td>Transport (4)</td><td>Which <b>application</b> on the device</td><td>No</td></tr>
+          <tr><td>IP address</td><td>Network (3)</td><td>Which <b>device</b> in the world (end to end)</td><td>No (except with NAT)</td></tr>
+          <tr><td>MAC address</td><td>Data Link (2)</td><td>Which <b>network card</b> on this local link</td><td><b>Yes</b>, rewritten by every router</td></tr>
+        </table></div>
+        <div class="tip">💡 <b>Key idea:</b> IP address = final destination (city address). MAC address = next stop only (the next door in the route). That is why the MAC changes at every router but the IP does not.</div>
+      </section>
+
+      <!-- ===================== 5. TCP/IP ===================== -->
+      <section class="topic" id="tcpip">
+        <span class="level l1">BEGINNER</span>
+        <h2>5. TCP/IP Model</h2>
+        <p>OSI is a theory model. The internet actually runs on the <b>TCP/IP model</b> with 4 layers.</p>
+        <div class="tbl"><table>
+          <tr><th>TCP/IP Layer</th><th>OSI Layers</th><th>Examples</th></tr>
+          <tr><td>Application</td><td>7, 6, 5</td><td>HTTP, DNS, FTP, SMTP</td></tr>
+          <tr><td>Transport</td><td>4</td><td>TCP, UDP</td></tr>
+          <tr><td>Internet</td><td>3</td><td>IP, ICMP</td></tr>
+          <tr><td>Network Access</td><td>2, 1</td><td>Ethernet, Wi-Fi</td></tr>
+        </table></div>
+        <div class="note">📌 <b>OSI vs TCP/IP:</b> OSI has 7 layers and is a reference model. TCP/IP has 4 layers and is the practical, real-world model.</div>
+
+        <h3>Why do both exist?</h3>
+        <ul>
+          <li>OSI was designed first as a <b>standard teaching blueprint</b>, with clean layer separation.</li>
+          <li>TCP/IP was built by researchers to <b>actually work</b> (ARPANET) and it won in the real world.</li>
+          <li>In exams and interviews, we use OSI words (Layer 2, Layer 3...) even when talking about TCP/IP.</li>
+        </ul>
+
+        <h3>Real example: you open a website</h3>
+        <ul>
+          <li><b>Application:</b> browser creates an HTTP request.</li>
+          <li><b>Transport:</b> TCP breaks it into segments with port 443.</li>
+          <li><b>Internet:</b> IP adds your IP and the server's IP.</li>
+          <li><b>Network Access:</b> Wi-Fi/Ethernet sends frames to your router.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 6. DATA LINK ===================== -->
+      <section class="topic" id="datalink">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>6. Data Link Layer: MAC, Ethernet, Switching & Error Control</h2>
+        <p>The Data Link layer moves data between two devices <b>on the same local network</b>. It uses <b>MAC addresses</b>, builds <b>frames</b>, and detects errors.</p>
+
+        <h3>MAC address</h3>
+        <ul>
+          <li>48-bit physical address burned into the network card. Example: <code>A4:5E:60:C2:1B:9F</code> (6 bytes in hex).</li>
+          <li>First 3 bytes = <b>OUI</b> (manufacturer), last 3 bytes = device number.</li>
+          <li>Broadcast MAC: <code>FF:FF:FF:FF:FF:FF</code> (means "everyone").</li>
+        </ul>
+
+        <h3>Ethernet frame (what's inside)</h3>
+        <div class="tbl"><table>
+          <tr><th>Field</th><th>Size</th><th>Purpose</th></tr>
+          <tr><td>Preamble + SFD</td><td>8 bytes</td><td>Synchronisation: "a frame is starting"</td></tr>
+          <tr><td>Destination MAC</td><td>6 bytes</td><td>Who should receive</td></tr>
+          <tr><td>Source MAC</td><td>6 bytes</td><td>Who sent it</td></tr>
+          <tr><td>Type / Length</td><td>2 bytes</td><td>Which protocol is inside (e.g. IPv4)</td></tr>
+          <tr><td>Payload (data)</td><td>46 – 1500 bytes</td><td>The IP packet. <b>1500 = MTU</b></td></tr>
+          <tr><td>FCS (CRC)</td><td>4 bytes</td><td>Error check</td></tr>
+        </table></div>
+
+        <h3>How a switch learns (MAC address table)</h3>
+        <ol>
+          <li>A frame arrives on a port. The switch reads the <b>source MAC</b> and remembers "this MAC is on this port" (<b>learning</b>).</li>
+          <li>It looks up the <b>destination MAC</b> in its table.</li>
+          <li><b>Found</b> → send only to that port (<b>forwarding</b>).</li>
+          <li><b>Not found</b> or broadcast → send to all ports except the incoming one (<b>flooding</b>).</li>
+          <li>Entries expire after some minutes (aging) if not used.</li>
+        </ol>
+
+        <h3>ARP: finding a MAC from an IP</h3>
+        <p>You know the IP of the target but the frame needs a MAC. So your computer broadcasts: <i>"Who has 192.168.1.1? Tell 192.168.1.10."</i> The owner replies with its MAC. The answer is saved in the <b>ARP cache</b> (see it with <code>arp -a</code>).</p>
+        <div class="note">📌 To reach a device in a <b>different network</b>, your PC does ARP for the <b>default gateway's</b> MAC, not the far-away server's MAC.</div>
+
+        <h3>Error detection</h3>
+        <div class="tbl"><table>
+          <tr><th>Method</th><th>Idea</th><th>Strength</th></tr>
+          <tr><td>Parity bit</td><td>Add 1 bit to make count of 1s even (or odd)</td><td>Detects only single-bit errors</td></tr>
+          <tr><td>Checksum</td><td>Add up all data chunks, send the sum</td><td>Used in IP, TCP, UDP headers</td></tr>
+          <tr><td>CRC</td><td>Divide data by a special polynomial; send the remainder</td><td>Very strong; used in Ethernet &amp; Wi-Fi</td></tr>
+        </table></div>
+        <details><summary>✍️ Worked example: even parity</summary>
+          <p>Data = <code>1011001</code>. Count of 1s = 4 (already even) → parity bit = <b>0</b> → send <code>10110010</code>.<br>
+          Data = <code>1011011</code>. Count of 1s = 5 (odd) → parity bit = <b>1</b> → send <code>10110111</code>.<br>
+          The receiver counts 1s. If the count is odd, an error happened.</p></details>
+        <p><b>Error correction:</b> <b>Hamming code</b> adds extra bits so the receiver can find <i>and fix</i> a single-bit error. Otherwise the receiver asks for <b>retransmission</b>.</p>
+
+        <h3>Flow control & ARQ (reliable delivery at link level)</h3>
+        <ul>
+          <li><b>Stop-and-Wait:</b> send 1 frame, wait for ACK. Simple but slow (link sits idle).</li>
+          <li><b>Go-Back-N:</b> send many frames (a window). If frame k is lost, resend k and all after it.</li>
+          <li><b>Selective Repeat:</b> resend only the lost frame. Receiver buffers the rest. Most efficient.</li>
+        </ul>
+        <div class="tbl"><table>
+          <tr><th>Protocol</th><th>Sender window</th><th>Receiver window</th></tr>
+          <tr><td>Stop-and-Wait</td><td>1</td><td>1</td></tr>
+          <tr><td>Go-Back-N</td><td>2<sup>m</sup> − 1</td><td>1</td></tr>
+          <tr><td>Selective Repeat</td><td>2<sup>m−1</sup></td><td>2<sup>m−1</sup></td></tr>
+        </table></div>
+        <p>(m = number of bits used for sequence numbers.)</p>
+
+        <h3>Medium access: who talks when?</h3>
+        <ul>
+          <li><b>CSMA/CD</b> (old half-duplex Ethernet): listen first, send if free, if a collision is detected stop, wait a random time (<b>backoff</b>), retry.</li>
+          <li><b>CSMA/CA</b> (Wi-Fi): try to <i>avoid</i> collisions using random waits and optional RTS/CTS.</li>
+          <li>Modern switched full-duplex Ethernet has <b>no collisions</b>, so CSMA/CD is rarely used now.</li>
+        </ul>
+
+        <h3>VLAN: virtual LANs</h3>
+        <p>A <b>VLAN</b> splits one physical switch into several separate logical networks (for example: Students, Staff, Guests). Devices in different VLANs cannot talk directly; they need a router (or L3 switch). Benefits: <b>security, smaller broadcast domains, easy management</b>. Frames are marked with a VLAN tag using <b>802.1Q</b>.</p>
+
+        <h3>STP: Spanning Tree Protocol</h3>
+        <p>Extra cables between switches give backup, but also create <b>loops</b>, and broadcasts would circle forever (a broadcast storm). <b>STP</b> blocks some links to make a loop-free tree, and unblocks one if another fails.</p>
+      </section>
+
+      <!-- ===================== 7. IP ===================== -->
+      <section class="topic" id="ipaddr">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>7. IP Addressing & Subnetting</h2>
+        <p>An <b>IP address</b> is the address of a device on a network, like a house address. <b>IPv4</b> has 32 bits written as 4 numbers (0–255), e.g. <code>192.168.1.10</code>. <b>IPv6</b> has 128 bits. Each of the 4 numbers is called an <b>octet</b> (8 bits).</p>
+
+        <h3>Step 0: Binary made easy</h3>
+        <p>Each octet has 8 bits. Their place values are:</p>
+        <div class="tbl"><table>
+          <tr><th>128</th><th>64</th><th>32</th><th>16</th><th>8</th><th>4</th><th>2</th><th>1</th></tr>
+        </table></div>
+        <p>To convert a decimal to binary, switch ON the place values that add up to the number.<br>
+        Example: <b>77</b> = 64 + 8 + 4 + 1 → <code>01001101</code>.<br>
+        Example: <b>192</b> = 128 + 64 → <code>11000000</code>.<br>
+        So <code>192.168.10.77</code> = <code>11000000.10101000.00001010.01001101</code>.</p>
+
+        <h3>Classes of IPv4</h3>
+        <div class="tbl"><table>
+          <tr><th>Class</th><th>Range</th><th>First bits</th><th>Default Mask</th><th>Use</th></tr>
+          <tr><td>A</td><td>1 – 126</td><td>0</td><td>255.0.0.0 (/8)</td><td>Very large networks</td></tr>
+          <tr><td>B</td><td>128 – 191</td><td>10</td><td>255.255.0.0 (/16)</td><td>Medium networks</td></tr>
+          <tr><td>C</td><td>192 – 223</td><td>110</td><td>255.255.255.0 (/24)</td><td>Small networks</td></tr>
+          <tr><td>D</td><td>224 – 239</td><td>1110</td><td>-</td><td>Multicast</td></tr>
+          <tr><td>E</td><td>240 – 255</td><td>1111</td><td>-</td><td>Research</td></tr>
+        </table></div>
+        <div class="note">📌 <code>127.x.x.x</code> is reserved for <b>loopback</b> (your own computer; <code>127.0.0.1</code> = "localhost"). Classes are old; today we use <b>CIDR</b> (classless addressing).</div>
+
+        <h3>Public, Private and Special addresses</h3>
+        <p><b>Private IP ranges</b> (used inside homes and offices, not routable on the Internet): <code>10.0.0.0/8</code>, <code>172.16.0.0/12</code>, <code>192.168.0.0/16</code></p>
+        <ul>
+          <li><b>Public IP:</b> unique on the Internet, given by your ISP.</li>
+          <li><b>APIPA (169.254.x.x):</b> a device gives itself this when DHCP fails.</li>
+          <li><b>0.0.0.0:</b> "this host / any address". <b>255.255.255.255:</b> limited broadcast.</li>
+        </ul>
+
+        <h3>Subnetting in simple words</h3>
+        <p>Subnetting means <b>cutting a big network into smaller ones</b>. The <b>CIDR number</b> (like /26) tells how many bits belong to the network. The remaining bits are for hosts. The <b>subnet mask</b> is the same thing written in dotted form: 1s for network bits, 0s for host bits.</p>
+        <ul>
+          <li>Usable hosts = <code>2^(host bits) − 2</code> (minus network and broadcast address)</li>
+          <li>Example: /26 → host bits = 32 − 26 = 6 → 2⁶ − 2 = <b>62 hosts</b></li>
+          <li><b>Network address:</b> all host bits = 0 (name of the network, can't be given to a device).</li>
+          <li><b>Broadcast address:</b> all host bits = 1 (reaches everyone in that subnet).</li>
+        </ul>
+
+        <h3>Quick CIDR table</h3>
+        <div class="tbl"><table>
+          <tr><th>CIDR</th><th>Subnet mask</th><th>Block size</th><th>Usable hosts</th></tr>
+          <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td>254</td></tr>
+          <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td>126</td></tr>
+          <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td>62</td></tr>
+          <tr><td>/27</td><td>255.255.255.224</td><td>32</td><td>30</td></tr>
+          <tr><td>/28</td><td>255.255.255.240</td><td>16</td><td>14</td></tr>
+          <tr><td>/29</td><td>255.255.255.248</td><td>8</td><td>6</td></tr>
+          <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td>2</td></tr>
+        </table></div>
+        <div class="tip">💡 <b>Shortcut:</b> Block size = 256 − (last mask octet). For /26 the mask is .192 → block size = 256 − 192 = 64. Subnets start at 0, 64, 128, 192.</div>
+
+        <h3>✍️ Worked example (step by step)</h3>
+        <details open><summary>Find network, broadcast and hosts for 192.168.10.77/26</summary>
+          <p><b>1.</b> /26 → mask 255.255.255.192, block size = 64.<br>
+          <b>2.</b> Subnets in the last octet: 0, 64, 128, 192. Our host is 77, which lies between 64 and 127.<br>
+          <b>3.</b> Network address = <b>192.168.10.64</b><br>
+          <b>4.</b> Broadcast address = next network − 1 = <b>192.168.10.127</b><br>
+          <b>5.</b> Usable range = <b>192.168.10.65 – 192.168.10.126</b> (62 hosts).</p></details>
+
+        <details><summary>✍️ Example: divide 192.168.1.0/24 into 4 equal subnets</summary>
+          <p>We need 4 subnets → borrow 2 bits (2² = 4) → new mask /26.<br>
+          Subnet 1: 192.168.1.0/26 (hosts .1–.62, broadcast .63)<br>
+          Subnet 2: 192.168.1.64/26 (hosts .65–.126, broadcast .127)<br>
+          Subnet 3: 192.168.1.128/26 (hosts .129–.190, broadcast .191)<br>
+          Subnet 4: 192.168.1.192/26 (hosts .193–.254, broadcast .255)</p></details>
+
+        <h3>VLSM: Variable Length Subnet Masks</h3>
+        <p>Equal subnets waste addresses. With <b>VLSM</b> you give each department a subnet of the size it needs. Rule: <b>allocate the largest subnet first</b>.</p>
+        <details><summary>✍️ Example: 192.168.1.0/24 for Sales (100 hosts), HR (50), Lab (20)</summary>
+          <p>Sales needs 100 → 2⁷ − 2 = 126 → <b>/25</b> → 192.168.1.0/25 (.0 – .127)<br>
+          HR needs 50 → 2⁶ − 2 = 62 → <b>/26</b> → 192.168.1.128/26 (.128 – .191)<br>
+          Lab needs 20 → 2⁵ − 2 = 30 → <b>/27</b> → 192.168.1.192/27 (.192 – .223)<br>
+          Space left: 192.168.1.224 – .255 for future use.</p></details>
+
+        <h3>CIDR & Supernetting</h3>
+        <p><b>CIDR</b> (Classless Inter-Domain Routing) lets us use any prefix length (like /19), not just /8, /16, /24. <b>Route summarisation</b> combines many small networks into one bigger route to keep routing tables small. Example: 192.168.0.0/24 + 192.168.1.0/24 → <code>192.168.0.0/23</code>.</p>
+
+        <h3>NAT: Network Address Translation</h3>
+        <p>There aren't enough IPv4 addresses (only ~4.3 billion). With <b>NAT</b>, your whole home uses private IPs inside, and your router swaps them for <b>one public IP</b> when going out.</p>
+        <ul>
+          <li><b>Static NAT:</b> one private ↔ one public (fixed).</li>
+          <li><b>Dynamic NAT:</b> private IPs share a pool of public IPs.</li>
+          <li><b>PAT / NAT overload:</b> many private IPs share <b>one</b> public IP, using different <b>port numbers</b> to tell them apart. This is what your home router does.</li>
+        </ul>
+
+        <h3>IPv6</h3>
+        <ul>
+          <li>128-bit address in hexadecimal, 8 groups: <code>2001:0db8:0000:0000:0000:ff00:0042:8329</code></li>
+          <li>Shortening: remove leading zeros, and replace <b>one</b> run of zeros with <code>::</code> → <code>2001:db8::ff00:42:8329</code></li>
+          <li>No broadcast (uses multicast), built-in support for auto-configuration (SLAAC), no NAT needed, simpler header.</li>
+          <li>Total addresses: 2¹²⁸, enough for every grain of sand on Earth.</li>
+          <li><code>::1</code> = loopback, <code>fe80::/10</code> = link-local.</li>
+        </ul>
+
+        <h3>🧮 Try it: Subnet Calculator</h3>
+        <div class="calc">
+          <input id="ip" value="192.168.10.77" placeholder="IP address">
+          <input id="cidr" type="number" value="26" min="0" max="32" placeholder="CIDR">
+          <button class="btn2" onclick="calcSubnet()">Calculate</button>
+        </div>
+        <div id="sn-out"></div>
+      </section>
+
+      <!-- ===================== 8. ROUTING ===================== -->
+      <section class="topic" id="routing">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>8. Network Layer: Routing, ICMP & DHCP</h2>
+        <p>The Network layer carries a packet from the <b>source device to the destination device across many networks</b>. This is done by <b>routers</b>.</p>
+
+        <h3>IPv4 packet header (important fields)</h3>
+        <div class="tbl"><table>
+          <tr><th>Field</th><th>Purpose</th></tr>
+          <tr><td>Version</td><td>4 for IPv4</td></tr>
+          <tr><td>Header length</td><td>20 – 60 bytes</td></tr>
+          <tr><td>Total length</td><td>Size of whole packet (max 65,535 bytes)</td></tr>
+          <tr><td>Identification, Flags, Fragment offset</td><td>Used when a packet is broken into fragments</td></tr>
+          <tr><td><b>TTL</b> (Time To Live)</td><td>Reduced by 1 at every router. When it reaches 0, the packet is dropped. Stops endless loops.</td></tr>
+          <tr><td>Protocol</td><td>What's inside: 6 = TCP, 17 = UDP, 1 = ICMP</td></tr>
+          <tr><td>Header checksum</td><td>Error check for the header</td></tr>
+          <tr><td>Source IP / Destination IP</td><td>Who sent / who should receive</td></tr>
+        </table></div>
+
+        <h3>Fragmentation</h3>
+        <p>Every link has a maximum frame size, the <b>MTU</b> (Ethernet = 1500 bytes). If a packet is bigger, a router <b>fragments</b> it into smaller pieces. Only the <b>destination</b> puts them back together.</p>
+
+        <h3>How a router decides: the routing table</h3>
+        <p>A router keeps a table: "for this destination network, send to this next hop through this interface".</p>
+        <div class="tbl"><table>
+          <tr><th>Destination</th><th>Mask</th><th>Next hop</th><th>Interface</th></tr>
+          <tr><td>192.168.1.0</td><td>/24</td><td>Directly connected</td><td>Eth0</td></tr>
+          <tr><td>10.0.0.0</td><td>/8</td><td>192.168.1.254</td><td>Eth0</td></tr>
+          <tr><td>0.0.0.0</td><td>/0</td><td>203.0.113.1</td><td>Eth1</td></tr>
+        </table></div>
+        <ul>
+          <li><b>Longest prefix match:</b> if many rows match, the router picks the <b>most specific</b> one (longest mask).</li>
+          <li><b>Default route (0.0.0.0/0):</b> "if nothing else matches, send here" (towards the Internet).</li>
+          <li><b>Default gateway:</b> on your PC, the router IP used to leave your local network.</li>
+        </ul>
+
+        <h3>Static vs Dynamic routing</h3>
+        <div class="tbl"><table>
+          <tr><th>Static</th><th>Dynamic</th></tr>
+          <tr><td>Admin types routes by hand</td><td>Routers learn routes from each other automatically</td></tr>
+          <tr><td>Good for small, simple networks</td><td>Good for big networks; adapts to failures</td></tr>
+          <tr><td>No extra traffic</td><td>Uses some bandwidth and CPU</td></tr>
+        </table></div>
+
+        <h3>Routing protocols</h3>
+        <div class="tbl"><table>
+          <tr><th>Protocol</th><th>Type</th><th>Idea</th></tr>
+          <tr><td>RIP</td><td>Distance Vector (IGP)</td><td>Uses <b>hop count</b> (max 15). Each router tells neighbours its table ("routing by rumour"). Simple but slow.</td></tr>
+          <tr><td>OSPF</td><td>Link State (IGP)</td><td>Every router learns the <b>full map</b> and runs <b>Dijkstra's algorithm</b> to find the shortest path. Fast, used in enterprises.</td></tr>
+          <tr><td>EIGRP</td><td>Advanced distance vector (Cisco)</td><td>Fast, uses bandwidth and delay.</td></tr>
+          <tr><td>BGP</td><td>Path Vector (EGP)</td><td>Connects different organisations (<b>Autonomous Systems</b>). It is the "glue" of the Internet; routes by policy.</td></tr>
+        </table></div>
+        <div class="note">📌 <b>IGP</b> = routing inside one organisation (AS). <b>EGP</b> = routing between organisations. A famous problem for distance vector: <b>count-to-infinity</b> (solved by split horizon, route poisoning).</div>
+
+        <h3>ICMP: the network's error messenger</h3>
+        <p><b>ICMP</b> (Internet Control Message Protocol) reports problems and tests connectivity. It has no ports; it rides directly inside IP.</p>
+        <ul>
+          <li><code>ping</code>: sends ICMP Echo Request → gets Echo Reply. Shows if a host is reachable and the RTT.</li>
+          <li><code>traceroute</code> (Windows: <code>tracert</code>): sends packets with TTL 1, 2, 3... Every router that drops a packet replies "TTL exceeded", revealing the path hop by hop.</li>
+          <li>Other messages: Destination unreachable, Time exceeded.</li>
+        </ul>
+
+        <h3>DHCP: automatic IP configuration</h3>
+        <p>Without DHCP you would type an IP, mask, gateway and DNS in every device. <b>DHCP</b> gives them automatically using 4 steps, <b>DORA</b>:</p>
+        <ol>
+          <li><b>Discover:</b> new device broadcasts "Is there a DHCP server?"</li>
+          <li><b>Offer:</b> server offers an IP address.</li>
+          <li><b>Request:</b> device says "I'll take that one."</li>
+          <li><b>Acknowledge:</b> server confirms; the IP is <b>leased</b> for a time.</li>
+        </ol>
+        <p>DHCP uses UDP ports <b>67</b> (server) and <b>68</b> (client).</p>
+      </section>
+
+      <!-- ===================== 9. TCP / UDP ===================== -->
+      <section class="topic" id="tcpudp">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>9. Transport Layer: TCP vs UDP & 3-Way Handshake</h2>
+        <p>Both are <b>Transport layer</b> protocols. TCP is like a <b>phone call</b> (connect first, reliable). UDP is like <b>throwing letters</b> (fast, no guarantee).</p>
+
+        <h3>Ports and sockets</h3>
+        <p>An IP address finds the <b>device</b>; a <b>port</b> finds the <b>application</b> inside it (like a flat number in a building). A <b>socket</b> = IP address + port, e.g. <code>192.168.1.10:443</code>. A connection is identified by 4 values: source IP, source port, destination IP, destination port.</p>
+        <ul>
+          <li><b>Well-known ports:</b> 0 – 1023 (HTTP 80, HTTPS 443...)</li>
+          <li><b>Registered ports:</b> 1024 – 49151</li>
+          <li><b>Dynamic / ephemeral ports:</b> 49152 – 65535 (random ports your browser picks as source)</li>
+        </ul>
+
+        <div class="tbl"><table>
+          <tr><th>Feature</th><th>TCP</th><th>UDP</th></tr>
+          <tr><td>Connection</td><td>Connection-oriented</td><td>Connectionless</td></tr>
+          <tr><td>Reliability</td><td>Guaranteed delivery, ordered</td><td>No guarantee</td></tr>
+          <tr><td>Speed</td><td>Slower</td><td>Faster</td></tr>
+          <tr><td>Header size</td><td>20 bytes (min)</td><td>8 bytes</td></tr>
+          <tr><td>Flow &amp; congestion control</td><td>Yes</td><td>No</td></tr>
+          <tr><td>Used for</td><td>Web, email, file transfer</td><td>Video calls, gaming, DNS, streaming</td></tr>
+        </table></div>
+
+        <h3>TCP segment: important fields</h3>
+        <ul>
+          <li><b>Source port, Destination port</b> (16 bits each)</li>
+          <li><b>Sequence number:</b> position of the first byte in this segment (used to put data in order)</li>
+          <li><b>Acknowledgement number:</b> "I have received everything up to this byte; send the next from here"</li>
+          <li><b>Flags:</b> SYN, ACK, FIN, RST, PSH, URG</li>
+          <li><b>Window size:</b> how much data the receiver can accept (flow control)</li>
+          <li><b>Checksum</b></li>
+        </ul>
+
+        <h3>🤝 3-Way Handshake (interactive)</h3>
+        <p>Before sending data, TCP sets up a connection. Click the button to see each step.</p>
+        <div class="hs"><div>💻 Client</div><div>🗄️ Server</div></div>
+        <div id="hs-box"></div>
+        <button class="btn2" id="hs-btn" onclick="nextHS()">Next Step ▶</button>
+        <div class="tip">💡 <b>Closing a connection</b> uses a 4-way handshake: FIN, ACK, FIN, ACK.</div>
+        <p><b>Why 3 steps and not 2?</b> Both sides must prove they can <i>send</i> and <i>receive</i>. Step 1 shows the client can send; step 2 shows the server can receive and send; step 3 shows the client can receive. It also lets both sides agree on starting sequence numbers.</p>
+
+        <h3>How TCP gives reliability</h3>
+        <ul>
+          <li><b>Sequence numbers:</b> reorder packets that arrive jumbled, and remove duplicates.</li>
+          <li><b>Acknowledgements (ACK):</b> receiver confirms what it got.</li>
+          <li><b>Retransmission:</b> if no ACK comes before the <b>timeout</b> (RTO), or 3 duplicate ACKs arrive (<b>fast retransmit</b>), the data is sent again.</li>
+          <li><b>Checksum:</b> detects corrupted segments.</li>
+        </ul>
+
+        <h3>Flow control (protect the receiver)</h3>
+        <p>The receiver tells the sender its <b>window size</b> ("I have room for 8 KB"). The sender never sends more than that without an ACK. This is the <b>sliding window</b>. If the receiver is overloaded, it announces window = 0 and the sender pauses.</p>
+
+        <h3>Congestion control (protect the network)</h3>
+        <p>Flow control protects the <i>receiver</i>. Congestion control protects the <i>network</i> (routers). The sender keeps a <b>congestion window (cwnd)</b>:</p>
+        <ol>
+          <li><b>Slow start:</b> cwnd begins small (1 MSS) and <b>doubles every RTT</b> (exponential) until it reaches the <i>ssthresh</i> limit.</li>
+          <li><b>Congestion avoidance:</b> after ssthresh, cwnd grows by only <b>+1 MSS per RTT</b> (linear).</li>
+          <li><b>On packet loss:</b> timeout → cwnd back to 1 and slow start again; 3 duplicate ACKs → <b>fast recovery</b> (cut cwnd to half and continue).</li>
+        </ol>
+        <div class="note">📌 This pattern is called <b>AIMD</b>: Additive Increase, Multiplicative Decrease. It is why the speed of a download goes up and down like a saw.</div>
+
+        <h3>TCP connection states (short)</h3>
+        <p>LISTEN → SYN-SENT / SYN-RECEIVED → <b>ESTABLISHED</b> → FIN-WAIT / CLOSE-WAIT → <b>TIME-WAIT</b> → CLOSED. Check them with <code>netstat -an</code> or <code>ss -tuln</code>.</p>
+
+        <h3>When to use UDP?</h3>
+        <p>When <b>speed matters more than perfection</b>: a lost frame in a live video call is better ignored than re-sent late. UDP is also used by DNS (small query/response), DHCP, online games, VoIP, and <b>QUIC</b> (which HTTP/3 is built on, adding reliability on top of UDP).</p>
+      </section>
+
+      <!-- ===================== 10. APPLICATION ===================== -->
+      <section class="topic" id="dnshttp">
+        <span class="level l2">INTERMEDIATE</span>
+        <h2>10. Application Layer: DNS, HTTP & What happens when you type google.com?</h2>
+        <p><b>DNS</b> is the phonebook of the internet. It converts a name (<code>google.com</code>) into an IP address. <b>HTTP</b> is the language a browser and a web server use to talk.</p>
+
+        <h3>Step by step (a favourite interview question)</h3>
+        <ol>
+          <li>Browser checks its <b>cache</b> (and OS cache, and the hosts file) for the IP.</li>
+          <li>If not found, asks the <b>DNS resolver</b> (your ISP), which asks Root → TLD (.com) → Authoritative server.</li>
+          <li>Browser gets the <b>IP address</b>.</li>
+          <li>Your PC finds the gateway's MAC using <b>ARP</b> (if not cached) to leave the local network.</li>
+          <li>TCP <b>3-way handshake</b> is done with the server.</li>
+          <li>For HTTPS, a <b>TLS handshake</b> sets up encryption.</li>
+          <li>Browser sends an <b>HTTP GET request</b>.</li>
+          <li>Server sends back an <b>HTTP response</b> (HTML, CSS, JS).</li>
+          <li>Browser <b>renders</b> the page (and fetches images, scripts, etc.).</li>
+        </ol>
+
+        <h3>DNS in depth</h3>
+        <p>DNS is a <b>distributed, hierarchical database</b>. Reading <code>www.example.com.</code> from right to left: Root (.) → TLD (com) → Domain (example) → Subdomain (www).</p>
+        <div class="tbl"><table>
+          <tr><th>Server</th><th>Role</th></tr>
+          <tr><td>Recursive resolver</td><td>Does all the searching for you and caches the answer (ISP, 8.8.8.8, 1.1.1.1)</td></tr>
+          <tr><td>Root server</td><td>Knows who handles each TLD (.com, .in, .org)</td></tr>
+          <tr><td>TLD server</td><td>Knows the authoritative servers for each domain</td></tr>
+          <tr><td>Authoritative server</td><td>Holds the real records for the domain</td></tr>
+        </table></div>
+        <ul>
+          <li><b>Recursive query:</b> "Give me the final answer."</li>
+          <li><b>Iterative query:</b> "Give me the best help you have (point me to someone else)."</li>
+          <li><b>TTL:</b> how long an answer may be cached. This is why DNS changes take time to spread.</li>
+        </ul>
+        <h3>Common DNS records</h3>
+        <div class="tbl"><table>
+          <tr><th>Record</th><th>Meaning</th><th>Example</th></tr>
+          <tr><td>A</td><td>Name → IPv4</td><td>example.com → 93.184.216.34</td></tr>
+          <tr><td>AAAA</td><td>Name → IPv6</td><td>example.com → 2606:2800::1</td></tr>
+          <tr><td>CNAME</td><td>Alias of another name</td><td>www → example.com</td></tr>
+          <tr><td>MX</td><td>Mail server of the domain</td><td>mail.example.com</td></tr>
+          <tr><td>NS</td><td>Name server of the domain</td><td>ns1.example.com</td></tr>
+          <tr><td>TXT</td><td>Text info (SPF, verification)</td><td>"v=spf1 ..."</td></tr>
+          <tr><td>PTR</td><td>IP → Name (reverse lookup)</td><td>34.216.184.93 → example.com</td></tr>
+        </table></div>
+        <p>DNS uses <b>UDP port 53</b> for normal queries and <b>TCP 53</b> for large answers and zone transfers.</p>
+
+        <h3>HTTP in depth</h3>
+        <ul>
+          <li><b>Stateless:</b> the server doesn't remember you between requests. <b>Cookies</b> and <b>sessions</b>/<b>tokens</b> are used to remember who is logged in.</li>
+          <li><b>Request</b> = method + URL + headers + (optional) body. <b>Response</b> = status code + headers + body.</li>
+        </ul>
+        <div class="tbl"><table>
+          <tr><th>Method</th><th>Purpose</th><th>Safe / Idempotent?</th></tr>
+          <tr><td>GET</td><td>Read data</td><td>Yes / Yes</td></tr>
+          <tr><td>POST</td><td>Create data / submit a form</td><td>No / No</td></tr>
+          <tr><td>PUT</td><td>Replace data completely</td><td>No / Yes</td></tr>
+          <tr><td>PATCH</td><td>Update part of data</td><td>No / Not guaranteed</td></tr>
+          <tr><td>DELETE</td><td>Remove data</td><td>No / Yes</td></tr>
+          <tr><td>HEAD / OPTIONS</td><td>Headers only / what is allowed</td><td>Yes / Yes</td></tr>
+        </table></div>
+        <p><b>Example request:</b></p>
+        <p><code>GET /index.html HTTP/1.1</code> · <code>Host: example.com</code> · <code>User-Agent: Chrome</code> · <code>Accept: text/html</code></p>
+
+        <h3>HTTP status codes</h3>
+        <div class="tbl"><table>
+          <tr><th>Code</th><th>Meaning</th></tr>
+          <tr><td>1xx</td><td>Informational</td></tr>
+          <tr><td>200</td><td>OK, success</td></tr>
+          <tr><td>201</td><td>Created</td></tr>
+          <tr><td>301 / 302</td><td>Redirect (permanent / temporary)</td></tr>
+          <tr><td>304</td><td>Not modified (use your cache)</td></tr>
+          <tr><td>400</td><td>Bad request</td></tr>
+          <tr><td>401 / 403</td><td>Not logged in / Not allowed</td></tr>
+          <tr><td>404</td><td>Page not found</td></tr>
+          <tr><td>429</td><td>Too many requests</td></tr>
+          <tr><td>500</td><td>Server error</td></tr>
+          <tr><td>502 / 503</td><td>Bad gateway / Service unavailable</td></tr>
+        </table></div>
+        <div class="tip">💡 <b>Trick:</b> 2xx = success, 3xx = go elsewhere, 4xx = <b>your</b> mistake (client), 5xx = <b>server's</b> mistake.</div>
+
+        <h3>HTTP versions</h3>
+        <div class="tbl"><table>
+          <tr><th>Version</th><th>Key improvement</th></tr>
+          <tr><td>HTTP/1.0</td><td>New TCP connection for every request (slow)</td></tr>
+          <tr><td>HTTP/1.1</td><td>Persistent connections (keep-alive), host header</td></tr>
+          <tr><td>HTTP/2</td><td>Binary, <b>multiplexing</b> many requests on one connection, header compression</td></tr>
+          <tr><td>HTTP/3</td><td>Runs on <b>QUIC over UDP</b>; no head-of-line blocking, faster setup</td></tr>
+        </table></div>
+
+        <div class="note">🔒 <b>HTTP vs HTTPS:</b> HTTPS = HTTP + TLS encryption. Port 80 vs 443.</div>
+
+        <h3>Other important application protocols</h3>
+        <div class="tbl"><table>
+          <tr><th>Protocol</th><th>Port</th><th>Purpose</th></tr>
+          <tr><td>SMTP</td><td>25 / 587</td><td><b>Send</b> email (client → server, server → server)</td></tr>
+          <tr><td>POP3</td><td>110 / 995</td><td><b>Download</b> email and usually delete it from the server</td></tr>
+          <tr><td>IMAP</td><td>143 / 993</td><td>Read email <b>on the server</b>, synced across devices</td></tr>
+          <tr><td>FTP</td><td>20, 21</td><td>File transfer (plain text, insecure). SFTP/FTPS are secure versions</td></tr>
+          <tr><td>SSH</td><td>22</td><td>Secure remote login</td></tr>
+          <tr><td>Telnet</td><td>23</td><td>Remote login (insecure, old)</td></tr>
+          <tr><td>SNMP</td><td>161</td><td>Monitor and manage network devices</td></tr>
+        </table></div>
+
+        <h3>Important Port Numbers</h3>
+        <p><code>HTTP 80</code> · <code>HTTPS 443</code> · <code>FTP 21</code> · <code>SSH 22</code> · <code>Telnet 23</code> · <code>SMTP 25</code> · <code>DNS 53</code> · <code>DHCP 67/68</code> · <code>POP3 110</code> · <code>IMAP 143</code></p>
+      </section>
+
+      <!-- ===================== 11. SECURITY ===================== -->
+      <section class="topic" id="security">
+        <span class="level l3">ADVANCED</span>
+        <h2>11. Network Security Basics</h2>
+        <p>Security goals are called the <b>CIA triad</b>: <b>Confidentiality</b> (only the right people can read), <b>Integrity</b> (data is not changed), <b>Availability</b> (service is up when needed).</p>
+
+        <h3>Common attacks</h3>
+        <div class="tbl"><table>
+          <tr><th>Attack</th><th>What happens</th><th>Defence</th></tr>
+          <tr><td>Sniffing</td><td>Attacker reads packets on the network</td><td>Encryption (HTTPS, VPN)</td></tr>
+          <tr><td>Phishing</td><td>Fake emails/websites steal passwords</td><td>Awareness, 2FA, email filters</td></tr>
+          <tr><td>DoS / DDoS</td><td>Flood a server with traffic so real users can't connect</td><td>Rate limiting, CDN, DDoS protection</td></tr>
+          <tr><td>SYN flood</td><td>Many SYN packets never complete the handshake; server runs out of resources</td><td>SYN cookies, firewalls</td></tr>
+          <tr><td>Man-in-the-Middle (MITM)</td><td>Attacker sits between two parties, reading or changing data</td><td>TLS with valid certificates</td></tr>
+          <tr><td>ARP spoofing</td><td>Fake ARP replies trick devices into sending data to the attacker</td><td>Dynamic ARP Inspection, static ARP</td></tr>
+          <tr><td>DNS spoofing</td><td>Fake DNS answers lead you to a wrong website</td><td>DNSSEC, DNS over HTTPS</td></tr>
+          <tr><td>IP spoofing</td><td>Fake source IP address</td><td>Ingress filtering</td></tr>
+          <tr><td>SQL injection / XSS</td><td>Malicious input in web apps (application level)</td><td>Input validation, prepared statements</td></tr>
+        </table></div>
+
+        <h3>Cryptography in simple words</h3>
+        <ul>
+          <li><b>Symmetric encryption:</b> the <b>same key</b> locks and unlocks. Fast. Example: <b>AES</b>. Problem: how to share the key safely?</li>
+          <li><b>Asymmetric encryption:</b> a <b>key pair</b>. The <b>public key</b> locks, the <b>private key</b> unlocks (like a mailbox: anyone can drop a letter, only the owner opens it). Slower. Example: <b>RSA</b>, ECC.</li>
+          <li><b>Hashing:</b> a one-way fingerprint of data (cannot be reversed). Example: <b>SHA-256</b>. Used for integrity and password storage.</li>
+          <li><b>Digital signature:</b> hash signed with the <b>private</b> key; anyone can verify with the public key. Proves who sent it and that it was not changed.</li>
+        </ul>
+
+        <h3>How HTTPS / TLS really works (simplified)</h3>
+        <ol>
+          <li><b>ClientHello:</b> browser says which TLS versions and ciphers it supports.</li>
+          <li><b>ServerHello + Certificate:</b> the server picks a cipher and sends its <b>digital certificate</b> (contains its public key, signed by a trusted <b>Certificate Authority</b>).</li>
+          <li>Browser <b>verifies</b> the certificate (is it valid, not expired, for this domain, signed by a trusted CA?).</li>
+          <li>Both sides use key exchange (e.g. Diffie-Hellman) to create a shared <b>session key</b>.</li>
+          <li>From now on all data is encrypted with fast <b>symmetric</b> encryption (AES) using that session key.</li>
+        </ol>
+        <div class="note">📌 Smart combination: <b>asymmetric</b> crypto is used only to safely agree on a key; <b>symmetric</b> crypto then does the heavy work.</div>
+
+        <h3>Firewalls</h3>
+        <ul>
+          <li><b>Packet-filter:</b> checks IP, port, protocol against rules (fast, simple).</li>
+          <li><b>Stateful:</b> remembers connections; allows replies to connections you started.</li>
+          <li><b>Application / proxy firewall (WAF):</b> understands HTTP and other app data.</li>
+          <li><b>NGFW:</b> next-generation firewall with deep inspection, IPS and app control.</li>
+          <li><b>DMZ:</b> a separate network zone for public servers (web, mail), so an attack on them doesn't reach the internal LAN.</li>
+        </ul>
+
+        <h3>VPN, IDS and IPS</h3>
+        <ul>
+          <li><b>VPN:</b> creates an <b>encrypted tunnel</b> over the public Internet (IPsec, OpenVPN, WireGuard). Used for remote work and privacy.</li>
+          <li><b>IDS</b> (Intrusion Detection System): watches and <b>alerts</b>.</li>
+          <li><b>IPS</b> (Intrusion Prevention System): watches and <b>blocks</b>.</li>
+        </ul>
+
+        <h3>Good practices</h3>
+        <ul>
+          <li>Use WPA2/WPA3 on Wi-Fi and change default router passwords.</li>
+          <li>Keep firmware and software updated.</li>
+          <li>Use strong, unique passwords and two-factor authentication.</li>
+          <li>Prefer HTTPS, SSH and SFTP over HTTP, Telnet and FTP.</li>
+          <li>Apply the <b>principle of least privilege</b> and segment the network (VLANs).</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 12. ADVANCED ===================== -->
+      <section class="topic" id="advanced">
+        <span class="level l3">ADVANCED</span>
+        <h2>12. Advanced Topics: Proxies, CDN, Load Balancing, SDN & Cloud</h2>
+
+        <h3>Proxy servers</h3>
+        <ul>
+          <li><b>Forward proxy:</b> sits in front of <b>clients</b>. Hides client identity, filters sites, caches content (schools, offices).</li>
+          <li><b>Reverse proxy:</b> sits in front of <b>servers</b>. Hides the real servers, handles TLS, caching and load balancing (Nginx, Cloudflare).</li>
+        </ul>
+
+        <h3>Load balancer</h3>
+        <p>Spreads incoming requests across many servers so no single server is overloaded, and keeps working if one server fails (health checks).</p>
+        <ul>
+          <li><b>Algorithms:</b> Round robin, Least connections, IP hash, Weighted.</li>
+          <li><b>L4</b> load balancer works with IP/port; <b>L7</b> load balancer understands HTTP (can route by URL or cookie).</li>
+        </ul>
+
+        <h3>CDN: Content Delivery Network</h3>
+        <p>A CDN keeps copies of your website's files in many cities around the world. Users get data from the <b>nearest</b> server, so pages load faster and the main server has less load (Cloudflare, Akamai, CloudFront). It also helps absorb DDoS attacks.</p>
+
+        <h3>QoS: Quality of Service</h3>
+        <p>When a network is busy, <b>QoS</b> gives priority to important traffic (voice and video calls) over less urgent traffic (file downloads). Tools: traffic classification, queuing, shaping and policing.</p>
+
+        <h3>Wireless & mobile networks</h3>
+        <ul>
+          <li><b>Cellular generations:</b> 2G (voice, SMS) → 3G (mobile data) → 4G LTE (all-IP broadband) → 5G (very high speed, very low latency, IoT).</li>
+          <li><b>Handoff:</b> when you move, the call moves from one tower to another without breaking.</li>
+        </ul>
+
+        <h3>Software Defined Networking (SDN)</h3>
+        <p>Traditional devices have both the <b>control plane</b> (decides where to send) and the <b>data plane</b> (actually forwards) inside each box. SDN <b>separates them</b>: a central software <b>controller</b> makes decisions and programs all switches (e.g. with OpenFlow). Result: easier management, automation and flexibility.</p>
+
+        <h3>Cloud & data-centre networking</h3>
+        <ul>
+          <li><b>Cloud models:</b> IaaS (rent servers), PaaS (rent a platform), SaaS (use software).</li>
+          <li><b>Virtualisation:</b> virtual machines and containers get virtual switches and virtual networks.</li>
+          <li><b>Overlay networks:</b> VXLAN, tunnels on top of the physical network.</li>
+        </ul>
+
+        <h3>Real-time communication & APIs</h3>
+        <ul>
+          <li><b>REST API:</b> uses HTTP methods on URLs and usually returns JSON.</li>
+          <li><b>WebSocket:</b> a two-way, always-open connection (chat, live scores).</li>
+          <li><b>VoIP / WebRTC:</b> voice and video over IP, commonly using UDP.</li>
+        </ul>
+
+        <h3>Network troubleshooting toolbox</h3>
+        <div class="tbl"><table>
+          <tr><th>Command</th><th>What it tells you</th></tr>
+          <tr><td><code>ping 8.8.8.8</code></td><td>Is the remote host reachable? What is the RTT? Packet loss?</td></tr>
+          <tr><td><code>ping google.com</code></td><td>If IP ping works but this fails → <b>DNS problem</b></td></tr>
+          <tr><td><code>ipconfig</code> / <code>ifconfig</code> / <code>ip a</code></td><td>Your IP, mask, gateway</td></tr>
+          <tr><td><code>tracert</code> / <code>traceroute</code></td><td>The path (hops) and where delay or failure happens</td></tr>
+          <tr><td><code>nslookup</code> / <code>dig</code></td><td>Check DNS records</td></tr>
+          <tr><td><code>netstat -an</code> / <code>ss -tuln</code></td><td>Open ports and active connections</td></tr>
+          <tr><td><code>arp -a</code></td><td>IP ↔ MAC table</td></tr>
+          <tr><td><code>curl -I url</code></td><td>See HTTP response headers</td></tr>
+          <tr><td>Wireshark</td><td>Capture and inspect every packet</td></tr>
+        </table></div>
+        <div class="tip">💡 <b>Troubleshoot bottom-up:</b> cable/Wi-Fi connected? (L1) → got an IP? (L3) → can ping gateway? → can ping 8.8.8.8? → can ping a domain name? (DNS) → does the website open? (L7).</div>
+      </section>
+
+      <!-- ===================== 13. PRACTICE ===================== -->
+      <section class="topic" id="practice">
+        <span class="level l3">PRACTICE</span>
+        <h2>13. Practice Problems with Answers</h2>
+        <p>Try each one yourself first, then open the answer.</p>
+
+        <details><summary>Q1. How many usable hosts are in a /28 network?</summary>
+          <p>Host bits = 32 − 28 = 4 → 2⁴ − 2 = <b>14 hosts</b>.</p></details>
+
+        <details><summary>Q2. Find the network and broadcast address of 172.16.5.130/25.</summary>
+          <p>/25 → mask 255.255.255.128, block size 128. Subnets of the last octet: 0 and 128. Host 130 is in the 128 block.<br>
+          Network = <b>172.16.5.128</b>, Broadcast = <b>172.16.5.255</b>, hosts = .129 – .254.</p></details>
+
+        <details><summary>Q3. Which class is 150.10.20.30 and what is its default mask?</summary>
+          <p>First octet 150 is between 128–191 → <b>Class B</b>, default mask <b>255.255.0.0 (/16)</b>.</p></details>
+
+        <details><summary>Q4. A company needs at least 500 hosts in one subnet. What is the smallest prefix?</summary>
+          <p>2⁹ − 2 = 510 ≥ 500 → host bits = 9 → prefix = 32 − 9 = <b>/23</b>.</p></details>
+
+        <details><summary>Q5. Are 192.168.1.50/24 and 192.168.2.60/24 in the same network?</summary>
+          <p>/24 means the first 3 octets are the network part: 192.168.1 vs 192.168.2 → <b>different networks</b>. They need a router to talk.</p></details>
+
+        <details><summary>Q6. A mesh network has 8 nodes. How many links are needed?</summary>
+          <p>n(n − 1)/2 = 8 × 7 / 2 = <b>28 links</b> (and each node needs 7 ports).</p></details>
+
+        <details><summary>Q7. A 2000-byte file is sent on a 4 Mbps link. What is the transmission delay?</summary>
+          <p>Bits = 2000 × 8 = 16,000. Delay = 16,000 / 4,000,000 = <b>0.004 s = 4 ms</b>.</p></details>
+
+        <details><summary>Q8. Shorten the IPv6 address 2001:0db8:0000:0000:0000:0000:0000:0001.</summary>
+          <p>Remove leading zeros and compress the longest zero run: <b>2001:db8::1</b>.</p></details>
+
+        <details><summary>Q9. In slow start, cwnd = 1 MSS. What is it after 4 RTTs without loss?</summary>
+          <p>It doubles each RTT: 1 → 2 → 4 → 8 → <b>16 MSS</b> (if still below ssthresh).</p></details>
+
+        <details><summary>Q10. A router's table has 10.0.0.0/8 → A, 10.1.0.0/16 → B, 0.0.0.0/0 → C. Where does a packet for 10.1.5.9 go?</summary>
+          <p>Matches all three, but the <b>longest prefix</b> is /16 → goes to <b>B</b>.</p></details>
+      </section>
+
+      <!-- ===================== REVISION ===================== -->
+      <section class="topic" id="revision">
+        <span class="level l3">QUICK REVISION</span>
+        <h2>⚡ Fast Revision Notes</h2>
+        <div class="rev">
+          <div><h4>OSI Layers</h4><ul>
+            <li>7 App · 6 Pres · 5 Session</li><li>4 Transport (Segment)</li><li>3 Network (Packet, IP)</li><li>2 Data Link (Frame, MAC)</li><li>1 Physical (Bits)</li></ul></div>
+          <div><h4>Devices</h4><ul>
+            <li>Hub → L1</li><li>Switch → L2</li><li>Router → L3</li><li>Firewall → L3 to L7</li><li>Router splits broadcast domains</li></ul></div>
+          <div><h4>TCP vs UDP</h4><ul>
+            <li>TCP: reliable, slow, handshake</li><li>UDP: fast, no guarantee</li><li>TCP header 20B, UDP 8B</li><li>TCP: flow + congestion control</li></ul></div>
+          <div><h4>Subnetting</h4><ul>
+            <li>Hosts = 2^h − 2</li><li>Subnets = 2^(borrowed bits)</li><li>/24 → 254 hosts</li><li>Block size = 256 − mask octet</li></ul></div>
+          <div><h4>Addresses</h4><ul>
+            <li>MAC: 48-bit, physical, L2</li><li>IPv4: 32-bit, logical, L3</li><li>IPv6: 128-bit</li><li>Port: 16-bit (0–65535)</li></ul></div>
+          <div><h4>Protocols</h4><ul>
+            <li>DNS: name → IP</li><li>ARP: IP → MAC</li><li>DHCP: gives IP (DORA)</li><li>ICMP: ping, errors</li></ul></div>
+          <div><h4>Routing</h4><ul>
+            <li>RIP: hop count, max 15</li><li>OSPF: link state, Dijkstra</li><li>BGP: between ASes</li><li>Longest prefix match wins</li><li>TTL − 1 per hop</li></ul></div>
+          <div><h4>Data Link</h4><ul>
+            <li>Ethernet MTU 1500</li><li>CRC for error detection</li><li>Switch: learn, forward, flood</li><li>VLAN splits broadcast domains</li><li>STP prevents loops</li></ul></div>
+          <div><h4>TCP Details</h4><ul>
+            <li>SYN → SYN+ACK → ACK</li><li>Close: FIN, ACK, FIN, ACK</li><li>Slow start → congestion avoidance</li><li>3 dup ACKs → fast retransmit</li></ul></div>
+          <div><h4>HTTP</h4><ul>
+            <li>Stateless; cookies give state</li><li>2xx ok · 3xx redirect · 4xx client · 5xx server</li><li>HTTP/3 uses QUIC (UDP)</li><li>HTTPS = HTTP + TLS (443)</li></ul></div>
+          <div><h4>Security</h4><ul>
+            <li>CIA triad</li><li>Symmetric: AES (fast)</li><li>Asymmetric: RSA (key pair)</li><li>Hash: SHA-256 (one-way)</li><li>VPN = encrypted tunnel</li></ul></div>
+          <div><h4>Key Ports</h4><ul>
+            <li>HTTP 80 · HTTPS 443</li><li>SSH 22 · FTP 21 · Telnet 23</li><li>SMTP 25 · DNS 53</li><li>DHCP 67/68 · POP3 110 · IMAP 143</li></ul></div>
+        </div>
+      </section>
+
+      <!-- ===================== QUESTIONS ===================== -->
+      <section class="topic" id="questions">
+        <span class="level l3">PLACEMENT</span>
+        <h2>🎯 Important Interview Questions</h2>
+        <details><summary>1. Difference between a hub, switch and router?</summary>
+          <p>Hub broadcasts to all ports (Layer 1). Switch sends to the correct port using MAC addresses (Layer 2). Router connects different networks using IP addresses (Layer 3).</p></details>
+        <details><summary>2. OSI vs TCP/IP model?</summary>
+          <p>OSI has 7 layers and is a theoretical reference model. TCP/IP has 4 layers and is what the internet really uses.</p></details>
+        <details><summary>3. What is the difference between MAC and IP address?</summary>
+          <p>MAC is a permanent physical address burned into the network card (Layer 2). IP is a logical address given by the network and can change (Layer 3). The MAC changes at every hop; the IP stays the same end to end.</p></details>
+        <details><summary>4. Why is TCP called reliable?</summary>
+          <p>It uses sequence numbers, acknowledgements, retransmission of lost data, flow control and congestion control.</p></details>
+        <details><summary>5. Explain the TCP 3-way handshake.</summary>
+          <p>Client sends SYN, server replies SYN+ACK, client sends ACK. Then the connection is established.</p></details>
+        <details><summary>6. What happens when you type a URL in the browser?</summary>
+          <p>DNS lookup, ARP for the gateway, TCP handshake, TLS handshake (HTTPS), HTTP request, server response, browser renders the page (see topic 10).</p></details>
+        <details><summary>7. What is ARP?</summary>
+          <p>Address Resolution Protocol finds the MAC address when the IP address is known. It broadcasts a request and the owner replies.</p></details>
+        <details><summary>8. What is DHCP?</summary>
+          <p>It automatically gives IP address, subnet mask, gateway and DNS to devices. Process: Discover, Offer, Request, Acknowledge (DORA).</p></details>
+        <details><summary>9. What is a subnet mask and why is it needed?</summary>
+          <p>It separates the network part and host part of an IP address, so devices know whether the destination is in the same network or must be sent to the gateway.</p></details>
+        <details><summary>10. Difference between HTTP and HTTPS?</summary>
+          <p>HTTPS encrypts data using TLS (port 443), so it is secure from eavesdropping and tampering. HTTP is plain text (port 80).</p></details>
+        <details><summary>11. What is the difference between a collision domain and a broadcast domain?</summary>
+          <p>A collision domain is where simultaneous transmissions collide (each switch port is its own; a hub makes one big one). A broadcast domain is where a broadcast is received (a router separates them; a switch does not, unless VLANs are used).</p></details>
+        <details><summary>12. What is NAT and why do we need it?</summary>
+          <p>NAT translates private IP addresses to a public IP when leaving the network. It saves public IPv4 addresses and hides internal devices. PAT uses port numbers so many devices can share one public IP.</p></details>
+        <details><summary>13. What is the difference between TCP and UDP? When would you use each?</summary>
+          <p>TCP is connection-oriented and reliable (web, email, file transfer). UDP is connectionless, fast and has no guarantee (video calls, gaming, DNS). Use UDP when low delay matters more than perfect delivery.</p></details>
+        <details><summary>14. What is the difference between flow control and congestion control?</summary>
+          <p>Flow control stops a fast sender from overwhelming the <b>receiver</b> (receiver window). Congestion control stops senders from overloading the <b>network</b> (congestion window: slow start, congestion avoidance).</p></details>
+        <details><summary>15. How does a switch learn MAC addresses?</summary>
+          <p>It reads the source MAC of every incoming frame and records it with the incoming port. For unknown destinations it floods; for known ones it forwards only to the right port.</p></details>
+        <details><summary>16. What is a VLAN and why use it?</summary>
+          <p>A logical split of one physical switch into separate networks. It improves security, reduces broadcast traffic and makes management easier. Inter-VLAN traffic needs a router or L3 switch.</p></details>
+        <details><summary>17. What is the role of TTL in IP?</summary>
+          <p>TTL is reduced by one at every router. At zero the packet is discarded (and ICMP "Time Exceeded" is sent). It prevents packets from looping forever and is the basis of traceroute.</p></details>
+        <details><summary>18. How does traceroute work?</summary>
+          <p>It sends packets with TTL = 1, 2, 3 and so on. Each router that drops a packet replies with ICMP Time Exceeded, which reveals the router's address, so the full path is discovered hop by hop.</p></details>
+        <details><summary>19. Difference between distance vector and link state routing?</summary>
+          <p>Distance vector (RIP) shares its whole table with neighbours only and knows just "distance and direction". Link state (OSPF) floods information about its links to all routers; every router builds a complete map and runs Dijkstra. Link state converges faster, but uses more memory and CPU.</p></details>
+        <details><summary>20. What is BGP?</summary>
+          <p>Border Gateway Protocol is the routing protocol of the Internet. It exchanges routes between Autonomous Systems (ISPs and big organisations) and chooses paths mostly by policy.</p></details>
+        <details><summary>21. Explain DNS resolution.</summary>
+          <p>The browser checks its cache; otherwise the recursive resolver queries a root server, then the TLD server, then the authoritative server, which returns the IP. The resolver caches the answer according to its TTL.</p></details>
+        <details><summary>22. What are POP3 and IMAP? Which is better today?</summary>
+          <p>Both receive email. POP3 downloads and usually removes mail from the server. IMAP keeps mail on the server and syncs across devices, so IMAP is better for people using multiple devices.</p></details>
+        <details><summary>23. What is the difference between symmetric and asymmetric encryption?</summary>
+          <p>Symmetric uses one shared key and is fast (AES). Asymmetric uses a public/private key pair and is slower (RSA). TLS uses asymmetric crypto to exchange a key, then symmetric crypto to encrypt the data.</p></details>
+        <details><summary>24. How does HTTPS/TLS ensure security?</summary>
+          <p>The server proves its identity with a CA-signed certificate; client and server agree on a session key; then all data is encrypted (confidentiality) and protected with message authentication (integrity).</p></details>
+        <details><summary>25. What is a DDoS attack and how do you defend against it?</summary>
+          <p>Many compromised machines flood a target so real users cannot connect. Defences: rate limiting, firewalls/IPS, CDN and scrubbing services, load balancing, and anycast.</p></details>
+        <details><summary>26. What is the difference between a proxy and a reverse proxy?</summary>
+          <p>A forward proxy represents clients to the Internet (filtering, anonymity). A reverse proxy represents servers to clients (load balancing, TLS termination, caching, hiding backend servers).</p></details>
+        <details><summary>27. What is MTU and fragmentation?</summary>
+          <p>MTU is the largest packet a link can carry (1500 bytes on Ethernet). Larger IP packets are fragmented into smaller ones and reassembled at the destination.</p></details>
+        <details><summary>28. What is the difference between stateless and stateful firewalls?</summary>
+          <p>A stateless firewall checks each packet alone against rules. A stateful firewall tracks connections, so it can automatically allow replies to requests that were started from inside.</p></details>
+        <details><summary>29. Why does DNS use UDP?</summary>
+          <p>Queries and answers are small, and UDP avoids the cost of a handshake, so it is fast. TCP is used when the response is large or for zone transfers.</p></details>
+        <details><summary>30. A website doesn't open. How do you troubleshoot?</summary>
+          <p>Go bottom-up: check the cable/Wi-Fi, check you have an IP (ipconfig), ping the gateway, ping 8.8.8.8 (Internet works?), ping the domain name (DNS works?), then use curl or the browser to check the HTTP status code and the server.</p></details>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>Made with ❤️ for learners · LearnHub © 2026</footer>
+  <script src="js/main.js"></script>
+</body>
+</html>
