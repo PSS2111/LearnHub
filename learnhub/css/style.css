@@ -223,3 +223,385 @@ svg.er{width:100%;height:auto;max-width:760px;display:block;margin:14px auto;bac
 .ix.found{background:#fbbf24;color:#0b1020;outline:2px solid #fff}
 @keyframes lit{from{background:rgba(255,255,255,.05);color:var(--muted)}}
 @media(max-width:600px){.ixg{grid-template-columns:repeat(8,1fr)}}
+
+/* =========================================================
+   RESPONSIVE MOBILE FIXES — LearnHub
+   Appended overrides; desktop styling is preserved.
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 76px;
+}
+
+body {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+  overflow-wrap: anywhere;
+}
+
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+}
+
+main,
+section,
+.topic,
+.layout,
+.card,
+.feat,
+.rev,
+.tbl,
+.table-wrap {
+  min-width: 0;
+}
+
+pre,
+code {
+  overflow-wrap: anywhere;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tbl,
+.table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tbl table,
+.table-wrap table {
+  min-width: 560px;
+}
+
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+  font: inherit;
+}
+
+input,
+select,
+textarea {
+  min-width: 0;
+}
+
+.path {
+  gap: 12px;
+}
+
+.path .node {
+  min-width: 0;
+  flex: 1 1 0;
+  font-size: clamp(1.35rem, 6vw, 2rem);
+}
+
+.path .node small {
+  overflow-wrap: normal;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 22px 4%;
+  }
+
+  .side {
+    display: none;
+  }
+
+  .osi-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  nav {
+    padding: 12px 4%;
+    gap: 12px;
+  }
+
+  nav .logo {
+    font-size: 1.15rem;
+    white-space: nowrap;
+  }
+
+  .menu-btn {
+    display: block;
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    min-width: 42px;
+    min-height: 42px;
+  }
+
+  nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: calc(100vh - 65px);
+    overflow-y: auto;
+    padding: 12px 4% 18px;
+    gap: 0;
+    flex-direction: column;
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  nav ul.open {
+    display: flex;
+  }
+
+  nav ul li,
+  nav ul a {
+    width: 100%;
+  }
+
+  nav ul a {
+    display: block;
+    padding: 11px 8px;
+  }
+
+  .hero {
+    padding: 54px 5% 32px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.12;
+    overflow-wrap: normal;
+  }
+
+  .hero p,
+  .page-hero p {
+    font-size: .98rem;
+  }
+
+  .page-hero {
+    padding: 42px 5% 8px;
+  }
+
+  .section {
+    padding: 42px 5%;
+  }
+
+  .section h2 {
+    font-size: 1.65rem;
+  }
+
+  .cards,
+  .features,
+  .rev,
+  .two {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+
+  .stats {
+    gap: 20px 30px;
+    padding: 24px 5%;
+  }
+
+  .stat h3 {
+    font-size: 1.9rem;
+  }
+
+  .layout {
+    padding: 18px 4%;
+    gap: 14px;
+  }
+
+  .topic {
+    padding: 19px 16px;
+    border-radius: 15px;
+    margin-bottom: 16px;
+  }
+
+  .topic h2 {
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+
+  .topic h3 {
+    font-size: 1.02rem;
+    line-height: 1.35;
+    margin-top: 19px;
+  }
+
+  .topic p,
+  .topic li {
+    font-size: .94rem;
+  }
+
+  table {
+    font-size: .82rem;
+  }
+
+  th,
+  td {
+    padding: 8px;
+  }
+
+  .path {
+    gap: 5px;
+    padding: 16px 0;
+    margin: 18px 0;
+  }
+
+  .path .node {
+    font-size: 1.45rem;
+  }
+
+  .path .node small {
+    font-size: .64rem;
+  }
+
+  .path::before {
+    left: 5%;
+    right: 5%;
+  }
+
+  .path .dot {
+    width: 12px;
+    height: 12px;
+  }
+
+  .calc,
+  .ctl,
+  .sq,
+  .acts {
+    align-items: stretch;
+  }
+
+  .calc input,
+  .ctl input[type="number"],
+  .ctl input[type="text"],
+  .ctl input.wide,
+  .fd-in,
+  .search,
+  select,
+  textarea {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .btn,
+  .btn2 {
+    min-height: 42px;
+    max-width: 100%;
+    white-space: normal;
+  }
+
+  .hs {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    font-size: .86rem;
+  }
+
+  .msg {
+    max-width: 92%;
+  }
+
+  .bals {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .bal {
+    flex: 1 1 120px;
+    padding: 12px 14px;
+  }
+
+  .st {
+    flex: 1 1 125px;
+    min-width: 0;
+    padding: 12px;
+  }
+
+  .st.on {
+    transform: none;
+  }
+
+  .ixg {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  footer {
+    padding: 24px 5%;
+    font-size: .85rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .topic {
+    padding: 16px 12px;
+  }
+
+  .path .node {
+    font-size: 1.2rem;
+  }
+
+  .path .node small {
+    font-size: .58rem;
+  }
+
+  .stats {
+    gap: 16px;
+  }
+
+  .stat h3 {
+    font-size: 1.65rem;
+  }
+
+  .hs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
