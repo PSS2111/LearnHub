@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java + Python – LearnHub</title><link rel="stylesheet" href="css/style.css">
+<style>
+/* Page-specific additions; the shared LearnHub theme remains in control. */
+.jp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:14px 0}
+.jp-card{border:1px solid var(--border);background:rgba(255,255,255,.035);border-radius:12px;padding:14px;min-width:0}
+.jp-card h4{margin-bottom:8px;color:var(--c)}
+.jp-card pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;background:rgba(0,0,0,.22);padding:12px;border-radius:8px;font-size:.88rem}
+.jp-note{border-left:4px solid var(--c);background:rgba(255,255,255,.045);padding:12px 15px;margin:14px 0;border-radius:8px}
+.jp-quiz{border:1px solid var(--border);padding:16px;border-radius:12px;margin:14px 0}
+.jp-quiz button{margin:5px 5px 5px 0;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.08);color:var(--text);cursor:pointer}
+.jp-answer{display:none;margin-top:10px;color:#a7f3d0}.jp-answer.show{display:block}
+.topic h4{margin:16px 0 6px}.topic pre{overflow-x:auto}.topic code{overflow-wrap:anywhere}
+@media(max-width:700px){.jp-grid{grid-template-columns:1fr}.layout{grid-template-columns:1fr}.side{position:relative;top:auto;max-height:300px}}
+</style>
+</head>
+<body class="os">
+<div id="progress"></div><canvas id="bg"></canvas>
+<nav><a href="index.html" class="logo">Learn<span>Hub</span></a><button class="menu-btn" aria-label="Toggle navigation">☰</button><ul>
+<li><a href="index.html">Home</a></li><li><a href="cn.html">Networks</a></li><li><a href="os.html">OS</a></li><li><a href="dbms.html">DBMS</a></li><li><a href="#revision">Revision</a></li><li><a href="#questions">Questions</a></li>
+</ul></nav>
+<header class="page-hero"><div class="icon">☕🐍</div><h1>Java + Python</h1><p>Two languages taught side by side — from your first line of code to object-oriented programming, data structures, files, concurrency, testing and interview-level problem solving. No prior programming experience required.</p></header>
+<div class="layout"><aside class="side" id="side"></aside><main>
+<section class="topic" id="start"><span class="level l1">BEGINNER</span><h2>1. What is programming? Meet Java and Python</h2>
+<p>A computer follows instructions. <b>Programming</b> means writing those instructions in a language a computer can run. A program can calculate marks, power a website, automate a task or control a device.</p>
+<div class="path"><div class="node">🧑‍🎓<small>You</small></div><div class="node">⌨️<small>Code</small></div><div class="node">⚙️<small>Runtime</small></div><div class="node">💻<small>Result</small></div><div class="dot"></div></div>
+<h3>What are Java and Python?</h3><ul><li><b>Java:</b> a statically typed, class-based language. Source code is compiled to bytecode and commonly runs on the Java Virtual Machine (JVM). Used in backend services, enterprise systems, Android development and test automation.</li><li><b>Python:</b> a dynamically typed, high-level language known for readable syntax. Common in automation, scripting, data science, AI, backend services and testing.</li><li><b>Both:</b> general-purpose languages with variables, conditions, loops, functions/methods, data structures, OOP and exception handling.</li></ul>
+<div class="tbl"><table><tr><th>Feature</th><th>Java</th><th>Python</th></tr><tr><td>Typing</td><td>Static: types are declared or inferred at compile time</td><td>Dynamic: names can refer to values of different types</td></tr><tr><td>Typical execution</td><td>Compile to bytecode, run on JVM</td><td>Usually run by Python interpreter/implementation</td></tr><tr><td>Syntax</td><td>Braces and semicolons are common</td><td>Indentation defines code blocks</td></tr><tr><td>Variable example</td><td><code>int age = 20;</code></td><td><code>age = 20</code></td></tr><tr><td>Common strengths</td><td>Strong tooling, large backend ecosystem, static checks</td><td>Concise code, automation, data/AI ecosystem</td></tr></table></div>
+<div class="jp-note"><b>Important:</b> neither language is universally “better” or automatically faster in every task. Choose based on the job, ecosystem, constraints and team. Learning one makes the other easier, but their syntax and runtime rules are not identical.</div>
+<h3>How a program becomes a result</h3><ol><li>Write source code in an editor.</li><li>Translate/execute it using the language toolchain.</li><li>The runtime executes instructions and uses operating-system resources.</li><li>Inspect output and errors, then debug and improve the program.</li></ol>
+<h3>Setup checklist</h3><ul><li>Install a current supported JDK for Java; verify with <code>java -version</code> and <code>javac -version</code>.</li><li>Install Python 3; verify with <code>python --version</code> or <code>python3 --version</code>.</li><li>Use an editor or IDE, a terminal, and a folder for practice files.</li><li>Run one tiny program in each language before moving on.</li></ul></section>
+
+<section class="topic" id="first-program"><span class="level l1">BEGINNER</span><h2>2. Your first program and how to run it</h2>
+<p>Start by printing a message. Printing sends text to the terminal; it does not save the text into a variable.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java — Hello.java</h4><pre>public class Hello {
+    public static void main(String[] args) {
+        System.out.println("Hello, world!");
+    }
+}</pre><p>Run: <code>javac Hello.java</code>, then <code>java Hello</code>.</p></div><div class="jp-card"><h4>Python — hello.py</h4><pre>print("Hello, world!")</pre><p>Run: <code>python hello.py</code> or <code>python3 hello.py</code>.</p></div></div>
+<h3>Understand every part</h3><ul><li><b>Java class:</b> code is organized in classes. A public class named <code>Hello</code> normally lives in <code>Hello.java</code>.</li><li><b><code>main</code> method:</b> the conventional entry point for a basic Java application. <code>String[] args</code> receives command-line arguments.</li><li><b><code>System.out.println</code>:</b> prints a line and then moves to the next line.</li><li><b>Python <code>print()</code>:</b> a built-in function that displays values; Python does not need a class or main method for a tiny script.</li><li><b>Case sensitivity:</b> <code>age</code>, <code>Age</code> and <code>AGE</code> are different names in both languages.</li></ul>
+<h3>Comments</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>// One-line comment
+/* Multiple-line
+   comment */</pre></div><div class="jp-card"><h4>Python</h4><pre># One-line comment
+"""A triple-quoted string is often
+used as a docstring when placed
+at the start of a module/function."""</pre></div></div>
+<h3>Errors you will meet</h3><ul><li><b>Syntax error:</b> code breaks the language grammar, such as a missing Java semicolon or incorrect Python indentation.</li><li><b>Runtime error/exception:</b> code starts but fails while running, such as dividing by zero.</li><li><b>Logic error:</b> program runs but produces the wrong answer.</li></ul></section>
+
+<section class="topic" id="variables"><span class="level l1">BEGINNER</span><h2>3. Variables, values, types and conversion</h2>
+<p>A variable is a name that refers to a value. Think of a labeled box, but remember that in Python the name refers to an object, and in Java a variable has a declared type.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>int age = 20;
+double height = 1.72;
+char grade = 'A';
+boolean passed = true;
+String name = "RAM";
+final int DAYS = 7;</pre></div><div class="jp-card"><h4>Python</h4><pre>age = 20
+height = 1.72
+grade = 'A'
+passed = True
+name = "RAM"
+DAYS = 7  # naming convention;
+          # not enforced constant</pre></div></div>
+<h3>Common types</h3><div class="tbl"><table><tr><th>Concept</th><th>Java</th><th>Python</th></tr><tr><td>Whole numbers</td><td><code>byte, short, int, long</code></td><td><code>int</code> (arbitrary precision in normal use)</td></tr><tr><td>Decimal numbers</td><td><code>float, double</code></td><td><code>float</code></td></tr><tr><td>Single character</td><td><code>char</code></td><td>No separate built-in char; one-character string</td></tr><tr><td>True/false</td><td><code>boolean</code></td><td><code>bool</code> (<code>True</code>/<code>False</code>)</td></tr><tr><td>Text</td><td><code>String</code> (reference type)</td><td><code>str</code></td></tr><tr><td>No value</td><td><code>null</code> for references</td><td><code>None</code></td></tr></table></div>
+<h3>Type conversion (casting)</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>int n = 7;
+double d = n;       // widening
+int whole = (int) 4.9; // becomes 4
+String s = String.valueOf(n);
+int parsed = Integer.parseInt("42");</pre></div><div class="jp-card"><h4>Python</h4><pre>n = 7
+d = float(n)
+whole = int(4.9)  # becomes 4
+s = str(n)
+parsed = int("42")</pre></div></div>
+<p>Conversion can fail: converting <code>"hello"</code> to an integer is invalid. In Java, parse methods may throw <code>NumberFormatException</code>; in Python, <code>int("hello")</code> raises <code>ValueError</code>.</p>
+<h3>Input and output</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>import java.util.Scanner;
+
+Scanner sc = new Scanner(System.in);
+System.out.print("Enter age: ");
+int age = sc.nextInt();
+System.out.println("Age = " + age);</pre><p>Learn Scanner token input versus <code>nextLine()</code>; mixing them can leave a newline to consume.</p></div><div class="jp-card"><h4>Python</h4><pre>age = int(input("Enter age: "))
+print(f"Age = {age}")</pre><p><code>input()</code> returns text, so convert it when a number is needed.</p></div></div>
+<h3>Operators</h3><ul><li><b>Arithmetic:</b> <code>+ - * / %</code>; Java also has integer division for integer operands, while Python <code>/</code> returns a float and <code>//</code> is floor division.</li><li><b>Comparison:</b> <code>== != &lt; &gt; &lt;= &gt;=</code> returns a boolean result.</li><li><b>Logical:</b> Java <code>&amp;&amp; || !</code>; Python <code>and or not</code>.</li><li><b>Assignment:</b> <code>= += -= *=</code> and similar compound operators.</li><li><b>Increment:</b> Java has <code>i++</code>; Python does not. Use <code>i += 1</code>.</li><li><b>Equality:</b> Java uses <code>==</code> for primitive values and reference identity; use <code>.equals()</code> for String content. Python uses <code>==</code> for value equality and <code>is</code> for identity.</li></ul></section>
+
+<section class="topic" id="control-flow"><span class="level l1">BEGINNER</span><h2>4. Decisions, loops and control flow</h2><p>Programs choose paths and repeat work. Indentation is meaningful in Python; Java groups blocks with braces.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java — if / else</h4><pre>int score = 76;
+if (score >= 90) {
+    System.out.println("A");
+} else if (score >= 60) {
+    System.out.println("Pass");
+} else {
+    System.out.println("Retry");
+}</pre></div><div class="jp-card"><h4>Python — if / elif / else</h4><pre>score = 76
+if score >= 90:
+    print("A")
+elif score >= 60:
+    print("Pass")
+else:
+    print("Retry")</pre></div></div>
+<h3>Loops</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>for (int i = 0; i < 5; i++) {
+    System.out.println(i);
+}
+int n = 3;
+while (n > 0) {
+    System.out.println(n);
+    n--;
+}</pre></div><div class="jp-card"><h4>Python</h4><pre>for i in range(5):
+    print(i)
+n = 3
+while n > 0:
+    print(n)
+    n -= 1</pre></div></div>
+<ul><li><b>For loop:</b> useful when iterating a range or collection.</li><li><b>While loop:</b> repeats while a condition remains true; ensure progress toward stopping.</li><li><b><code>break</code>:</b> exits the nearest loop.</li><li><b><code>continue</code>:</b> skips to the next iteration.</li><li><b>Nested loops:</b> one loop inside another; often used for grids, pairs and matrix operations.</li><li><b>Off-by-one error:</b> using the wrong boundary. Python <code>range(5)</code> produces 0 through 4; Java condition <code>i &lt; 5</code> does the same.</li></ul>
+<h3>Switch / match and conditional expressions</h3><div class="jp-grid"><div class="jp-card"><h4>Java switch (modern syntax)</h4><pre>String dayType = switch (day) {
+    case "Sat", "Sun" -> "Weekend";
+    default -> "Weekday";
+};</pre></div><div class="jp-card"><h4>Python match (3.10+)</h4><pre>match day:
+    case "Sat" | "Sun":
+        day_type = "Weekend"
+    case _:
+        day_type = "Weekday"</pre></div></div><p>Use these when they improve clarity; a simple <code>if</code> is often enough. Java switch features depend on the JDK version.</p></section>
+
+<section class="topic" id="strings"><span class="level l1">BEGINNER</span><h2>5. Strings and text processing</h2><p>A string represents text. Java strings and Python strings are immutable: operations usually create a new string rather than modifying the existing one.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>String name = "RAM";
+System.out.println(name.length());
+System.out.println(name.toLowerCase());
+System.out.println(name.substring(0, 2));
+System.out.println(name.contains("A"));
+String joined = name + " learns Java";
+String formatted = String.format("Score: %d", 90);</pre></div><div class="jp-card"><h4>Python</h4><pre>name = "RAM"
+print(len(name))
+print(name.lower())
+print(name[0:2])
+print("A" in name)
+joined = name + " learns Python"
+formatted = f"Score: {90}"</pre></div></div>
+<h3>Indexing and slicing</h3><ul><li>Indexes are usually zero-based: first character is index 0.</li><li>Java <code>substring(start, end)</code> uses an exclusive end index and does not support negative indexes.</li><li>Python slicing <code>text[start:end:step]</code> has an exclusive end; negative indexes count from the end.</li><li>Handle empty strings and boundaries before indexing to avoid exceptions.</li></ul>
+<h3>String comparison and construction</h3><ul><li>Java: compare contents with <code>text.equals(other)</code>; use <code>StringBuilder</code> for many repeated concatenations in a loop.</li><li>Python: use <code>==</code> for value equality and <code>"".join(parts)</code> for joining many pieces efficiently.</li><li>For user input, consider whitespace with <code>trim()</code> in Java and <code>strip()</code> in Python.</li><li>Unicode text can contain multi-code-point graphemes; a visible character is not always one code unit or one code point.</li></ul></section>
+
+<section class="topic" id="arrays-lists"><span class="level l1">BEGINNER</span><h2>6. Arrays, lists, tuples, sets and maps</h2><p>Collections let you keep multiple values. Choose a structure based on the operations you need: indexing, uniqueness, ordering, or key-based lookup.</p>
+<div class="tbl"><table><tr><th>Need</th><th>Java</th><th>Python</th></tr><tr><td>Fixed-size indexed sequence</td><td>Array, e.g. <code>int[]</code></td><td>Tuple is fixed by convention; list is resizable</td></tr><tr><td>Resizable sequence</td><td><code>ArrayList&lt;T&gt;</code></td><td><code>list</code></td></tr><tr><td>Unique elements</td><td><code>HashSet&lt;T&gt;</code></td><td><code>set</code></td></tr><tr><td>Key-value lookup</td><td><code>HashMap&lt;K,V&gt;</code></td><td><code>dict</code></td></tr><tr><td>FIFO queue</td><td><code>Queue</code> / <code>ArrayDeque</code></td><td><code>collections.deque</code></td></tr></table></div>
+<div class="jp-grid"><div class="jp-card"><h4>Java collections</h4><pre>int[] nums = {4, 8, 2};
+List<String> names = new ArrayList<>();
+names.add("RAM");
+names.add("Asha");
+Set<Integer> unique = new HashSet<>(List.of(2, 2, 5));
+Map<String, Integer> marks = new HashMap<>();
+marks.put("RAM", 90);
+int score = marks.getOrDefault("RAM", 0);</pre><p>Imports are required: <code>java.util.*</code> can be used for learning, but explicit imports are clearer in production.</p></div><div class="jp-card"><h4>Python collections</h4><pre>nums = [4, 8, 2]
+names = ["RAM", "Asha"]
+unique = {2, 2, 5}
+marks = {"RAM": 90}
+score = marks.get("RAM", 0)
+point = (3, 4)  # tuple
+names.append("Lee")
+nums.sort()</pre></div></div>
+<h3>Operations to master</h3><ul><li>Read/update by index, append/add, insert, remove, delete, membership test, length and iteration.</li><li>Lists/ArrayLists allow duplicates; sets remove duplicates; maps/dictionaries associate keys with values.</li><li>Java arrays have fixed length; <code>ArrayList</code> grows dynamically.</li><li>Python lists are mutable; tuples are immutable containers, though an object inside a tuple may itself be mutable.</li><li>Python dictionary keys must be hashable. Java hash-map keys should implement stable <code>equals()</code> and <code>hashCode()</code>.</li><li>Do not assume every collection preserves order. <code>HashMap</code> does not promise iteration order; use an ordered alternative when order is required.</li></ul>
+<h3>Looping through collections</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>for (String name : names) {
+    System.out.println(name);
+}
+for (int i = 0; i < nums.length; i++) {
+    System.out.println(nums[i]);
+}</pre></div><div class="jp-card"><h4>Python</h4><pre>for name in names:
+    print(name)
+for index, value in enumerate(nums):
+    print(index, value)</pre></div></div>
+<h3>Comprehensions and streams</h3><div class="jp-grid"><div class="jp-card"><h4>Java Stream</h4><pre>List<Integer> evens = nums.stream()
+    .filter(n -> n % 2 == 0)
+    .toList();</pre></div><div class="jp-card"><h4>Python comprehension</h4><pre>evens = [n for n in nums if n % 2 == 0]</pre></div></div><p>These are concise tools, not magic: understand the loop version first, then use them when they stay readable.</p></section>
+
+<section class="topic" id="functions"><span class="level l1">BEGINNER</span><h2>7. Functions and methods</h2><p>A function/method packages a task into a reusable unit. Parameters are inputs; a return value sends a result back to the caller.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java method</h4><pre>static int add(int a, int b) {
+    return a + b;
+}
+// call:
+int result = add(3, 4);</pre></div><div class="jp-card"><h4>Python function</h4><pre>def add(a, b):
+    return a + b
+
+result = add(3, 4)</pre></div></div>
+<h3>Parameters, return, scope</h3><ul><li><b>Parameter:</b> variable declared in the function definition. <b>Argument:</b> value supplied during a call.</li><li><b><code>return</code>:</b> ends the function and optionally gives back a value. Printing a value is not the same as returning it.</li><li><b>Scope:</b> determines where a name can be accessed. Prefer local variables and explicit inputs/outputs over hidden global state.</li><li><b>Overloading:</b> Java supports methods with the same name and different parameter lists. Python normally uses one function definition; defaults or argument handling are common alternatives.</li><li><b>Recursion:</b> a function calls itself. It needs a base case and progress toward that case, otherwise it may overflow the call stack or hit recursion limits.</li></ul>
+<h3>Defaults, named arguments and varargs</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>static int sum(int... values) {
+    int total = 0;
+    for (int v : values) total += v;
+    return total;
+}
+// sum(1, 2, 3)</pre></div><div class="jp-card"><h4>Python</h4><pre>def greet(name, greeting="Hello"):
+    return f"{greeting}, {name}"
+
+def total(*values):
+    return sum(values)
+
+greet(name="RAM", greeting="Hi")</pre></div></div>
+<p>Python also supports <code>**kwargs</code> for collecting keyword arguments. Avoid mutable defaults such as <code>def f(items=[])</code>; the same list would be reused across calls.</p>
+<h3>Lambda functions</h3><div class="jp-grid"><div class="jp-card"><h4>Java lambda</h4><pre>names.sort((a, b) -> a.length() - b.length());</pre></div><div class="jp-card"><h4>Python lambda</h4><pre>names.sort(key=lambda name: len(name))</pre></div></div><p>Use lambdas for small expressions. For complex logic, define a named function. In Java, lambdas commonly implement functional interfaces.</p></section>
+
+<section class="topic" id="oop"><span class="level l2">INTERMEDIATE</span><h2>8. Object-oriented programming (OOP)</h2><p>OOP organizes code around objects that combine state and behavior. A class is a blueprint; an object is an instance created from it.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java class</h4><pre>class Student {
+    private String name;
+    private int marks;
+
+    Student(String name, int marks) {
+        this.name = name;
+        this.marks = marks;
+    }
+    public String getName() { return name; }
+    public boolean passed() { return marks >= 40; }
+}
+Student s = new Student("RAM", 82);</pre></div><div class="jp-card"><h4>Python class</h4><pre>class Student:
+    def __init__(self, name, marks):
+        self.name = name
+        self.marks = marks
+
+    def passed(self):
+        return self.marks >= 40
+
+s = Student("RAM", 82)</pre></div></div>
+<h3>The four common OOP principles</h3><ul><li><b>Encapsulation:</b> keep state and related behavior together; protect invariants. Java uses access modifiers such as <code>private</code> and public methods. Python conventionally uses leading underscores; it does not enforce privacy the same way.</li><li><b>Abstraction:</b> expose what a caller needs and hide implementation details. Java has interfaces and abstract classes; Python has abstract base classes in <code>abc</code>.</li><li><b>Inheritance:</b> a class derives behavior from a parent. Use it for a genuine “is-a” relationship, not just to reuse a few lines.</li><li><b>Polymorphism:</b> the same interface can lead to different behavior depending on the actual object. Python often relies on duck typing; Java commonly uses interface or superclass references.</li></ul>
+<h3>Inheritance and overriding</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>interface Payable {
+    double amount();
+}
+class Invoice implements Payable {
+    public double amount() { return 125.0; }
+}
+Payable p = new Invoice();
+System.out.println(p.amount());</pre></div><div class="jp-card"><h4>Python</h4><pre>class Payable:
+    def amount(self):
+        raise NotImplementedError
+
+class Invoice(Payable):
+    def amount(self):
+        return 125.0
+
+p = Invoice()
+print(p.amount())</pre></div></div>
+<h3>OOP concepts beyond the basics</h3><ul><li><b>Constructor:</b> initializes a new object. Java constructor name matches the class; Python uses <code>__init__</code> to initialize an already-created instance.</li><li><b><code>this</code> / <code>self</code>:</b> Java <code>this</code> refers to the current object; Python methods explicitly receive the instance conventionally named <code>self</code>.</li><li><b>Static/class members:</b> Java <code>static</code> members belong to the class. Python has class attributes and <code>@classmethod</code>; instance attributes are usually set on <code>self</code>.</li><li><b>Composition:</b> one object contains or uses another (“has-a”). Often more flexible than inheritance.</li><li><b>Overloading vs overriding:</b> overloading selects among signatures (Java); overriding replaces inherited behavior. Python overriding is common, but traditional signature-based method overloading is not built in.</li><li><b>Special methods:</b> Python <code>__str__</code>, <code>__repr__</code>, <code>__len__</code>, and operator methods customize object behavior.</li><li><b>Equality:</b> define equality consistently. In Java, overriding <code>equals</code> normally requires a matching <code>hashCode</code>. Python may implement <code>__eq__</code>.</li></ul></section>
+
+<section class="topic" id="exceptions"><span class="level l2">INTERMEDIATE</span><h2>9. Exceptions and defensive programming</h2><p>An exception signals that normal execution cannot continue as written. Handle exceptions you can meaningfully recover from; do not hide every error with a blanket catch.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>try {
+    int value = Integer.parseInt("42");
+    System.out.println(value);
+} catch (NumberFormatException e) {
+    System.out.println("Invalid number");
+} finally {
+    System.out.println("Cleanup runs");
+}</pre></div><div class="jp-card"><h4>Python</h4><pre>try:
+    value = int("42")
+    print(value)
+except ValueError:
+    print("Invalid number")
+finally:
+    print("Cleanup runs")</pre></div></div>
+<h3>Java vs Python exception model</h3><ul><li>Java has checked exceptions (must be caught or declared in many contexts) and unchecked exceptions (subclasses of <code>RuntimeException</code>, among others).</li><li>Python exceptions are unchecked; the code documents and handles expected failures at runtime.</li><li>Java uses <code>throw</code> to raise and <code>throws</code> to declare; Python uses <code>raise</code>.</li><li>Use Java try-with-resources or Python <code>with</code> for reliable resource cleanup.</li><li>Catch specific exception types, add context, and preserve the original cause when re-raising.</li></ul>
+<h3>Custom exceptions</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>class InvalidAgeException extends Exception {
+    InvalidAgeException(String message) {
+        super(message);
+    }
+}</pre></div><div class="jp-card"><h4>Python</h4><pre>class InvalidAgeError(Exception):
+    pass
+
+if age < 0:
+    raise InvalidAgeError("Age cannot be negative")</pre></div></div>
+<p>Validate external input at boundaries, but avoid redundant checks everywhere. Errors should be understandable to users and detailed enough in logs for developers without leaking secrets.</p></section>
+
+<section class="topic" id="files"><span class="level l2">INTERMEDIATE</span><h2>10. Files, serialization and paths</h2><p>Programs often read configuration, write reports and exchange structured data. Always consider encoding, file paths, permissions and cleanup.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java — text file</h4><pre>import java.nio.file.*;
+import java.io.IOException;
+
+try {
+    Files.writeString(Path.of("notes.txt"), "LearnHub\n");
+    String text = Files.readString(Path.of("notes.txt"));
+    System.out.println(text);
+} catch (IOException e) {
+    System.err.println("File operation failed: " + e.getMessage());
+}</pre></div><div class="jp-card"><h4>Python — text file</h4><pre>from pathlib import Path
+
+path = Path("notes.txt")
+path.write_text("LearnHub\n", encoding="utf-8")
+text = path.read_text(encoding="utf-8")
+print(text)</pre></div></div>
+<h3>File handling checklist</h3><ul><li>Prefer explicit UTF-8 encoding for text files where practical.</li><li>Use paths rather than hard-coded platform-specific separators. Java <code>Path</code> and Python <code>pathlib.Path</code> help.</li><li>Use Java try-with-resources for streams/readers/writers; Python <code>with open(...)</code> closes the file reliably.</li><li>Distinguish text from binary files. Images, archives and many documents must be read/written in binary mode.</li><li>Handle missing files and permission errors appropriately.</li></ul>
+<h3>JSON serialization</h3><div class="jp-grid"><div class="jp-card"><h4>Java (library required)</h4><pre>// With a JSON library such as Jackson:
+// ObjectMapper mapper = new ObjectMapper();
+// String json = mapper.writeValueAsString(data);
+// MyType data = mapper.readValue(json, MyType.class);</pre></div><div class="jp-card"><h4>Python built-in json</h4><pre>import json
+
+data = {"name": "RAM", "score": 90}
+text = json.dumps(data)
+restored = json.loads(text)</pre></div></div><p>JSON is a data format, not an executable program. Never deserialize untrusted data using unsafe mechanisms such as Python <code>pickle</code> from an untrusted source.</p></section>
+
+<section class="topic" id="modules"><span class="level l2">INTERMEDIATE</span><h2>11. Packages, modules, libraries and environments</h2><p>Small programs grow into projects. Organize code into modules, isolate dependencies and make setup repeatable.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java package</h4><pre>package com.learnhub.math;
+
+public class Calculator {
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+}</pre><p>Packages group types; imports let source files refer to types by simple names.</p></div><div class="jp-card"><h4>Python module</h4><pre># calculator.py
+def multiply(a, b):
+    return a * b
+
+# in another file:
+from calculator import multiply
+print(multiply(3, 4))</pre><p>A folder with Python modules can be organized as a package.</p></div></div>
+<h3>Dependency management</h3><ul><li><b>Java:</b> learn Maven or Gradle; Maven commonly uses <code>pom.xml</code> to declare dependencies, build settings and tests.</li><li><b>Python:</b> learn <code>venv</code> and <code>pip</code>; isolate project dependencies rather than installing everything globally. Modern projects may use <code>pyproject.toml</code>.</li><li><b>Reproducibility:</b> document language/runtime versions and dependency versions, and keep secrets out of source control.</li><li><b>Entry point:</b> Java uses a main method for standard applications; Python often uses <code>if __name__ == "__main__":</code>.</li></ul>
+<div class="jp-grid"><div class="jp-card"><h4>Python script guard</h4><pre>def main():
+    print("Run as a script")
+
+if __name__ == "__main__":
+    main()</pre></div><div class="jp-card"><h4>Useful commands</h4><pre># Python environment
+python -m venv .venv
+# activate environment using your OS instructions
+python -m pip install requests
+python -m pip freeze
+
+# Java Maven
+mvn test
+mvn package</pre></div></div></section>
+
+<section class="topic" id="generics"><span class="level l2">INTERMEDIATE</span><h2>12. Generics, type hints and reusable design</h2><p>Reusable code should work with multiple types without throwing away safety or clarity.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java generics</h4><pre>static <T> T first(List<T> values) {
+    if (values.isEmpty()) {
+        throw new IllegalArgumentException("Empty list");
+    }
+    return values.get(0);
+}
+List<String> names = List.of("RAM", "Asha");
+String firstName = first(names);</pre></div><div class="jp-card"><h4>Python type hints</h4><pre>def first[T](values: list[T]) -> T:
+    if not values:
+        raise ValueError("Empty list")
+    return values[0]
+
+# Generic syntax depends on Python version;
+# older versions use TypeVar from typing.</pre></div></div>
+<p>Java generics are checked by the compiler with type erasure in the usual implementation. Python type hints help editors and static analysis tools, but Python does not enforce them automatically at runtime. The newer Python generic syntax shown requires Python 3.12+; for older versions use <code>TypeVar</code>.</p>
+<h3>Design principles</h3><ul><li><b>Single responsibility:</b> one class/function should have one clear reason to change.</li><li><b>Separation of concerns:</b> keep input/output, business rules and storage separate.</li><li><b>Composition over inheritance:</b> prefer assembling collaborators unless inheritance models a real subtype relationship.</li><li><b>DRY:</b> avoid harmful duplication, but do not create abstractions for every two repeated lines.</li><li><b>Readable names:</b> explain intent. Avoid unexplained abbreviations and huge methods.</li><li><b>API contracts:</b> document valid inputs, output, side effects and possible failures.</li></ul></section>
+
+<section class="topic" id="algorithms"><span class="level l2">INTERMEDIATE</span><h2>13. Algorithms and Big-O analysis</h2><p>An algorithm is a finite sequence of steps that solves a problem. Data structures and algorithmic complexity matter in both languages and in interviews.</p>
+<h3>Big-O intuition</h3><div class="tbl"><table><tr><th>Complexity</th><th>Meaning (roughly)</th><th>Example</th></tr><tr><td><code>O(1)</code></td><td>Constant work</td><td>Array access by index</td></tr><tr><td><code>O(log n)</code></td><td>Problem shrinks by a factor each step</td><td>Binary search in sorted data</td></tr><tr><td><code>O(n)</code></td><td>Work grows with input size</td><td>Linear scan</td></tr><tr><td><code>O(n log n)</code></td><td>Common efficient comparison sorting</td><td>Merge sort / typical efficient sorts</td></tr><tr><td><code>O(n²)</code></td><td>Every item compared with many others</td><td>Nested loop over all pairs</td></tr><tr><td><code>O(2ⁿ)</code></td><td>Explosive growth</td><td>Naive subset recursion</td></tr></table></div>
+<h3>Linear search vs binary search</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>static int binarySearch(int[] a, int target) {
+    int left = 0, right = a.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (a[mid] == target) return mid;
+        if (a[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1;
+}</pre></div><div class="jp-card"><h4>Python</h4><pre>def binary_search(a, target):
+    left, right = 0, len(a) - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if a[mid] == target:
+            return mid
+        if a[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1</pre></div></div>
+<p><b>Precondition:</b> the input must be sorted. Binary search runs in <code>O(log n)</code> time and uses <code>O(1)</code> extra space in this iterative form.</p>
+<h3>Core DSA roadmap</h3><ol><li>Arrays and strings: traversal, prefix sums, two pointers, sliding window.</li><li>Hashing: frequency counts, duplicate detection, pair sum.</li><li>Linked lists: insert/delete, reverse, slow/fast pointers, cycle detection.</li><li>Stacks and queues: balanced brackets, next greater element, BFS.</li><li>Recursion and backtracking: subsets, permutations, maze paths.</li><li>Sorting and binary search: custom comparators, bounds, search on answer.</li><li>Trees and BSTs: traversals, height, validation, lowest common ancestor.</li><li>Heaps: top K elements, merge sorted sequences.</li><li>Graphs: adjacency lists, BFS/DFS, shortest paths, cycle detection, topological sort.</li><li>Dynamic programming: define state, transition, base case, order and complexity.</li></ol>
+<div class="jp-note"><b>Interview habit:</b> explain a brute-force solution first, improve it, state time and space complexity, test edge cases, then write clean code. Memorizing a solution without understanding its invariant fails when the question changes.</div></section>
+
+<section class="topic" id="collections-deep"><span class="level l2">INTERMEDIATE</span><h2>14. Collections internals and choosing the right structure</h2><h3>Typical average-case costs</h3><div class="tbl"><table><tr><th>Structure / operation</th><th>Typical time</th><th>Important caveat</th></tr><tr><td>Array/list index access</td><td><code>O(1)</code></td><td>Middle insertion/removal may shift items: <code>O(n)</code></td></tr><tr><td>Hash map/set lookup</td><td>Average <code>O(1)</code></td><td>Worst case can be worse; hashing and collisions matter</td></tr><tr><td>Balanced search tree</td><td><code>O(log n)</code></td><td>Maintains ordering at extra cost</td></tr><tr><td>Stack push/pop</td><td><code>O(1)</code> typical</td><td>Use the language's intended stack/deque structure</td></tr><tr><td>Heap peek</td><td><code>O(1)</code></td><td>Insert/remove top generally <code>O(log n)</code></td></tr><tr><td>Linked list search</td><td><code>O(n)</code></td><td>Constant-time insertion requires the relevant node/position</td></tr></table></div>
+<h3>Java collection framework</h3><ul><li><code>List</code>: ordered sequence; common implementations include <code>ArrayList</code> and <code>LinkedList</code>.</li><li><code>Set</code>: unique elements; <code>HashSet</code>, <code>LinkedHashSet</code>, <code>TreeSet</code> have different order/performance properties.</li><li><code>Map</code>: key-value associations; <code>HashMap</code>, <code>LinkedHashMap</code>, <code>TreeMap</code>.</li><li><code>Queue</code>/<code>Deque</code>: queues and double-ended queues; <code>ArrayDeque</code> is often useful for stack/queue operations.</li><li>Use generics such as <code>List&lt;String&gt;</code> to avoid unsafe casts.</li></ul>
+<h3>Python collection tools</h3><ul><li><code>list</code>, <code>tuple</code>, <code>set</code>, <code>dict</code> are core built-ins.</li><li><code>collections.deque</code> supports efficient appends and pops at both ends.</li><li><code>collections.Counter</code> counts hashable values; <code>defaultdict</code> supplies defaults for missing keys.</li><li><code>heapq</code> provides a min-heap; <code>bisect</code> helps binary-search sorted sequences.</li><li>Use a generator when you want to produce values lazily rather than build a full list.</li></ul></section>
+
+<section class="topic" id="functional"><span class="level l2">INTERMEDIATE</span><h2>15. Functional-style programming and iteration</h2><p>Functional techniques emphasize transforming values, composing small operations and limiting side effects. Use them when they make code easier to reason about.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java streams</h4><pre>List<String> result = names.stream()
+    .filter(name -> name.length() >= 4)
+    .map(String::toUpperCase)
+    .sorted()
+    .toList();</pre></div><div class="jp-card"><h4>Python map/filter/generator</h4><pre>result = sorted(
+    name.upper()
+    for name in names
+    if len(name) >= 4
+)
+
+def squares(limit):
+    for n in range(limit):
+        yield n * n</pre></div></div>
+<ul><li><b>Pure function:</b> same inputs produce the same output and no externally visible side effect.</li><li><b>Map:</b> transform each item. <b>Filter:</b> keep items that pass a condition. <b>Reduce:</b> combine values into one result.</li><li><b>Java stream:</b> operations are often lazy until a terminal operation; streams should generally not be reused after a terminal operation.</li><li><b>Python generator:</b> yields values one at a time, saving memory for large sequences; it is usually consumed as it iterates.</li><li><b>Immutability:</b> reduces accidental state changes, but do not confuse an immutable reference with a deeply immutable object graph.</li></ul></section>
+
+<section class="topic" id="concurrency"><span class="level l3">ADVANCED</span><h2>16. Threads, concurrency, parallelism and async</h2><p><b>Concurrency</b> means multiple tasks make progress during overlapping periods. <b>Parallelism</b> means work literally executes at the same time on multiple processing units. They are related but not the same.</p>
+<div class="tbl"><table><tr><th>Concept</th><th>Java</th><th>Python</th></tr><tr><td>Threading</td><td><code>Thread</code>, executors, concurrent utilities</td><td><code>threading</code></td></tr><tr><td>CPU-bound parallel work</td><td>Threads can run in parallel depending on CPU and workload</td><td><code>multiprocessing</code> is often useful; CPython's GIL affects Python-bytecode threading</td></tr><tr><td>I/O-bound tasks</td><td>Threads or asynchronous APIs</td><td>Threads or <code>asyncio</code></td></tr><tr><td>Shared-state protection</td><td><code>synchronized</code>, locks, atomic classes</td><td><code>threading.Lock</code>, queues, careful design</td></tr></table></div>
+<h3>Race conditions and synchronization</h3><p>If two tasks read the same value and update it without coordination, one update can overwrite the other. This is a <b>race condition</b>. A critical section protects shared mutable state.</p>
+<div class="jp-grid"><div class="jp-card"><h4>Java synchronized</h4><pre>class Counter {
+    private int value = 0;
+    public synchronized void increment() {
+        value++;
+    }
+    public synchronized int get() {
+        return value;
+    }
+}</pre></div><div class="jp-card"><h4>Python lock</h4><pre>from threading import Lock
+
+class Counter:
+    def __init__(self):
+        self.value = 0
+        self.lock = Lock()
+
+    def increment(self):
+        with self.lock:
+            self.value += 1</pre></div></div>
+<h3>Deadlocks and safe design</h3><ul><li>A deadlock can occur when tasks wait forever for resources held by one another.</li><li>Reduce risk with a consistent lock ordering, small critical sections, timeouts where appropriate and avoiding nested locks where possible.</li><li>Prefer thread-safe queues and high-level concurrency abstractions instead of manually coordinating many low-level locks.</li><li>Java: learn <code>ExecutorService</code>, <code>Future</code>, <code>CompletableFuture</code>, concurrent collections and atomic variables.</li><li>Python: learn <code>concurrent.futures</code>, <code>queue.Queue</code>, <code>multiprocessing</code> and <code>asyncio</code>.</li></ul>
+<h3>Python async/await</h3><pre>import asyncio
+
+async def fetch_example():
+    await asyncio.sleep(1)  # yields control; doesn't block the event loop
+    return "done"
+
+async def main():
+    result = await fetch_example()
+    print(result)
+
+asyncio.run(main())</pre><p><code>asyncio</code> is particularly useful for many concurrent I/O operations when the libraries involved support async. It does not automatically make CPU-heavy code faster.</p></section>
+
+<section class="topic" id="memory"><span class="level l3">ADVANCED</span><h2>17. Memory management, references and garbage collection</h2><p>Programs allocate objects, hold references to them and eventually release memory. Understanding references helps explain leaks, surprising mutation and performance problems.</p>
+<ul><li><b>Stack frames:</b> hold call-related state such as local variables and return information conceptually; actual implementation details vary.</li><li><b>Heap:</b> commonly stores dynamically allocated objects.</li><li><b>Java:</b> automatic garbage collection reclaims unreachable objects. A memory leak can still occur when references unintentionally keep objects reachable.</li><li><b>Python:</b> memory management is implementation-dependent. CPython commonly uses reference counting plus cyclic garbage collection.</li><li><b>Pass-by-value:</b> Java passes values; when passing an object, the copied value is a reference. Python passes object references by assignment (often described as call-by-sharing).</li><li><b>Mutable vs immutable:</b> mutating a shared list can be visible through multiple references; reassigning a local name does not reassign the caller's variable.</li></ul>
+<div class="jp-grid"><div class="jp-card"><h4>Java reference example</h4><pre>List<String> a = new ArrayList<>();
+List<String> b = a;
+b.add("hello");
+// a also sees "hello": same list object</pre></div><div class="jp-card"><h4>Python reference example</h4><pre>a = []
+b = a
+b.append("hello")
+# a also sees "hello": same list object</pre></div></div>
+<h3>Practical memory hygiene</h3><ul><li>Close streams, sockets and database connections; garbage collection is not a substitute for resource management.</li><li>Avoid retaining large caches or event listeners indefinitely.</li><li>Use profilers and heap/memory tools to measure before optimizing.</li><li>Do not assume a variable name directly “contains” a complex object; reference semantics matter.</li></ul></section>
+
+<section class="topic" id="testing"><span class="level l2">INTERMEDIATE</span><h2>18. Testing, debugging and code quality</h2><p>Tests provide evidence that code behaves as expected. A useful test suite covers normal behavior, edge cases and failures.</p>
+<h3>Unit test example</h3><div class="jp-grid"><div class="jp-card"><h4>Java — JUnit 5 style</h4><pre>import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+class CalculatorTest {
+    @Test
+    void addsTwoNumbers() {
+        assertEquals(7, Calculator.add(3, 4));
+    }
+}</pre><p>JUnit must be added as a project dependency.</p></div><div class="jp-card"><h4>Python — unittest</h4><pre>import unittest
+
+def add(a, b):
+    return a + b
+
+class TestCalculator(unittest.TestCase):
+    def test_add(self):
+        self.assertEqual(add(3, 4), 7)
+
+if __name__ == "__main__":
+    unittest.main()</pre></div></div>
+<h3>Test levels and practices</h3><ul><li><b>Unit test:</b> small unit in isolation.</li><li><b>Integration test:</b> verifies components work together, such as code and a database/API.</li><li><b>End-to-end test:</b> checks a complete user workflow across the system.</li><li><b>Boundary cases:</b> empty input, one item, minimum/maximum values, duplicates, invalid values and very large input.</li><li><b>Arrange–Act–Assert:</b> prepare state, perform the action, verify the result.</li><li><b>Debugging:</b> reproduce, reduce the problem, inspect state, form a hypothesis, test it, then add a regression test.</li><li><b>Quality tools:</b> formatters, linters, static analysis, code review, CI and coverage reports.</li></ul>
+<h3>Automation/testing ecosystem</h3><ul><li>Java: JUnit/TestNG, Maven/Gradle, Selenium WebDriver and REST Assured are common in test automation.</li><li>Python: pytest, unittest, Selenium, requests and API-testing libraries are commonly used.</li><li>Test design matters more than framework syntax: clear assertions, deterministic tests, isolated test data and actionable failure messages.</li></ul></section>
+
+<section class="topic" id="network-db"><span class="level l2">INTERMEDIATE</span><h2>19. Working with APIs, databases and the operating system</h2><p>Real applications connect to services and databases, read environment settings, and handle failures. Keep network and storage concerns outside core business logic where possible.</p>
+<h3>HTTP request example</h3><div class="jp-grid"><div class="jp-card"><h4>Java (HttpClient)</h4><pre>HttpClient client = HttpClient.newHttpClient();
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("https://example.com"))
+    .GET().build();
+HttpResponse<String> response = client.send(
+    request, HttpResponse.BodyHandlers.ofString());
+System.out.println(response.statusCode());</pre><p>Requires imports from <code>java.net.http</code>; handle <code>IOException</code> and <code>InterruptedException</code>.</p></div><div class="jp-card"><h4>Python (standard library)</h4><pre>from urllib.request import urlopen
+
+with urlopen("https://example.com") as response:
+    print(response.status)
+    body = response.read().decode("utf-8")</pre><p>For richer HTTP work, projects often use a maintained HTTP library such as Requests.</p></div></div>
+<h3>Database access principles</h3><ul><li>Use parameterized queries or prepared statements; never build SQL by concatenating untrusted input.</li><li>Understand transactions, commit/rollback, connection pools and resource cleanup.</li><li>Keep credentials in environment/configuration or a secrets manager, not source code.</li><li>Expect timeouts, unavailable services, invalid responses and partial failures.</li><li>Use least-privilege database accounts and avoid logging passwords, tokens or sensitive records.</li></ul>
+<h3>Command-line arguments and environment variables</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>public static void main(String[] args) {
+    String mode = args.length > 0 ? args[0] : "dev";
+    String url = System.getenv("API_URL");
+    System.out.println(mode);
+}</pre></div><div class="jp-card"><h4>Python</h4><pre>import os
+import sys
+
+mode = sys.argv[1] if len(sys.argv) > 1 else "dev"
+url = os.getenv("API_URL")
+print(mode)</pre></div></div></section>
+
+<section class="topic" id="advanced"><span class="level l3">ADVANCED</span><h2>20. Advanced language features and common pitfalls</h2>
+<h3>Java topics to learn deeply</h3><ul><li><b>JVM architecture:</b> class loading, bytecode, runtime data areas, execution engine and garbage collection.</li><li><b>Access modifiers:</b> <code>public</code>, <code>protected</code>, package-private and <code>private</code>.</li><li><b>Interfaces and abstract classes:</b> contracts, default methods, partial implementation and design trade-offs.</li><li><b>Generics:</b> bounded types, wildcards (<code>? extends</code>/<code>? super</code>), type erasure and PECS.</li><li><b>Exceptions:</b> checked vs unchecked, exception chaining and try-with-resources.</li><li><b>Collections:</b> hashing, equality contracts, fail-fast iterators, concurrent collections and ordering guarantees.</li><li><b>Functional Java:</b> functional interfaces, lambdas, method references, streams and Optional.</li><li><b>Concurrency:</b> happens-before, visibility, atomicity, locks, executors, futures and virtual threads where supported by the chosen JDK.</li><li><b>Modern Java:</b> records, enums, sealed classes, pattern matching and switch expressions; confirm the project's target JDK.</li><li><b>Build/runtime:</b> classpath/module path, JARs, Maven/Gradle, JVM flags, profiling and diagnosing memory/latency.</li></ul>
+<h3>Python topics to learn deeply</h3><ul><li><b>Object model:</b> names, references, identity, mutability and equality.</li><li><b>Comprehensions and generators:</b> lazy iteration, generator expressions and <code>yield</code>.</li><li><b>Decorators:</b> wrap functions/classes to add behavior while preserving metadata where appropriate.</li><li><b>Context managers:</b> <code>with</code>, <code>__enter__</code>/<code>__exit__</code> and resource safety.</li><li><b>Iterators:</b> <code>__iter__</code>, <code>__next__</code> and the iterator protocol.</li><li><b>Descriptors and properties:</b> control attribute access and validation.</li><li><b>Data classes:</b> reduce boilerplate for data-focused classes using <code>@dataclass</code>.</li><li><b>Type system tools:</b> annotations, Protocols, generics and static checkers; annotations are not automatic runtime validation.</li><li><b>Concurrency:</b> threading, multiprocessing, futures, async event loops and the GIL implications for the Python implementation/version.</li><li><b>Packaging:</b> virtual environments, package metadata, wheels, dependency locking and module import behavior.</li></ul>
+<h3>Common bugs to avoid</h3><ul><li>Comparing Java strings with <code>==</code> rather than content equality.</li><li>Assuming Python assignment copies a list or dictionary; use an explicit copy when needed.</li><li>Mutating a collection while iterating over it in an unsupported way.</li><li>Using floating-point numbers for exact money calculations without a suitable decimal strategy.</li><li>Ignoring null/None, empty inputs, time zones, Unicode and integer/overflow assumptions.</li><li>Swallowing exceptions or catching overly broad errors without logging context.</li><li>Sharing mutable state across threads without a concurrency strategy.</li><li>Premature optimization before measuring a real bottleneck.</li></ul></section>
+
+<section class="topic" id="projects"><span class="level l3">PRACTICAL</span><h2>21. Build projects to turn knowledge into skill</h2><p>Reading is not enough. Build each project in both languages where practical; compare how the language changes the design, not only the syntax.</p>
+<h3>Beginner projects</h3><ol><li><b>CLI calculator:</b> input, conversion, branching, functions and invalid-input handling.</li><li><b>Marks manager:</b> list/map data structures, average, highest/lowest marks and formatted output.</li><li><b>Number guessing game:</b> loops, random values, conditions and attempts counter.</li><li><b>Text analyzer:</b> count words/characters, frequency maps, case normalization and file input.</li></ol>
+<h3>Intermediate projects</h3><ol><li><b>Expense tracker:</b> classes, validation, JSON/CSV persistence, date handling and reports.</li><li><b>Library management system:</b> OOP, collections, search, borrowing rules and unit tests.</li><li><b>REST API client:</b> HTTP, JSON, status codes, timeouts and error handling.</li><li><b>Test automation framework:</b> test runner, reusable page/API clients, configuration, logging, assertions and CI.</li></ol>
+<h3>Advanced projects</h3><ol><li><b>Concurrent file processor:</b> process many files, measure throughput and handle partial failures safely.</li><li><b>Database-backed service:</b> CRUD API, transactions, validation, tests, environment configuration and containerized deployment.</li><li><b>DSA visualizer:</b> show sorting/searching or graph traversal steps with tests for edge cases.</li><li><b>Production-quality command-line tool:</b> package it, document it, log errors, test it and publish a versioned release.</li></ol>
+<div class="jp-note"><b>Project standard:</b> each repository should include a clear README, setup/run instructions, sample input/output, tests, sensible error handling and no committed secrets. Explain design decisions and limitations in an interview.</div></section>
+
+<section class="topic" id="practice"><span class="level l2">PRACTICE</span><h2>22. Practice problems with answers</h2>
+<h3>Problem 1 — even or odd</h3><p>Given an integer, print whether it is even or odd. Key idea: the remainder after division by 2.</p><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>System.out.println(n % 2 == 0 ? "Even" : "Odd");</pre></div><div class="jp-card"><h4>Python</h4><pre>print("Even" if n % 2 == 0 else "Odd")</pre></div></div>
+<h3>Problem 2 — count frequencies</h3><p>Count how often each item occurs. Expected average time is <code>O(n)</code> using a hash map/dictionary.</p><div class="jp-grid"><div class="jp-card"><h4>Java idea</h4><pre>Map<Integer, Integer> freq = new HashMap<>();
+for (int n : nums) {
+    freq.put(n, freq.getOrDefault(n, 0) + 1);
+}</pre></div><div class="jp-card"><h4>Python idea</h4><pre>from collections import Counter
+freq = Counter(nums)</pre></div></div>
+<h3>Problem 3 — palindrome check</h3><p>Decide whether text reads the same forward and backward. Clarify whether spaces, punctuation and letter case should be ignored.</p><div class="jp-grid"><div class="jp-card"><h4>Java (simple exact check)</h4><pre>boolean palindrome = text.equals(
+    new StringBuilder(text).reverse().toString());</pre></div><div class="jp-card"><h4>Python (simple exact check)</h4><pre>palindrome = text == text[::-1]</pre></div></div>
+<h3>Problem 4 — remove duplicates while preserving order</h3><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>List<Integer> unique = new ArrayList<>(
+    new LinkedHashSet<>(nums));</pre></div><div class="jp-card"><h4>Python</h4><pre>unique = list(dict.fromkeys(nums))</pre></div></div>
+<h3>Problem 5 — find the second-largest distinct number</h3><p>Do not sort by default; a one-pass solution is <code>O(n)</code>. Define what happens if fewer than two distinct values exist.</p><div class="jp-grid"><div class="jp-card"><h4>Java</h4><pre>Integer largest = null, second = null;
+for (int n : nums) {
+    if (largest == null || n > largest) {
+        if (largest == null || n != largest) second = largest;
+        largest = n;
+    } else if (n != largest &&
+               (second == null || n > second)) {
+        second = n;
+    }
+}
+// second == null means no second distinct value</pre></div><div class="jp-card"><h4>Python</h4><pre>distinct = set(nums)
+if len(distinct) < 2:
+    second = None
+else:
+    largest = max(distinct)
+    second = max(n for n in distinct if n != largest)</pre></div></div>
+<h3>Problem 6 — validate parentheses</h3><p>Use a stack. Push opening brackets; on a closing bracket, verify the top matches. The algorithm is <code>O(n)</code> time.</p><div class="jp-grid"><div class="jp-card"><h4>Java outline</h4><pre>Deque<Character> stack = new ArrayDeque<>();
+Map<Character, Character> pairs = Map.of(
+    ')', '(', ']', '[', '}', '{');
+for (char ch : text.toCharArray()) {
+    if (ch == '(' || ch == '[' || ch == '{') stack.push(ch);
+    else if (pairs.containsKey(ch)) {
+        if (stack.isEmpty() || stack.pop() != pairs.get(ch))
+            return false;
+    }
+}
+return stack.isEmpty();</pre></div><div class="jp-card"><h4>Python outline</h4><pre>stack = []
+pairs = {')': '(', ']': '[', '}': '{'}
+for ch in text:
+    if ch in '([{':
+        stack.append(ch)
+    elif ch in pairs:
+        if not stack or stack.pop() != pairs[ch]:
+            return False
+return not stack</pre></div></div>
+<h3>Problem 7 — binary search</h3><p>Use the implementation in the Algorithms section. Test target at first/last index, absent target, empty input and duplicates (decide whether any, first or last match is needed).</p>
+<h3>Interactive self-check</h3><div class="jp-quiz"><p><b>Question:</b> What is the output of Python <code>print(7 / 2, 7 // 2)</code>?</p><button type="button" onclick="showAnswer('qa1')">Show answer</button><div class="jp-answer" id="qa1">3.5 3 — <code>/</code> performs true division; <code>//</code> performs floor division.</div></div>
+<div class="jp-quiz"><p><b>Question:</b> In Java, what is the safer way to compare String contents?</p><button type="button" onclick="showAnswer('qa2')">Show answer</button><div class="jp-answer" id="qa2">Use <code>a.equals(b)</code> (with a null-safe approach if either value may be null). <code>==</code> compares reference identity for objects.</div></div>
+<div class="jp-quiz"><p><b>Question:</b> Why is binary search not valid on an arbitrary unsorted array?</p><button type="button" onclick="showAnswer('qa3')">Show answer</button><div class="jp-answer" id="qa3">It decides which half to discard based on ordering. Without sorted order, that decision can discard the target.</div></div></section>
+
+<section class="topic" id="revision"><span class="level l3">FAST REVISION</span><h2>23. Short notes — Java + Python</h2>
+<h3>Programming fundamentals</h3><ul><li><b>Variable:</b> a name referring to a value; Java declares a type, Python binds names dynamically.</li><li><b>Condition:</b> chooses a path; loops repeat; functions package reusable logic.</li><li><b>Array/list:</b> indexed sequence; array size is fixed in Java, Python list is resizable.</li><li><b>Set:</b> unique values. <b>Map/dict:</b> key-value lookup. <b>Stack:</b> LIFO. <b>Queue:</b> FIFO.</li><li><b>String:</b> immutable text in both languages; Java content comparison uses <code>equals</code>.</li><li><b>Exception:</b> runtime signal for failure; catch only what you can handle meaningfully.</li></ul>
+<h3>OOP quick notes</h3><ul><li><b>Class:</b> blueprint; <b>object:</b> instance.</li><li><b>Encapsulation:</b> protect state and invariants. <b>Abstraction:</b> expose a simple contract.</li><li><b>Inheritance:</b> reuse/extend a subtype relationship. <b>Polymorphism:</b> same contract, different behavior.</li><li><b>Composition:</b> build an object using collaborators; often more flexible than inheritance.</li><li><b>Java:</b> interfaces, access modifiers, static members, generics, JVM. <b>Python:</b> duck typing, conventions for privacy, decorators, generators.</li></ul>
+<h3>DSA quick notes</h3><ul><li><code>O(1)</code> constant; <code>O(log n)</code> logarithmic; <code>O(n)</code> linear; <code>O(n log n)</code> efficient comparison sorting; <code>O(n²)</code> quadratic.</li><li>Binary search requires sorted input and takes <code>O(log n)</code> time.</li><li>Hash map/set lookup is average <code>O(1)</code>; do not confuse average with guaranteed worst case.</li><li>Stack: balanced brackets/DFS. Queue: BFS. Heap: top K. Graph: BFS/DFS. DP: state + transition + base case.</li><li>Always state complexity and test edge cases.</li></ul>
+<h3>Runtime, testing and production</h3><ul><li>Java source compiles to bytecode executed by the JVM; Python is commonly executed by an interpreter implementation.</li><li>Garbage collection does not remove the need to close files, sockets or database connections.</li><li>Unit tests target small units; integration tests verify components together; end-to-end tests verify full workflows.</li><li>Use Git, code review, automated tests, dependency management, logging and CI.</li><li>Never commit secrets. Validate external input and use parameterized database queries.</li></ul>
+<h3>Java syntax vs Python syntax</h3><div class="tbl"><table><tr><th>Task</th><th>Java</th><th>Python</th></tr><tr><td>Print</td><td><code>System.out.println(x);</code></td><td><code>print(x)</code></td></tr><tr><td>Condition</td><td><code>if (x &gt; 0) { ... }</code></td><td><code>if x &gt; 0:</code></td></tr><tr><td>Function/method</td><td><code>int f(int x) { return x; }</code></td><td><code>def f(x): return x</code></td></tr><tr><td>Boolean true</td><td><code>true</code></td><td><code>True</code></td></tr><tr><td>Null-like</td><td><code>null</code></td><td><code>None</code></td></tr><tr><td>Logical AND</td><td><code>&amp;&amp;</code></td><td><code>and</code></td></tr><tr><td>List-like</td><td><code>ArrayList&lt;T&gt;</code></td><td><code>list</code></td></tr><tr><td>Map-like</td><td><code>HashMap&lt;K,V&gt;</code></td><td><code>dict</code></td></tr><tr><td>Inheritance</td><td><code>extends</code> / <code>implements</code></td><td><code>class Child(Parent):</code></td></tr><tr><td>Raise error</td><td><code>throw new ...</code></td><td><code>raise ...</code></td></tr></table></div></section>
+
+<section class="topic" id="questions"><span class="level l3">INTERVIEW PREP</span><h2>24. Important interview questions with short answers</h2>
+<h3>Core programming</h3><ol><li><b>What is the difference between compiler and interpreter?</b> A compiler translates code ahead of execution; an interpreter/runtime executes code through its implementation. Real language toolchains can combine compilation and interpretation.</li><li><b>What is static vs dynamic typing?</b> Static typing checks declared/inferred types before execution; dynamic typing associates types with runtime values and checks operations at runtime.</li><li><b>What is the difference between syntax and logic errors?</b> Syntax violates language grammar; logic error produces incorrect behavior despite running.</li><li><b>What is pass-by-value in Java?</b> Java always passes argument values; for objects, the value copied is a reference, so the method can mutate the referenced object but cannot reassign the caller's variable.</li><li><b>How are arguments passed in Python?</b> Names are bound to passed objects (call-by-sharing); mutation of a shared mutable object may be visible to the caller.</li><li><b>Why are strings immutable?</b> Immutability supports safe sharing and predictable behavior; implementation benefits include caching and optimization, though exact internals vary.</li></ol>
+<h3>OOP</h3><ol><li><b>Overloading vs overriding?</b> Overloading uses different parameter signatures; overriding supplies a subtype's implementation of inherited behavior.</li><li><b>Interface vs abstract class in Java?</b> Interfaces define contracts and can support multiple implementation; abstract classes can hold shared state and partial implementation.</li><li><b>Does Python support multiple inheritance?</b> Yes; method resolution order (MRO) determines lookup order. Design it carefully.</li><li><b>Encapsulation vs abstraction?</b> Encapsulation bundles/protects state and behavior; abstraction exposes essential operations while hiding details.</li><li><b>Composition vs inheritance?</b> Composition builds behavior from collaborators; inheritance models a subtype. Prefer the relationship that fits the domain.</li><li><b>What is polymorphism?</b> Different object types can be used through a shared contract while dispatching to their own behavior.</li></ol>
+<h3>Collections and DSA</h3><ol><li><b>Array vs ArrayList in Java?</b> Arrays have fixed length and can hold primitives; ArrayList resizes and stores reference types through generics/autoboxing.</li><li><b>List vs tuple in Python?</b> Lists are mutable; tuples are immutable containers.</li><li><b>HashMap vs TreeMap?</b> HashMap is hash-based with average constant-time basic operations; TreeMap maintains sorted key order with logarithmic operations.</li><li><b>How does a hash map work?</b> It hashes a key to locate a bucket and resolves collisions; correct equality/hash contracts are essential.</li><li><b>When would you use a stack or queue?</b> Stack for LIFO tasks like DFS/bracket validation; queue for FIFO tasks like BFS and task processing.</li><li><b>What is Big-O?</b> A way to describe how time/space requirements scale as input grows, ignoring constant factors at a high level.</li><li><b>Why is binary search O(log n)?</b> Each step roughly halves the remaining search interval.</li><li><b>How do you find duplicates efficiently?</b> Usually scan once with a set/map for average O(n) time and O(n) additional space.</li></ol>
+<h3>Java-specific</h3><ol><li><b>What is the JVM?</b> The runtime that loads and executes Java bytecode and provides services such as memory management.</li><li><b>JDK vs JRE vs JVM?</b> JVM executes bytecode; runtime libraries/runtime components support execution; JDK adds developer tools such as the compiler. Packaging terminology varies across JDK distributions.</li><li><b>Why use equals() and hashCode() together?</b> Equal objects must have equal hash codes so hash-based collections can locate them correctly.</li><li><b>Checked vs unchecked exception?</b> Checked exceptions are subject to compile-time catch/declare rules; unchecked exceptions are not required to be declared.</li><li><b>What is a lambda?</b> A concise implementation of a functional interface's behavior, often used with streams and callbacks.</li><li><b>What is garbage collection?</b> Automatic reclamation of memory for objects no longer reachable, according to the runtime's collector.</li><li><b>What is synchronization?</b> A way to coordinate access to shared state and establish memory visibility/ordering guarantees.</li></ol>
+<h3>Python-specific</h3><ol><li><b>List vs generator?</b> A list stores materialized items; a generator yields items lazily as requested.</li><li><b>What is a decorator?</b> A callable that takes a function/class and returns a wrapped or modified callable/class.</li><li><b>What is a context manager?</b> A construct used with <code>with</code> to reliably set up and clean up resources.</li><li><b>What is the GIL?</b> In common CPython builds, the Global Interpreter Lock limits simultaneous execution of Python bytecode in threads; behavior and free-threaded options depend on Python version/build.</li><li><b>What is a virtual environment?</b> An isolated Python environment for project dependencies.</li><li><b>What is duck typing?</b> Code relies on an object's supported behavior rather than requiring a specific declared class.</li><li><b>What is a comprehension?</b> A concise way to construct a collection from an iterable with optional filtering.</li></ol>
+<h3>Testing and practical engineering</h3><ol><li><b>Unit vs integration test?</b> Unit tests isolate a small component; integration tests verify multiple components together.</li><li><b>What makes a good test?</b> Deterministic, isolated, readable, focused, with meaningful assertions and clear failure messages.</li><li><b>How do you debug a production issue?</b> Establish impact, inspect safe logs/metrics/traces, reproduce, isolate the cause, mitigate, fix and add a regression test.</li><li><b>Why use Git?</b> Version history, collaboration, branching, review and recovery.</li><li><b>How do you protect secrets?</b> Use environment/configuration or a secrets manager, least privilege, rotation and redaction; never commit them.</li><li><b>How would you choose Java or Python?</b> Based on role requirements, ecosystem, runtime/performance needs, team skills and maintainability—not a universal language ranking.</li></ol>
+<div class="jp-note"><b>Interview method:</b> answer the definition, explain the mechanism, give a small example, mention a trade-off and state complexity where relevant. If you do not know something, say what you know and reason from fundamentals instead of bluffing.</div></section>
+</main></div>
+<footer>Made with ❤️ for learners · LearnHub © 2026</footer>
+<script src="js/main.js"></script>
+<script>
+function showAnswer(id){const el=document.getElementById(id);if(el)el.classList.toggle('show');}
+</script>
+</body></html>
